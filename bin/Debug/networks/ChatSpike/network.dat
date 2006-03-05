@@ -1,0 +1,16 @@
+N w00t
+U w00t
+R Master of all trades, jack of none.
+s
+S irc.chatspike.net:6667
+# Set +w
+P mode w00t +w
+# Identify..
+P privmsg :nickserv identify
+# Join a few channels..
+P join #chatspike
+P join #spankers
+P join #iglo
+P join #omnia
+P join #coding
+P join #helpers
