@@ -223,7 +223,7 @@ namespace Obsidian
 			/* remove nick from all pages */
 			foreach (mcPage aPage in this.Pages.Values)
 			{
-				if (aPage.GetUserOnChannelByNick != null)
+				if (aPage.GetUserOnChannelByNick(Nick) != null)
 				{
 					aPage.MessageQuit(Nick, Reason);
 					aPage.RemoveUserFromChannel(Nick);
@@ -235,17 +235,10 @@ namespace Obsidian
 			/* Change OldNick to NewNick on all given pages. */
 			foreach (mcPage aPage in this.Pages.Values)
 			{
-				foreach (System.Windows.Forms.TreeNode aNode in aPage.tvcUsers.Nodes)
-				{
-					if ((string)aNode.Tag == OldNick)
-					{
-						aNode.Text = NewNick;
-						aPage.MessageInfo(OldNick + " is now known as " + NewNick);
-						aNode.Tag = NewNick;
-						break;
-					}
-						
-				}
+				TreeNode moo = aPage.GetUserOnChannelByNick(OldNick);
+				moo.Text = NewNick;
+				moo.Tag = NewNick;
+				aPage.MessageInfo(OldNick + " is now known as " + NewNick);
 			}
 		}
 	}
