@@ -710,7 +710,7 @@ namespace Obsidian
 
 		private void mnuNicklistWhois_Click(object sender, System.EventArgs e)
 		{
-		
+			this.Server.IRCSend("WHOIS " + this.tvcUsers.SelectedNode.Tag);
 		}
 
 		private void ColourNode(Color ink) 
