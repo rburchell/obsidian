@@ -223,14 +223,10 @@ namespace Obsidian
 			/* remove nick from all pages */
 			foreach (mcPage aPage in this.Pages.Values)
 			{
-				foreach (System.Windows.Forms.TreeNode aNode in aPage.tvcUsers.Nodes)
+				if (aPage.GetUserOnChannelByNick != null)
 				{
-					if ((string)aNode.Tag == Nick)
-					{
-						aPage.MessageQuit(Nick, Reason);
-						aNode.Remove();
-					}
-						
+					aPage.MessageQuit(Nick, Reason);
+					aPage.RemoveUserFromChannel(Nick);
 				}
 			}
 		}
