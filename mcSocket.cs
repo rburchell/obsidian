@@ -447,9 +447,12 @@ namespace Obsidian
 								if (sck.sck == null) continue;
 								if (sck.PendingDisconnect) 
 								{
-									sck.sck.Send(Encoding.ASCII.GetBytes(sck.sendbuffer));
+									if (sck.sck.Poll(0, SelectMode.SelectWrite) && sck.sendbuffer.Length > 0) sck.sck.Send(Encoding.ASCII.GetBytes(sck.sendbuffer));
 									sck.sendbuffer = "";
-									sck.sck.Shutdown(SocketShutdown.Send);
+									sck.sck.Shutdown(SocketShutdown.Both);
+									sck.sck.Close();
+									sck.sck = null;
+									continue;
 								}
 								if (sck.sendbuffer.Length > 0) 
 								{
