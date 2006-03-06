@@ -134,6 +134,18 @@ namespace Obsidian
 			target.DoFocus();
 		}
 
+		public static void cmdMe(mcPage aPage, string Parameters)
+		{
+			if (Parameters == null)
+			{
+				aPage.MessageInfo("Usage: /me <does stuff>");
+				return;
+			}
+
+			aPage.Server.IRCSend("PRIVMSG " + aPage.Text + " :ACTION " + Parameters + "");
+			aPage.MessageAction(aPage.Server.MyNickname, Parameters);
+		}
+
 		public mcCommands()
 		{
 		}
