@@ -18,7 +18,7 @@ namespace Obsidian
 			parts = Parameters.Split(null);
 			if(parts.Length < 1 || parts.Length > 3) 
 			{
-				aPage.MessageInfo("Usage: /Server <Server name> [port]");
+				aPage.MessageInfo("Usage: /server <server.name> [port]");
 				return;
 			} 
 
@@ -29,11 +29,13 @@ namespace Obsidian
 			aPage.Server.ServerPort = (parts.Length == 3) ? System.Int32.Parse(parts[2]) : 6667;
 			aPage.Server.Connect();
 		}
+
 		public static void cmdReconnect(mcPage aPage, string Parameters)
 		{
 			aPage.Server.Disconnect("Reconnecting.");
 			aPage.Server.Connect();
 		}
+
 		public static void cmdDisconnect(mcPage aPage, string Parameters)
 		{
 			if (Parameters == null)
@@ -46,6 +48,7 @@ namespace Obsidian
 				aPage.Server.Disconnect(Parameters.Substring(12));
 			} 
 		}
+
 		public static void cmdNick(mcPage aPage, string Parameters)
 		{
 			if (Parameters == null)
@@ -55,6 +58,7 @@ namespace Obsidian
 			}
 			aPage.Server.IRCSend("NICK " + Parameters);
 		}
+
 		public static void cmdJoin(mcPage aPage, string Parameters)
 		{
 			if (Parameters == null) 
@@ -64,6 +68,7 @@ namespace Obsidian
 			} 
 			aPage.Server.IRCSend("JOIN " + Parameters);
 		}
+
 		public static void cmdCycle(mcPage aPage, string Parameters)
 		{
 			if (Parameters == null)
@@ -79,6 +84,7 @@ namespace Obsidian
 			aPage.Server.IRCSend("JOIN " + aPage.Text);
 			aPage.MessageDisplay("--> " + aPage.Server.MyNickname+" has joined "+aPage.Text);
 		}
+
 		public static void cmdPart(mcPage aPage, string Parameters)
 		{
 			string[] parts;
@@ -106,13 +112,32 @@ namespace Obsidian
 			}
 		}
 
+		public static void cmdQuery(mcPage aPage, string Parameters)
+		{
+			mcPage target;
+			string[] parts;
+			
+			if (Parameters == null)
+			{
+				aPage.MessageInfo("Usage: /query <nickname>");
+				return;
+			}
 
+			parts = Parameters.Split(null);
 
-
+			target = aPage.Server.FindPage(parts[1]);
+			if (target == null)
+			{
+				target = aPage.Server.AddPage(parts[1], mcServer.PageType.Message);
+				target.IsChannel = false;
+			}
+			target.DoFocus();
+		}
 
 		public mcCommands()
 		{
 		}
+
 		public static void MainParser(mcPage aPage, string CommandString)
 		{
 			System.Reflection.MethodInfo m;
