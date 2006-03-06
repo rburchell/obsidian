@@ -142,7 +142,7 @@ namespace Obsidian
 				return;
 			}
 
-			aPage.Server.IRCSend("PRIVMSG " + aPage.Text + " :ACTION " + Parameters + "");
+			aPage.Server.IRCSend("PRIVMSG " + aPage.Text + " :ACTION" + Parameters + "");
 			aPage.MessageAction(aPage.Server.MyNickname, Parameters);
 		}
 
