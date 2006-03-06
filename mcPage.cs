@@ -724,6 +724,7 @@ namespace Obsidian
 			MyNode.ForeColor = System.Drawing.Color.White;
 			this.Server.CurrentPage = this;
 			Obsidian.mainForm.CurrentPage = this;
+			this.txtToSend.Focus();
 		}
 
 		public void AddUserToChannel(string nick, string info)
