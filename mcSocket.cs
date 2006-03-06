@@ -387,7 +387,8 @@ namespace Obsidian
 				while(true) 
 				{
 					// Even a tiny sleep like this goes a long way to keeping us from using 100% CPU.
-					Thread.Sleep(10);
+					try { Thread.Sleep(10); } 
+					catch (ThreadInterruptedException) {}
 					lock(this) 
 					{
 						if ((sockets.Count + connectionqueue.Count) < 1) continue;
@@ -465,19 +466,19 @@ namespace Obsidian
 									}
 									sck.sck.Send(data);
 								}
-								if (sck.sck.Available > 0) 
-								{
-									byte[] data = new byte[sck.sck.Available];
-									sck.sck.Receive(data);
-									sck.recvbuffer += Encoding.ASCII.GetString(data);
-								}
-								else if (sck.sck.Poll(0, SelectMode.SelectRead) == true) 
+								if (sck.sck.Poll(0, SelectMode.SelectRead) && sck.sck.Available <= 0) 
 								{
 									// Remote endpoint disconnected.
 									sck.sendbuffer = "";
 									if (sck.sck.Poll(0, SelectMode.SelectWrite)) sck.sck.Shutdown(SocketShutdown.Send);
 									sck.sck.Close();
 									sck.sck = null;
+								}
+								else if (sck.sck.Available > 0) 
+								{
+									byte[] data = new byte[sck.sck.Available];
+									sck.sck.Receive(data);
+									sck.recvbuffer += Encoding.ASCII.GetString(data);
 								}
 								// In case someone had called Monitor.Wait() on this sck, pulse it.
 								Monitor.PulseAll(sck);
