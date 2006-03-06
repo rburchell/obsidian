@@ -13,6 +13,8 @@ namespace Obsidian
 	/// </summary>
 	sealed public class mcInbound
 	{
+
+		private static string tempBuffer = "";
 		
 		public static void Parse(string data, mcPage page)
 		{
@@ -36,6 +38,21 @@ namespace Obsidian
 			/* TODO: buffering. */
 			data = data.Replace('\r', '\n');
 			messages = data.Split('\n');
+			
+			/* If we have any tempBuffer from the last parse, and more than one element,
+			 * then we have the end of the incomplete buffer from the last parse. */
+			if (tempBuffer.Length > 0 && messages.Length > 1) 
+			{
+				messages[0] = tempBuffer + messages[0];
+				tempBuffer = "";
+			}
+
+			/* The last element should be empty. If it isn't we have an incomplete buffer. */
+			if (messages[messages.Length - 1] != "") 
+			{
+				tempBuffer = messages[messages.Length - 1];
+				messages[messages.Length - 1] = "";
+			}
 
 			foreach (string message in messages)
 			{
