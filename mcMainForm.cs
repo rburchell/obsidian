@@ -401,17 +401,17 @@ namespace Obsidian
 			{
 				if (aServer.Connected)
 				{
-					if (aServer.ServerSocket.PollRead() == true && aServer.ServerSocket.Available() == 0)
+					if (aServer.ServerSocket.sck == null)
 					{
 						/* Remote server disconnected.*/
 						aServer.Disconnect("Remote server closed socket.");
 						/* fix: exception on remote server close */
 						continue;
 					}
-					if (aServer.ServerSocket.PollRead())
+					if (aServer.ServerSocket.Available() > 0)
 					{
 						//Data incoming...
-						mcInbound.Parse(aServer.ServerSocket.Recv(), aServer.ServerPage);
+						mcInbound.Parse(aServer.ServerSocket.GetData(), aServer.ServerPage);
 					}
 				}
 			}

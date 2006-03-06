@@ -76,7 +76,7 @@ namespace Obsidian
 		private System.Collections.SortedList Pages = new System.Collections.SortedList(5);
 
 		/* todo: mark this private? */
-		public mcSocket ServerSocket = new mcSocket();
+		public NetworkThread.BufferedSocket ServerSocket;
 
 		public mcServer()
 		{
@@ -172,7 +172,7 @@ namespace Obsidian
 		{
 			if(!Connected)
 				return;
-			ServerSocket.Send(msg + "\r\n");
+			ServerSocket.SendData(msg + "\r\n");
 		}
 
 		public void Connect()
@@ -180,6 +180,7 @@ namespace Obsidian
 			/* Try to connect (this is slow :/) */
 			//TODO: Asynchronous sockets.
 			this.ServerPage.MessageInfo("Attempting to connect to " + this.ServerName + " on " + this.ServerPort.ToString());
+#if NeverDefineThis
 			try
 			{
 				ServerSocket.Connect(this.ServerName, this.ServerPort);
@@ -194,6 +195,26 @@ namespace Obsidian
 			this._connected = true;
 			this.IRCSend("NICK " + this.MyNickname);
 			this.IRCSend("USER " + this.MyUsername + " * * :" + this.MyRealname);
+#endif
+			Obsidian.DoConnect(this.ServerName, this.ServerPort, new NetworkThread.ConnectCallback(this.ServerSocket_Connect));
+		}
+
+		private void ServerSocket_Connect(NetworkThread.BufferedSocket sck) 
+		{
+			if (sck.sck != null) 
+			{
+				/* SUCCESS!!! */
+				this.ServerSocket = sck;
+				this._connected = true;
+				this.IRCSend("NICK " + this.MyNickname);
+				this.IRCSend("USER " + this.MyUsername + " * * :" + this.MyRealname);
+			}
+			else 
+			{
+				/* FAILED :( */
+				this.ServerPage.MessageInfo("Waah, couldn't connect: " + sck.sckError.ToString());
+				return;
+			}
 		}
 
 		public void Disconnect(string msg)
@@ -209,9 +230,7 @@ namespace Obsidian
 				{
 					/* ignore, the Server might've closed us. */
 				}
-				ServerSocket.Shutdown(SocketShutdown.Both);
-				ServerSocket.Close();
-				ServerSocket = new mcSocket();
+				ServerSocket.Disconnect();
 			}
 
 			this._connected = false;

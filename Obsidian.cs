@@ -21,6 +21,29 @@ namespace Obsidian
 
 		public static mcMainForm mainForm = new mcMainForm();
 
+		private static System.Collections.ArrayList mNetThreads = new System.Collections.ArrayList();
+
+		public static NetworkThread[] IOThreads 
+		{
+			get 
+			{
+				return (NetworkThread[])(mNetThreads.ToArray(typeof(NetworkThread)));
+			}
+		}
+
+		public static void DoConnect(string address, int port, NetworkThread.ConnectCallback cb) 
+		{
+			foreach (NetworkThread nt in mNetThreads) 
+			{
+				if (nt.AvailableSlot() >= 1) 
+				{
+					nt.AddSocket(address, port, cb);
+					return;
+				}
+			}
+			mNetThreads.Add(new NetworkThread(address, port, cb));
+		}
+
 		[STAThread]
 		public static void Main()
 		{
