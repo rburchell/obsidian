@@ -112,11 +112,6 @@ namespace Obsidian
 			}
 		}
 
-		public static void cmdDisconnect(mcPage aPage, string Parameters)
-		{
-			aPage.Server.Disconnect("Departing.");
-		}
-
 		public static void cmdQuery(mcPage aPage, string Parameters)
 		{
 			mcPage target;
