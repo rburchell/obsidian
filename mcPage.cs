@@ -56,6 +56,7 @@ namespace Obsidian
 		private System.Windows.Forms.ContextMenu ctmNicklist;
 		private System.Windows.Forms.MenuItem mnuNicklistWhois;
 		private System.Windows.Forms.TextBox txtTopic;
+		private System.Windows.Forms.Panel panel2;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -146,30 +147,31 @@ namespace Obsidian
 			this.mnuNicklistWhois = new System.Windows.Forms.MenuItem();
 			this.txtData = new System.Windows.Forms.RichTextBox();
 			this.txtTopic = new System.Windows.Forms.TextBox();
+			this.panel2 = new System.Windows.Forms.Panel();
 			this.panel1.SuspendLayout();
+			this.panel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cmdClosePage
 			// 
-			this.cmdClosePage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdClosePage.Location = new System.Drawing.Point(400, 223);
+			this.cmdClosePage.Dock = System.Windows.Forms.DockStyle.Right;
+			this.cmdClosePage.Location = new System.Drawing.Point(512, 0);
 			this.cmdClosePage.Name = "cmdClosePage";
-			this.cmdClosePage.Size = new System.Drawing.Size(48, 17);
+			this.cmdClosePage.Size = new System.Drawing.Size(48, 24);
 			this.cmdClosePage.TabIndex = 3;
 			this.cmdClosePage.Text = "X";
 			this.cmdClosePage.Click += new System.EventHandler(this.cmdClosePage_Click);
 			// 
 			// txtToSend
 			// 
-			this.txtToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtToSend.BackColor = System.Drawing.Color.Black;
+			this.txtToSend.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtToSend.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.txtToSend.ForeColor = System.Drawing.Color.White;
-			this.txtToSend.Location = new System.Drawing.Point(0, 222);
+			this.txtToSend.Location = new System.Drawing.Point(0, 0);
 			this.txtToSend.Multiline = true;
 			this.txtToSend.Name = "txtToSend";
-			this.txtToSend.Size = new System.Drawing.Size(472, 20);
+			this.txtToSend.Size = new System.Drawing.Size(560, 24);
 			this.txtToSend.TabIndex = 5;
 			this.txtToSend.Text = "";
 			this.txtToSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToSend_KeyPress);
@@ -181,9 +183,9 @@ namespace Obsidian
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.panel1.Controls.Add(this.tvcUsers);
 			this.panel1.Controls.Add(this.txtData);
-			this.panel1.Location = new System.Drawing.Point(0, 22);
+			this.panel1.Location = new System.Drawing.Point(0, 21);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(448, 197);
+			this.panel1.Size = new System.Drawing.Size(560, 243);
 			this.panel1.TabIndex = 9;
 			// 
 			// tvcUsers
@@ -194,10 +196,10 @@ namespace Obsidian
 			this.tvcUsers.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.tvcUsers.ForeColor = System.Drawing.Color.White;
 			this.tvcUsers.ImageIndex = -1;
-			this.tvcUsers.Location = new System.Drawing.Point(344, 0);
+			this.tvcUsers.Location = new System.Drawing.Point(456, 0);
 			this.tvcUsers.Name = "tvcUsers";
 			this.tvcUsers.SelectedImageIndex = -1;
-			this.tvcUsers.Size = new System.Drawing.Size(104, 197);
+			this.tvcUsers.Size = new System.Drawing.Size(104, 243);
 			this.tvcUsers.Sorted = true;
 			this.tvcUsers.TabIndex = 1;
 			// 
@@ -226,37 +228,46 @@ namespace Obsidian
 			this.txtData.Name = "txtData";
 			this.txtData.ReadOnly = true;
 			this.txtData.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-			this.txtData.Size = new System.Drawing.Size(344, 200);
+			this.txtData.Size = new System.Drawing.Size(456, 246);
 			this.txtData.TabIndex = 99;
 			this.txtData.Text = "";
-			this.txtData.TextChanged += new System.EventHandler(txtData_TextChanged);
+			this.txtData.TextChanged += new System.EventHandler(this.txtData_TextChanged);
 			this.txtData.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtData_MouseUp);
 			// 
 			// txtTopic
 			// 
-			this.txtTopic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtTopic.BackColor = System.Drawing.Color.Black;
+			this.txtTopic.Dock = System.Windows.Forms.DockStyle.Top;
 			this.txtTopic.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.txtTopic.ForeColor = System.Drawing.Color.White;
 			this.txtTopic.Location = new System.Drawing.Point(0, 0);
 			this.txtTopic.Name = "txtTopic";
-			this.txtTopic.Size = new System.Drawing.Size(448, 21);
+			this.txtTopic.Size = new System.Drawing.Size(560, 21);
 			this.txtTopic.TabIndex = 11;
 			this.txtTopic.Text = "";
 			this.txtTopic.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTopic_KeyPress);
 			// 
+			// panel2
+			// 
+			this.panel2.Controls.Add(this.cmdClosePage);
+			this.panel2.Controls.Add(this.txtToSend);
+			this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.panel2.Location = new System.Drawing.Point(0, 264);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(560, 24);
+			this.panel2.TabIndex = 12;
+			// 
 			// mcPage
 			// 
+			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.cmdClosePage);
-			this.Controls.Add(this.txtToSend);
 			this.Controls.Add(this.txtTopic);
 			this.Name = "mcPage";
-			this.Size = new System.Drawing.Size(448, 240);
+			this.Size = new System.Drawing.Size(560, 288);
 			this.Tag = "ePAGE";
 			this.TextChanged += new System.EventHandler(this.PageTextChanged);
 			this.panel1.ResumeLayout(false);
+			this.panel2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
