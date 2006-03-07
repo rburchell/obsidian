@@ -112,6 +112,11 @@ namespace Obsidian
 			}
 		}
 
+		public static void cmdQuit(mcPage aPage, string Parameters)
+		{
+			Obsidian.mainForm.Exit(null, null);
+		}
+		
 		public static void cmdQuery(mcPage aPage, string Parameters)
 		{
 			mcPage target;
