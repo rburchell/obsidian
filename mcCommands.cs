@@ -135,6 +135,7 @@ namespace Obsidian
 			}
 
 			aPage.Server.IRCSend("PRIVMSG " + parts[1] + " :" + Parameters.Substring(parts[1].Length + 2) + "");
+			aPage.MessageNotice(aPage.Server.MyNickname, "CTCP " + parts[1] + " " + Parameters.Substring(parts[1].Length + 2));
 		}
 
 		public static void cmdCTCPReply(mcPage aPage, string Parameters)
@@ -155,6 +156,7 @@ namespace Obsidian
 			}
 
 			aPage.Server.IRCSend("NOTICE " + parts[1] + " :" + Parameters.Substring(parts[1].Length + 2) + "");
+			aPage.MessageNotice(aPage.Server.MyNickname, "CTCPREPLY " + parts[1] + " " + Parameters.Substring(parts[1].Length + 2));
 		}
 		
 		public static void cmdQuery(mcPage aPage, string Parameters)
