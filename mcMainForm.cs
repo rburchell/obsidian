@@ -435,7 +435,7 @@ namespace Obsidian
 					}
 					else
 					{
-					this.CurrentPage.Server.Connect();
+						this.CurrentPage.Server.Connect();
 					}
 					break;
 			}
