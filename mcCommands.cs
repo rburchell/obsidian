@@ -116,6 +116,46 @@ namespace Obsidian
 		{
 			Obsidian.mainForm.Exit(null, null);
 		}
+
+		public static void cmdCTCP(mcPage aPage, string Parameters)
+		{
+			string[] parts;
+			if (Parameters == null)
+			{
+				aPage.MessageInfo("Usage: /ctcp <target> <ctcp>]");
+				return;
+			}
+
+			parts = Parameters.Split(null);
+	
+			if(parts.Length < 3)
+			{
+				aPage.MessageInfo("Usage: /ctcp <target> <ctcp>");
+				return;
+			}
+
+			aPage.Server.IRCSend("PRIVMSG " + parts[1] + " :" + Parameters.Substring(parts[1].Length + 2) + "");
+		}
+
+		public static void cmdCTCPReply(mcPage aPage, string Parameters)
+		{
+			string[] parts;
+			if (Parameters == null)
+			{
+				aPage.MessageInfo("Usage: /ctcpreply <target> <ctcp>]");
+				return;
+			}
+
+			parts = Parameters.Split(null);
+	
+			if(parts.Length < 3)
+			{
+				aPage.MessageInfo("Usage: /ctcpreply <target> <ctcp>");
+				return;
+			}
+
+			aPage.Server.IRCSend("NOTICE " + parts[1] + " :" + Parameters.Substring(parts[1].Length + 2) + "");
+		}
 		
 		public static void cmdQuery(mcPage aPage, string Parameters)
 		{
