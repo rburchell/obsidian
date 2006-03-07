@@ -158,6 +158,28 @@ namespace Obsidian
 			aPage.Server.IRCSend("NOTICE " + parts[1] + " :" + Parameters.Substring(parts[1].Length + 2) + "");
 			aPage.MessageNotice(aPage.Server.MyNickname, "CTCPREPLY " + parts[1] + " " + Parameters.Substring(parts[1].Length + 2));
 		}
+
+		public static void cmdMsg(mcPage aPage, string Parameters)
+		{
+			string[] parts;
+
+			if (Parameters == null)
+			{
+				aPage.MessageInfo("Usage: /msg <nickname> <message>");
+				return;
+			}
+
+			parts = Parameters.Split(null);
+
+			if(parts.Length < 3)
+			{
+				aPage.MessageInfo("Usage: /msg <nickname> <message>");
+				return;
+			}
+
+			aPage.Server.IRCSend("PRIVMSG " + parts[1] + " :" + Parameters.Substring(parts[1].Length + 2));
+			aPage.MessagePrivate(parts[1], Parameters.Substring(parts[1].Length + 2));
+		}
 		
 		public static void cmdQuery(mcPage aPage, string Parameters)
 		{
