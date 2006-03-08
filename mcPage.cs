@@ -178,11 +178,9 @@ namespace Obsidian
 			// 
 			// panel1
 			// 
-			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.panel1.Controls.Add(this.tvcUsers);
 			this.panel1.Controls.Add(this.txtData);
+			this.panel1.Controls.Add(this.tvcUsers);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 21);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(560, 243);
@@ -216,11 +214,9 @@ namespace Obsidian
 			// 
 			// txtData
 			// 
-			this.txtData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtData.AutoSize = true;
 			this.txtData.BackColor = System.Drawing.Color.Black;
+			this.txtData.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtData.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.txtData.ForeColor = System.Drawing.Color.White;
 			this.txtData.Location = new System.Drawing.Point(0, 0);
@@ -228,7 +224,7 @@ namespace Obsidian
 			this.txtData.Name = "txtData";
 			this.txtData.ReadOnly = true;
 			this.txtData.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-			this.txtData.Size = new System.Drawing.Size(456, 246);
+			this.txtData.Size = new System.Drawing.Size(456, 243);
 			this.txtData.TabIndex = 99;
 			this.txtData.Text = "";
 			this.txtData.TextChanged += new System.EventHandler(this.txtData_TextChanged);
@@ -259,8 +255,8 @@ namespace Obsidian
 			// 
 			// mcPage
 			// 
-			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.panel1);
+			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.txtTopic);
 			this.Name = "mcPage";
 			this.Size = new System.Drawing.Size(560, 288);
