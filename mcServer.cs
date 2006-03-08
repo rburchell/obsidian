@@ -254,12 +254,11 @@ namespace Obsidian
 			/* Change OldNick to NewNick on all given pages. */
 			foreach (mcPage aPage in this.Pages.Values)
 			{
-				TreeNode moo = aPage.GetUserOnChannelByNick(OldNick);
+				mcPage.ChanUser moo = aPage.GetUserOnChannelByNick(OldNick);
 				if (moo == null)
 					continue;	/* HOPEFULLY a self nickchange? Dunno.. */
-
-				moo.Text = NewNick;
-				moo.Tag = NewNick;
+				moo.Nick = NewNick;
+				moo.Info = NewNick;
 				aPage.MessageInfo(OldNick + " is now known as " + NewNick);
 			}
 		}

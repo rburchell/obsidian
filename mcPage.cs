@@ -46,9 +46,6 @@ namespace Obsidian
 		public TreeNode ChannelsNode = new TreeNode();
 		public TreeNode MessagesNode = new TreeNode();
 		public TreeNode BuddiesNode = new TreeNode();
-
-		/* XXX - mark private ASAP */
-		public System.Windows.Forms.TreeView tvcUsers;
 		private System.Windows.Forms.Button cmdClosePage;
 		private System.Windows.Forms.TextBox txtToSend;
 		private System.Windows.Forms.Panel panel1;
@@ -57,6 +54,7 @@ namespace Obsidian
 		private System.Windows.Forms.MenuItem mnuNicklistWhois;
 		private System.Windows.Forms.TextBox txtTopic;
 		private System.Windows.Forms.Panel panel2;
+		public System.Windows.Forms.ListBox lstUsers;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -75,7 +73,7 @@ namespace Obsidian
 				this.txtData.Dock = DockStyle.Fill;
 				this.panel1.Top = 0;
 				this.panel1.Height = this.Height - this.txtToSend.Height;
-				this.tvcUsers.Visible = false;
+				this.lstUsers.Visible = false;
 				this.txtTopic.Visible = false;
 				this.Topic = null;
 			}
@@ -87,6 +85,7 @@ namespace Obsidian
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.SetIndent(StringWidth(TimeStamp()+"<> ", this.txtData.Font));
+			this.lstUsers.DrawItem += new DrawItemEventHandler(lstUsers_DrawItem);
 		}
 
 
@@ -104,7 +103,7 @@ namespace Obsidian
 			this.txtData.Dock = DockStyle.Fill;
 			this.panel1.Top = 0;
 			this.panel1.Height = this.Height - this.txtToSend.Height;
-			this.tvcUsers.Visible = false;
+			this.lstUsers.Visible = false;
 			this.txtTopic.Visible = false;
 			this.Topic = null;
 
@@ -115,6 +114,7 @@ namespace Obsidian
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.SetIndent(StringWidth(TimeStamp()+"<> ", this.txtData.Font));
+			this.lstUsers.DrawItem += new DrawItemEventHandler(lstUsers_DrawItem);
 		}
 
 		/// <summary> 
@@ -142,12 +142,12 @@ namespace Obsidian
 			this.cmdClosePage = new System.Windows.Forms.Button();
 			this.txtToSend = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.tvcUsers = new System.Windows.Forms.TreeView();
+			this.txtData = new System.Windows.Forms.RichTextBox();
 			this.ctmNicklist = new System.Windows.Forms.ContextMenu();
 			this.mnuNicklistWhois = new System.Windows.Forms.MenuItem();
-			this.txtData = new System.Windows.Forms.RichTextBox();
 			this.txtTopic = new System.Windows.Forms.TextBox();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.lstUsers = new System.Windows.Forms.ListBox();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.SuspendLayout();
@@ -179,38 +179,12 @@ namespace Obsidian
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.txtData);
-			this.panel1.Controls.Add(this.tvcUsers);
+			this.panel1.Controls.Add(this.lstUsers);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 21);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(560, 243);
 			this.panel1.TabIndex = 9;
-			// 
-			// tvcUsers
-			// 
-			this.tvcUsers.BackColor = System.Drawing.Color.Black;
-			this.tvcUsers.ContextMenu = this.ctmNicklist;
-			this.tvcUsers.Dock = System.Windows.Forms.DockStyle.Right;
-			this.tvcUsers.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
-			this.tvcUsers.ForeColor = System.Drawing.Color.White;
-			this.tvcUsers.ImageIndex = -1;
-			this.tvcUsers.Location = new System.Drawing.Point(456, 0);
-			this.tvcUsers.Name = "tvcUsers";
-			this.tvcUsers.SelectedImageIndex = -1;
-			this.tvcUsers.Size = new System.Drawing.Size(104, 243);
-			this.tvcUsers.Sorted = true;
-			this.tvcUsers.TabIndex = 1;
-			// 
-			// ctmNicklist
-			// 
-			this.ctmNicklist.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						this.mnuNicklistWhois});
-			// 
-			// mnuNicklistWhois
-			// 
-			this.mnuNicklistWhois.Index = 0;
-			this.mnuNicklistWhois.Text = "&Whois";
-			this.mnuNicklistWhois.Click += new System.EventHandler(this.mnuNicklistWhois_Click);
 			// 
 			// txtData
 			// 
@@ -224,11 +198,22 @@ namespace Obsidian
 			this.txtData.Name = "txtData";
 			this.txtData.ReadOnly = true;
 			this.txtData.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-			this.txtData.Size = new System.Drawing.Size(456, 243);
+			this.txtData.Size = new System.Drawing.Size(440, 243);
 			this.txtData.TabIndex = 99;
 			this.txtData.Text = "";
 			this.txtData.TextChanged += new System.EventHandler(this.txtData_TextChanged);
 			this.txtData.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtData_MouseUp);
+			// 
+			// ctmNicklist
+			// 
+			this.ctmNicklist.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																						this.mnuNicklistWhois});
+			// 
+			// mnuNicklistWhois
+			// 
+			this.mnuNicklistWhois.Index = 0;
+			this.mnuNicklistWhois.Text = "&Whois";
+			this.mnuNicklistWhois.Click += new System.EventHandler(this.mnuNicklistWhois_Click);
 			// 
 			// txtTopic
 			// 
@@ -252,6 +237,20 @@ namespace Obsidian
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(560, 24);
 			this.panel2.TabIndex = 12;
+			// 
+			// lstUsers
+			// 
+			this.lstUsers.BackColor = System.Drawing.Color.Black;
+			this.lstUsers.ContextMenu = this.ctmNicklist;
+			this.lstUsers.Dock = System.Windows.Forms.DockStyle.Right;
+			this.lstUsers.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.lstUsers.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.lstUsers.ForeColor = System.Drawing.Color.White;
+			this.lstUsers.IntegralHeight = false;
+			this.lstUsers.Location = new System.Drawing.Point(440, 0);
+			this.lstUsers.Name = "lstUsers";
+			this.lstUsers.Size = new System.Drawing.Size(120, 243);
+			this.lstUsers.TabIndex = 100;
 			// 
 			// mcPage
 			// 
@@ -717,7 +716,8 @@ namespace Obsidian
 
 		private void mnuNicklistWhois_Click(object sender, System.EventArgs e)
 		{
-			this.Server.IRCSend("WHOIS " + this.tvcUsers.SelectedNode.Tag);
+			if (this.lstUsers.SelectedItems.Count < 1) return;
+			this.Server.IRCSend("WHOIS " + ((ChanUser)(this.lstUsers.SelectedItem)).Nick);
 		}
 
 		private void ColourNode(Color ink) 
@@ -734,32 +734,66 @@ namespace Obsidian
 			this.txtToSend.Focus();
 		}
 
+		public class ChanUser 
+		{
+			public string Nick;
+			public string Info;
+			public string Prefixes;
+			public Color DispColor;
+			public ChanUser(string nick) 
+			{
+				this.Nick = nick;
+				this.DispColor = Color.White;
+			}
+		}
+
 		public void AddUserToChannel(string nick, string info)
 		{
 			if (this.GetUserOnChannelByNick(nick) != null)
 				return;
 
-			System.Windows.Forms.TreeNode lvi = new TreeNode(nick);
-			lvi.Tag = lvi.Text;
-			this.tvcUsers.Nodes.Add(lvi);
+			ChanUser cu = new ChanUser(nick);
+			cu.Info = info;
+			this.lstUsers.Items.Add(cu);
+			this.lstUsers.Refresh();
 		}
 
 		public void RemoveUserFromChannel(string nick)
 		{
-			TreeNode tvnode = GetUserOnChannelByNick(nick);
-			if (tvnode != null)
-				tvnode.Remove();
+			ChanUser cu = GetUserOnChannelByNick(nick);
+			if (cu != null)
+				this.lstUsers.Items.Remove(cu);
+			this.Refresh();
 		}
 
-		public TreeNode GetUserOnChannelByNick(string nick)
+		public ChanUser GetUserOnChannelByNick(string nick)
 		{
-			foreach (TreeNode tvNode in this.tvcUsers.Nodes)
+			foreach (ChanUser cu in this.lstUsers.Items)
 			{
-				if (tvNode.Tag.ToString().ToUpper() == nick.ToUpper())
-					return tvNode;
+				if (cu.Nick == nick)
+					return cu;
 			}
 
 			return null;
+		}
+
+		private void lstUsers_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			ChanUser cu;
+			if (e.Index >= 0) 
+			{
+				cu = ((ChanUser)(this.lstUsers.Items[e.Index]));
+				e.DrawBackground();
+				e.DrawFocusRectangle();
+				if ((e.State & DrawItemState.Selected) != 0) 
+				{
+					e.Graphics.DrawString(cu.Prefixes + cu.Nick, lstUsers.Font, SystemBrushes.HighlightText, new RectangleF((float)e.Bounds.X, (float)e.Bounds.Y, (float)e.Bounds.Width, (float)e.Bounds.Height));
+				}
+				else 
+				{
+					e.Graphics.DrawString(cu.Prefixes + cu.Nick, lstUsers.Font, new SolidBrush(cu.DispColor), new RectangleF((float)e.Bounds.X, (float)e.Bounds.Y, (float)e.Bounds.Width, (float)e.Bounds.Height));
+				}
+			}
 		}
 	}
 }

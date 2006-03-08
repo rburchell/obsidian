@@ -288,7 +288,7 @@ namespace Obsidian
 					/* populate user list */
 					/* TODO: clear the list first? */
 					userlist = parameters[5].Split(' ');
-					target.tvcUsers.BeginUpdate(); 
+					target.lstUsers.BeginUpdate(); 
 					foreach (string name in userlist) 
 					{
 						System.Text.StringBuilder thenick = new System.Text.StringBuilder();
@@ -317,7 +317,7 @@ namespace Obsidian
 
 						target.AddUserToChannel(thenick.ToString(), null);
 					}
-					target.tvcUsers.EndUpdate();
+					target.lstUsers.EndUpdate();
 					break;
 				case "366":
 					// RPL_ENDOFNAMES 

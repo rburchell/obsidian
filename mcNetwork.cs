@@ -37,7 +37,7 @@ namespace Obsidian
 		public static int SaveNetwork(mcNetwork aNetwork)
 		{
 			System.IO.StreamWriter fd;
-			string line;
+			// string line; // Commented so C# will stfu.
 
 			try
 			{
