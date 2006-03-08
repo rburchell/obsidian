@@ -255,6 +255,9 @@ namespace Obsidian
 			foreach (mcPage aPage in this.Pages.Values)
 			{
 				TreeNode moo = aPage.GetUserOnChannelByNick(OldNick);
+				if (moo == null)
+					continue;	/* HOPEFULLY a self nickchange? Dunno.. */
+
 				moo.Text = NewNick;
 				moo.Tag = NewNick;
 				aPage.MessageInfo(OldNick + " is now known as " + NewNick);
