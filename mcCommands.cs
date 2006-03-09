@@ -45,7 +45,7 @@ namespace Obsidian
 			}
 			else
 			{
-				aPage.Server.Disconnect(Parameters.Substring(12));
+				aPage.Server.Disconnect(Parameters);
 			} 
 		}
 
