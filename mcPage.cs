@@ -188,6 +188,7 @@ namespace Obsidian
 			this.lstUsers.Name = "lstUsers";
 			this.lstUsers.Size = new System.Drawing.Size(120, 243);
 			this.lstUsers.TabIndex = 100;
+			this.lstUsers.DoubleClick += new System.EventHandler(this.lstUsers_DoubleClick);
 			this.lstUsers.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lstUsers_DrawItem);
 			// 
 			// ctmNicklist
@@ -858,5 +859,9 @@ namespace Obsidian
 			}
 		}
 
+		private void lstUsers_DoubleClick(object sender, System.EventArgs e)
+		{
+			mcCommands.MainParser(this, "/query " + ((ChanUser)lstUsers.SelectedItem).Nick);
+		}
 	}
 }
