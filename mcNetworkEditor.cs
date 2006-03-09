@@ -11,7 +11,6 @@ namespace Obsidian
 	/// </summary>
 	public class mcNetworkEditor : System.Windows.Forms.Form
 	{
-		public double Setting_Opacity = 100;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.GroupBox groupBox3;
@@ -349,11 +348,6 @@ namespace Obsidian
 
 		}
 		#endregion
-
-		public void SynchroniseOpacity()
-		{
-			this.Opacity = this.Setting_Opacity;
-		}
 
 		private void mcNetworkEditor_Load(object sender, System.EventArgs e)
 		{

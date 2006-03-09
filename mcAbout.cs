@@ -150,9 +150,5 @@ namespace Obsidian
 		{
 			this.Close();
 		}
-		public void SynchroniseOpacity()
-		{
-			this.Opacity = Obsidian.mainForm.OptionsForm.Setting_Opacity;
-		}
 	}
 }

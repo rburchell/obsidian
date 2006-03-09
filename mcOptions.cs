@@ -11,7 +11,6 @@ namespace Obsidian
 	/// </summary>
 	sealed public class mcOptions : System.Windows.Forms.Form
 	{
-		public double Setting_Opacity = 100;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage tabPage2;
@@ -37,7 +36,6 @@ namespace Obsidian
 			// Required for Windows Form Designer support
 			//
 			InitializeComponent();
-			this.OpacityTrackBar.Value = (int)this.Setting_Opacity;
 
 			//
 			// TODO: Add any constructor code after InitializeComponent call
@@ -220,14 +218,8 @@ namespace Obsidian
 
 		private void OpacityTrackBar_Scroll(object sender, System.EventArgs e)
 		{
-			this.Setting_Opacity = ((double)OpacityTrackBar.Value/100.0);
-			this.SynchroniseOpacity();
-			Obsidian.mainForm.SynchroniseOpacity();
+			Obsidian.mainForm.Opacity = ((double)OpacityTrackBar.Value/100.0);
 
-		}
-		public void SynchroniseOpacity()
-		{
-			this.Opacity = this.Setting_Opacity;
 		}
 
 		private void button1_Click(object sender, System.EventArgs e)

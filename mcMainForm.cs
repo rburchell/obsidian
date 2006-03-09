@@ -328,38 +328,18 @@ namespace Obsidian
 		{
 			this.AboutForm = new mcAbout();
 			this.AboutForm.Show();
-			this.AboutForm.SynchroniseOpacity();
 		}
 
 		private void mnuNetworkEditor_Click(object sender, System.EventArgs e)
 		{
 			this.NetworkEditor = new mcNetworkEditor();
 			this.NetworkEditor.Show();
-			this.NetworkEditor.SynchroniseOpacity();
-		}
-		public void SynchroniseOpacity()
-		{
-			//this is really ugly :(
-			this.Opacity = this.OptionsForm.Setting_Opacity;
-			try
-			{
-				this.AboutForm.SynchroniseOpacity();
-			}
-			catch
-			{}
-			try
-			{
-				this.NetworkEditor.SynchroniseOpacity();
-			}
-			catch
-			{}
 		}
 
 		private void mnuViewOptions_Click(object sender, System.EventArgs e)
 		{
 			this.OptionsForm = new mcOptions();
 			this.OptionsForm.Show();
-			this.OptionsForm.SynchroniseOpacity();
 		}
 
 		private void tmrParseStuff_Tick(object sender, System.EventArgs e)
