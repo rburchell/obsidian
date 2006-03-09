@@ -175,8 +175,9 @@ namespace Obsidian
 					/* todo: do we need to support RPL_BOUNCE too? */
 					//<- :devel.rburchell.org 005 w00t SAFELIST HCN MAXCHANNELS=10 CHANLIMIT=#:10 MAXLIST=b:60,e:60,I:60 NICKLEN=30 CHANNELLEN=32 TOPICLEN=307 KICKLEN=307 AWAYLEN=307 MAXTARGETS=20 WALLCHOPS WATCH=128 :are supported by this Server
 					//<- :devel.rburchell.org 005 w00t SILENCE=15 MODES=12 CHANTYPES=# PREFIX=(qaohv)~&@%+ CHANMODES=beI,kfL,lj,psmntirRcOAQKVGCuzNSMTG NETWORK=Symmetic CASEMAPPING=ascii EXTBAN=~,cqnr ELIST=MNUCT STATUSMSG=~&@%+ EXCEPTS INVEX CMDS=KNOCK,MAP,DCCALLOW,USERIP :are supported by this Server
-					foreach (string str in parameters)
+					for (int i = 3; i < parameters.Length - 1; i++)
 					{
+						string str = parameters[i];
 						//TODO: Finish RPL_ISUPPORT parsing.
 						//str will be in form: TOK=VALUE
 						//or optionally, TOK.
@@ -216,15 +217,25 @@ namespace Obsidian
 								page.Server.ISupport.PREFIX_Modes = modechars;
 								break;
 							default:
-								if (tokens.Length > 1) 
+								if (page.Server.ISupport.Other.ContainsKey(tokens[0])) 
 								{
-									// Has a value.
-									page.Server.ISupport.Other.Add(tokens[0], tokens[1]);
+									if (tokens.Length > 1) 
+									{
+										page.Server.ISupport.Other[tokens[0]) = tokens[1];
+									}
 								}
 								else 
 								{
-									// No value.
-									page.Server.ISupport.Other.Add(tokens[0], null);
+									if (tokens.Length > 1) 
+									{
+										// Has a value.
+										page.Server.ISupport.Other.Add(tokens[0], tokens[1]);
+									}
+									else 
+									{
+										// No value.
+										page.Server.ISupport.Other.Add(tokens[0], null);
+									}
 								}
 								break;
 						}
