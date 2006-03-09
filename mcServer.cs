@@ -33,6 +33,15 @@ namespace Obsidian
 
 			public string PREFIX_Modes = "ohv";
 			public string PREFIX_Characters = "@%+";
+
+			public string[] CHANMODES = "b,k,l,imntsp".Split(',');
+
+			/// <summary>
+			/// Used to store any tokens we aren't handling internally. Readonly so that the instance
+			/// can't be mucked with (the collection itself is certainly mutable, just the reference to
+			/// it isn't).
+			/// </summary>
+			public readonly System.Collections.Specialized.StringDictionary Other = new System.Collections.Specialized.StringDictionary();
 		}
 
 		/* My properties. */

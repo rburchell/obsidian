@@ -196,7 +196,7 @@ namespace Obsidian
 								break;
 							case "CHANMODES":
 								/* CHANMODES=beI,kfL,lj,psmntirRcOAQKVGCuzNSMTG */
-								userhost = tokens[1].Split(',');
+								page.Server.ISupport.CHANMODES = tokens[1].Split(',');
 								break;
 							case "PREFIX":
 								/* tokens[1] is something like (ohv)@%+ */
@@ -216,6 +216,16 @@ namespace Obsidian
 								page.Server.ISupport.PREFIX_Modes = modechars;
 								break;
 							default:
+								if (tokens.Length > 1) 
+								{
+									// Has a value.
+									page.Server.ISupport.Other.Add(tokens[0], tokens[1]);
+								}
+								else 
+								{
+									// No value.
+									page.Server.ISupport.Other.Add(tokens[0], null);
+								}
 								break;
 						}
 					}
