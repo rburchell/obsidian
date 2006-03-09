@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Text;
 
 namespace Obsidian
 {
@@ -326,13 +327,12 @@ namespace Obsidian
 					target.lstUsers.BeginUpdate(); 
 					foreach (string name in userlist) 
 					{
-						System.Text.StringBuilder thenick = new System.Text.StringBuilder();
+						StringBuilder thenick = new StringBuilder();
+						StringBuilder theprefix = new StringBuilder();
 
 						if (name.Length < 1)
 							continue;
 
-						/* strip prefix characters off the start of the nick for now*/
-						/* TODO: do all this properly */
 						foreach (char nickchar in name)
 						{
 							bool isprefix = false;
@@ -343,14 +343,19 @@ namespace Obsidian
 								{
 									/* it's a prefix */
 									isprefix = true;
+									break;
 								}
 							}
 
 							if (isprefix == false)
 								thenick.Append(nickchar);
+							else
+								theprefix.Append(nickchar);
 						}
 
 						target.AddUserToChannel(thenick.ToString(), null);
+						foreach (char c in theprefix.ToString())
+							target.AddPrefix(thenick.ToString(), c);
 					}
 					target.lstUsers.EndUpdate();
 					break;
