@@ -259,6 +259,13 @@ namespace Obsidian
 					page.MessageInfo(parameters[3]);
 					break;
 /* WHOIS NUMERICS */
+/*
+ * TODO: A few more to be implemnted when I get time:
+ * [16:38:25] --- UNKNOWN:  :irc.viroteck.net 310 Rob w00t is available for help.
+ * [16:40:10] --- UNKNOWN:  :irc.viroteck.net 301 Rob Stskeeps CeBIT
+ * [16:40:10] --- UNKNOWN:  :irc.viroteck.net 313 Rob Stskeeps is a Network Administrator
+ * [16:40:10] --- UNKNOWN:  :irc.viroteck.net 671 Rob Stskeeps is using a Secure Connection
+ */
 				case "307":
 					page.Server.CurrentPage.MessageInfo("Status: " + parameters[3] + " is a Registered Nickname");
 					break;
@@ -266,7 +273,7 @@ namespace Obsidian
 					page.Server.CurrentPage.MessageInfo("-------------[WHOIS: " + parameters[3] + "]------------");
 					page.Server.CurrentPage.MessageInfo("NUH: " + parameters[3] + "!" + parameters[4] + "@" + parameters[5]);
 					
-					for (i = 5; i < parameters.Length; i++)
+					for (i = 7; i < parameters.Length; i++)
 						todisplay = todisplay + " " + parameters[i];
 					
 					page.Server.CurrentPage.MessageInfo("Real Name:" + todisplay);
