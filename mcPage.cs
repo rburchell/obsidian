@@ -806,9 +806,9 @@ namespace Obsidian
 
 		public class ChanUser 
 		{
-			public string Nick;
-			public string Info;
-			public string Prefixes;
+			public string Nick = "";
+			public string Info = "";
+			public string Prefixes = "";
 			public Color DispColor;
 			public ChanUser(string nick) 
 			{
