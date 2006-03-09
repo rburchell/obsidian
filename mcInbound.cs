@@ -122,6 +122,7 @@ namespace Obsidian
 			mcPage target = null;
 			string todisplay = null; /* join parts of parameters together to display */
 			string[] userhost;
+			int i = 0;
 
 			switch (command)
 			{
@@ -219,7 +220,6 @@ namespace Obsidian
 					}
 					
 					/* todo: this is inefficient given we loop over the array twice */
-					int i = 0;
 					todisplay = "Options: ";
 					foreach (string tmp in parameters)
 					{
@@ -257,6 +257,41 @@ namespace Obsidian
 					//:devel.rburchell.org 266 w00t_ :Current Global Users: 3  Max: 3
 					page.MessageInfo(parameters[3]);
 					break;
+/* WHOIS NUMERICS */
+				case "307":
+					page.Server.CurrentPage.MessageInfo("Status: " + parameters[3] + " is a Registered Nickname");
+					break;
+				case "311":
+					page.Server.CurrentPage.MessageInfo("-------------[WHOIS: " + parameters[3] + "]------------");
+					page.Server.CurrentPage.MessageInfo("NUH: " + parameters[3] + "!" + parameters[4] + "@" + parameters[5]);
+					
+					for (i = 5; i < parameters.Length; i++)
+						todisplay = todisplay + " " + parameters[i];
+					
+					page.Server.CurrentPage.MessageInfo("Real Name:" + todisplay);
+					break;
+				case "312":
+					for (i = 4; i < parameters.Length; i++)
+						todisplay = todisplay + " " + parameters[i];
+					
+					page.Server.CurrentPage.MessageInfo("Server:" + todisplay);
+					break;
+				case "318":
+					page.Server.CurrentPage.MessageInfo("-------------[END OF WHOIS]------------");
+					break;
+				case "319":
+					for (i = 4; i < parameters.Length; i++)
+						todisplay = todisplay + " " + parameters[i];
+					
+					page.Server.CurrentPage.MessageInfo("Channels:" + todisplay);
+					break;
+				case "320":
+					for (i = 3; i < parameters.Length; i++)
+						todisplay = todisplay + " " + parameters[i];
+					
+					page.Server.CurrentPage.MessageInfo("Description:" + todisplay);
+					break;
+/* END WHOIS NUMERICS */
 				case "332":
 					//<- :devel.rburchell.org 332 w00t #test :ggagagagaqg
 					target = page.Server.FindPage(parameters[3]);
