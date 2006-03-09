@@ -327,7 +327,7 @@ namespace Obsidian
 			{
 				txtData.SelectionStart = txtData.Text.Length - 1;
 				txtData.Focus();
-				this.txtToSend.Focus();
+				Obsidian.mainForm.CurrentPage.txtToSend.Focus();
 			}
 		}
 
@@ -372,7 +372,7 @@ namespace Obsidian
 			System.Collections.Specialized.StringCollection sc = new System.Collections.Specialized.StringCollection();
 			foreach (ChanUser cu in lstUsers.Items) 
 			{
-				if (cu.Nick.StartsWith(word)) 
+				if (cu.Nick.ToLower().StartsWith(word)) 
 				{
 					sc.Add(cu.Nick);
 				}
@@ -431,7 +431,7 @@ namespace Obsidian
 						}
 						else 
 						{
-							while (!list[i].StartsWith(tmpstring)) 
+							while (!list[i].ToLower().StartsWith(tmpstring)) 
 							{
 								tmpstring = tmpstring.Remove(tmpstring.Length - 1, 1);
 							}
@@ -845,6 +845,26 @@ namespace Obsidian
 			}
 
 			return null;
+		}
+
+		public void AddPrefix(string nick, char prefix) 
+		{
+			ChanUser cu = GetUserOnChannelByNick(nick);
+			if (cu == null) return;
+			char[] stmp = Server.ISupport.PREFIX_Characters.ToCharArray();
+			for (int i = 0; i < stmp.Length; i++) 
+			{
+				if (stmp[i] != prefix && cu.Prefixes.IndexOf(stmp[i]) < 0)
+					stmp[i] = ' ';
+			}
+			cu.Prefixes = (new string(stmp)).Replace(" ", "");
+		}
+
+		public void RemovePrefix(string nick, char prefix)
+		{
+			ChanUser cu = GetUserOnChannelByNick(nick);
+			if (cu == null) return;
+			cu.Prefixes = cu.Prefixes.Replace(prefix.ToString(), "");
 		}
 
 		private void lstUsers_DrawItem(object sender, DrawItemEventArgs e)
