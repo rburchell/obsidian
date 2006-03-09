@@ -24,7 +24,6 @@ namespace Obsidian
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox txtRealname;
 		private System.Windows.Forms.ColorDialog colorDialog1;
-		private mcPage mcPage1;
 		private System.Windows.Forms.Label label5;
 
 		/// <summary>
