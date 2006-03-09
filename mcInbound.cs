@@ -236,7 +236,7 @@ namespace Obsidian
 					break;
 				case "252":  // RPL_LUSEROP 
 					// "<integer> :operator(s) online" 
-					page.MessageInfo(parameters[3]);
+					page.MessageInfo(parameters[3] + " IRC operator(s) online");
 					break;
 				case "253":
 					// "<integer> :unknown connection(s)" 
