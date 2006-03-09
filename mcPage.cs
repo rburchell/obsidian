@@ -78,40 +78,12 @@ namespace Obsidian
 				this.Topic = null;
 			}
 
+
+			this.Dock = System.Windows.Forms.DockStyle.Fill;
+
 			if (Obsidian.mainForm != null)
 				Obsidian.mainForm.Controls.Add(this);
 
-			this.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.SetIndent(StringWidth(TimeStamp()+"<> ", this.txtData.Font));
-		}
-
-
-		public mcPage()
-		{
-			// This call is required by the Windows.Forms Form Designer.
-			InitializeComponent();
-
-			this.Text = "#chatspike";
-
-			this.Server = new mcServer();
-			this.Server.CurrentPage = this;
-			this.Server.ServerPage = this;
-
-			this.txtData.Dock = DockStyle.Fill;
-			this.panel1.Top = 0;
-			this.panel1.Height = this.Height - this.txtToSend.Height;
-			this.lstUsers.Visible = false;
-			this.txtTopic.Visible = false;
-			this.Topic = null;
-
-			this.txtToSend.Visible = false;
-			this.cmdClosePage.Visible = false;
-
-			this.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
 			this.SetIndent(StringWidth(TimeStamp()+"<> ", this.txtData.Font));
 		}
 
@@ -259,7 +231,7 @@ namespace Obsidian
 			this.Controls.Add(this.txtTopic);
 			this.Name = "mcPage";
 			this.Size = new System.Drawing.Size(560, 288);
-			this.Tag = "ePAGE";
+			this.Tag = "";
 			this.TextChanged += new System.EventHandler(this.PageTextChanged);
 			this.panel1.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);

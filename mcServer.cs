@@ -141,8 +141,6 @@ namespace Obsidian
 			
 			aPage.MyNode = lvi;
 			Pages.Add(PageName, aPage);
-			/* resize controls etc. -- is this needed here? */
-			Obsidian.mainForm.ReinitGUI();
 
 			/* reset focus on current page. */
 			CurrentPage.DoFocus();

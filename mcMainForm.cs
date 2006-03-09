@@ -144,12 +144,11 @@ namespace Obsidian
 			// 
 			// MySplitter
 			// 
-			this.MySplitter.Location = new System.Drawing.Point(121, 0);
+			this.MySplitter.Location = new System.Drawing.Point(144, 0);
 			this.MySplitter.Name = "MySplitter";
 			this.MySplitter.Size = new System.Drawing.Size(3, 260);
 			this.MySplitter.TabIndex = 5;
 			this.MySplitter.TabStop = false;
-			this.MySplitter.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.MySplitter_SplitterMoved);
 			// 
 			// tvcWindows
 			// 
@@ -162,7 +161,7 @@ namespace Obsidian
 			this.tvcWindows.Location = new System.Drawing.Point(0, 0);
 			this.tvcWindows.Name = "tvcWindows";
 			this.tvcWindows.SelectedImageIndex = -1;
-			this.tvcWindows.Size = new System.Drawing.Size(121, 260);
+			this.tvcWindows.Size = new System.Drawing.Size(144, 260);
 			this.tvcWindows.TabIndex = 4;
 			this.tvcWindows.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvcWindows_AfterSelect);
 			// 
@@ -179,10 +178,10 @@ namespace Obsidian
 																						  this.tbbtnConnectDisconnect});
 			this.tbLauncher.DropDownArrows = true;
 			this.tbLauncher.ImageList = this.tbImages;
-			this.tbLauncher.Location = new System.Drawing.Point(124, 0);
+			this.tbLauncher.Location = new System.Drawing.Point(147, 0);
 			this.tbLauncher.Name = "tbLauncher";
 			this.tbLauncher.ShowToolTips = true;
-			this.tbLauncher.Size = new System.Drawing.Size(524, 28);
+			this.tbLauncher.Size = new System.Drawing.Size(501, 28);
 			this.tbLauncher.TabIndex = 6;
 			this.tbLauncher.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
 			this.tbLauncher.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tbLauncher_ButtonClick);
@@ -216,7 +215,6 @@ namespace Obsidian
 			this.Menu = this.mainMenu1;
 			this.Name = "mcMainForm";
 			this.Text = "Obsidian";
-			this.Resize += new System.EventHandler(this.mcMainForm_Resize);
 			this.Closed += new System.EventHandler(this.Exit);
 			this.ResumeLayout(false);
 
@@ -233,8 +231,10 @@ namespace Obsidian
 			mcServer Server = new mcServer();
 			System.Random Rnd = new Random();
 
-			//generate a random key.
-			//this should break out eventually.
+			/*
+			 * generate a random key.
+			 * this should break out eventually.
+			 */
 			for (;;)
 			{
 				//100 chars should be sufficient entropy ;)...
@@ -266,7 +266,6 @@ namespace Obsidian
 					Servers.Add(Server.HashKey, Server);
 
 					this.tvcWindows.ExpandAll();
-					this.ReinitGUI();
 
 					//fix: select this Server as active.
 					this.tvcWindows_AfterSelect(this, new TreeViewEventArgs(Server.ServerPage.MyNode, TreeViewAction.ByMouse));
@@ -275,36 +274,29 @@ namespace Obsidian
 			}
 		}
 
-		public void ReinitGUI()
+		public void DeleteServer(mcServer Server)
 		{
-			this.mcMainForm_Resize(Obsidian.mainForm, new System.EventArgs());
+			Servers.Remove(Server.HashKey);
 		}
 
-		private void mcMainForm_Resize(object sender, System.EventArgs e)
+		public void DeleteServer(string Key)
 		{
-			foreach (Control ctl in this.Controls)
-			{
-				if ((string)ctl.Tag == "ePAGE")
-				{
-					ctl.Top = tvcWindows.Top + tbLauncher.Height;
-					ctl.Height = tvcWindows.Height - tbLauncher.Height;
-
-					ctl.Left = this.tvcWindows.Width + this.MySplitter.Width - 2;
-					ctl.Width = this.Width - (this.tvcWindows.Width + this.MySplitter.Width + 7);
-				}
-			}
+			Servers.Remove(Key);
 		}
 
 		private void tvcWindows_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
 		{
 			mcPage aPage;
 			mcServer aServer = (mcServer)Servers.GetByIndex(Servers.IndexOfKey(e.Node.Tag));
-			//Locate the server instance.
-			//aServer will never be null, as if the above fails
-			//the client will crash. This should be OK though
-			//as we should NOT be trying to select a non-existant window ;)
 
-			//find our page
+			/*
+			 * Locate the server instance.
+			 * aServer will never be null, as if the above fails
+			 * the client will crash. This should be OK though
+			 * s we should NOT be trying to select a non-existant window ;)
+			 */
+
+			/* find our page */
 			aPage = aServer.FindPage(e.Node.Text);
 			if (aPage == null)
 			{
@@ -316,30 +308,6 @@ namespace Obsidian
 			}
 			/* now, we should have a page - focus on it */
 			aPage.DoFocus();
-		}
-
-
-		private void MySplitter_SplitterMoved(object sender, System.Windows.Forms.SplitterEventArgs e)
-		{
-			foreach (Control ctl in this.Controls)
-			{
-				/* UGLY!!!! */
-				if ((string)ctl.Tag == "ePAGE")
-				{
-					ctl.Left = this.MySplitter.Left + this.MySplitter.Width;
-				}
-			}
-			this.ReinitGUI();
-		}
-	
-		public void DeleteServer(mcServer Server)
-		{
-			Servers.Remove(Server.HashKey);
-		}
-
-		public void DeleteServer(string Key)
-		{
-			Servers.Remove(Key);
 		}
 
 		public void Exit(object obj,System.EventArgs e)
