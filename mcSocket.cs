@@ -318,6 +318,26 @@ namespace Obsidian
 			AddSocket(address, port, cb);
 		}
 
+		~NetworkThread() 
+		{
+			if (thread == null || (thread.ThreadState & ThreadState.Unstarted) != 0 || (thread.ThreadState & ThreadState.Stopped) != 0) 
+			{
+				// Don't bother.
+				return;
+			}
+				// Otherwise, if the thread is sleeping, wake it up.
+			else if ((thread.ThreadState & ThreadState.Suspended) != 0)
+			{
+				thread.Resume();
+			}
+			else if ((thread.ThreadState & ThreadState.WaitSleepJoin) != 0) 
+			{
+				thread.Interrupt();
+			}
+			thread.Abort();
+			// It'll die eventually. We don't need to wait.
+		}
+
 		/// <summary>
 		/// Reports the number of connection slots available in this thread.
 		/// </summary>
@@ -379,6 +399,31 @@ namespace Obsidian
 			}
 		}
 
+		private void Dns_Resolve(IAsyncResult ar) 
+		{
+			Random rnd = new Random();
+			IPHostEntry hostent;
+			ConnQueueItem nextconn = (ConnQueueItem)(ar.AsyncState);
+			while (!ar.IsCompleted) ar.AsyncWaitHandle.WaitOne(10, false);
+			try 
+			{
+				hostent = Dns.EndGetHostByName(ar);
+			} 
+			catch (Exception e2) 
+			{
+				// DNS Failed.
+				BufferedSocket sck = new BufferedSocket(null);
+				sck.sckError = e2;
+				nextconn.cb(sck);
+				return;
+			}
+			nextconn.address = hostent.AddressList[rnd.Next(hostent.AddressList.Length)].ToString();
+			lock (this) 
+			{
+				connectionqueue.Enqueue(nextconn);
+			}
+		}
+
 		private void SocketThread() 
 		{
 			try 
@@ -423,9 +468,7 @@ namespace Obsidian
 								// We must DNS.
 								try 
 								{
-									ip = Dns.Resolve(nextconn.address).AddressList[0];
-									nextconn.address = ip.ToString();
-									connectionqueue.Enqueue(nextconn);
+									Dns.BeginGetHostByName(nextconn.address, new AsyncCallback(Dns_Resolve), nextconn);
 								} 
 								catch (Exception e2) 
 								{

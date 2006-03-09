@@ -85,7 +85,6 @@ namespace Obsidian
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.SetIndent(StringWidth(TimeStamp()+"<> ", this.txtData.Font));
-			this.lstUsers.DrawItem += new DrawItemEventHandler(lstUsers_DrawItem);
 		}
 
 
@@ -114,7 +113,6 @@ namespace Obsidian
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.SetIndent(StringWidth(TimeStamp()+"<> ", this.txtData.Font));
-			this.lstUsers.DrawItem += new DrawItemEventHandler(lstUsers_DrawItem);
 		}
 
 		/// <summary> 
@@ -143,11 +141,11 @@ namespace Obsidian
 			this.txtToSend = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.txtData = new System.Windows.Forms.RichTextBox();
+			this.lstUsers = new System.Windows.Forms.ListBox();
 			this.ctmNicklist = new System.Windows.Forms.ContextMenu();
 			this.mnuNicklistWhois = new System.Windows.Forms.MenuItem();
 			this.txtTopic = new System.Windows.Forms.TextBox();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.lstUsers = new System.Windows.Forms.ListBox();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.SuspendLayout();
@@ -164,6 +162,7 @@ namespace Obsidian
 			// 
 			// txtToSend
 			// 
+			this.txtToSend.AcceptsTab = true;
 			this.txtToSend.BackColor = System.Drawing.Color.Black;
 			this.txtToSend.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtToSend.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
@@ -204,6 +203,21 @@ namespace Obsidian
 			this.txtData.TextChanged += new System.EventHandler(this.txtData_TextChanged);
 			this.txtData.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtData_MouseUp);
 			// 
+			// lstUsers
+			// 
+			this.lstUsers.BackColor = System.Drawing.Color.Black;
+			this.lstUsers.ContextMenu = this.ctmNicklist;
+			this.lstUsers.Dock = System.Windows.Forms.DockStyle.Right;
+			this.lstUsers.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.lstUsers.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.lstUsers.ForeColor = System.Drawing.Color.White;
+			this.lstUsers.IntegralHeight = false;
+			this.lstUsers.Location = new System.Drawing.Point(440, 0);
+			this.lstUsers.Name = "lstUsers";
+			this.lstUsers.Size = new System.Drawing.Size(120, 243);
+			this.lstUsers.TabIndex = 100;
+			this.lstUsers.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lstUsers_DrawItem);
+			// 
 			// ctmNicklist
 			// 
 			this.ctmNicklist.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
@@ -238,20 +252,6 @@ namespace Obsidian
 			this.panel2.Size = new System.Drawing.Size(560, 24);
 			this.panel2.TabIndex = 12;
 			// 
-			// lstUsers
-			// 
-			this.lstUsers.BackColor = System.Drawing.Color.Black;
-			this.lstUsers.ContextMenu = this.ctmNicklist;
-			this.lstUsers.Dock = System.Windows.Forms.DockStyle.Right;
-			this.lstUsers.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.lstUsers.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
-			this.lstUsers.ForeColor = System.Drawing.Color.White;
-			this.lstUsers.IntegralHeight = false;
-			this.lstUsers.Location = new System.Drawing.Point(440, 0);
-			this.lstUsers.Name = "lstUsers";
-			this.lstUsers.Size = new System.Drawing.Size(120, 243);
-			this.lstUsers.TabIndex = 100;
-			// 
 			// mcPage
 			// 
 			this.Controls.Add(this.panel1);
@@ -279,7 +279,7 @@ namespace Obsidian
 			if(txtData == null)
 				return false;
 
-					txtData.AppendText(data);
+			txtData.AppendText(data);
 
 			if(!Server.CurrentPage.Equals(this))
 				this.ColourNode(Color.Red);
@@ -367,6 +367,37 @@ namespace Obsidian
 			Server.DeletePage(this);
 		}
 
+		private string[] DoNickComplete(string word) 
+		{
+			System.Collections.Specialized.StringCollection sc = new System.Collections.Specialized.StringCollection();
+			foreach (ChanUser cu in lstUsers.Items) 
+			{
+				if (cu.Nick.StartsWith(word)) 
+				{
+					sc.Add(cu.Nick);
+				}
+			}
+			string[] a = new string[sc.Count];
+			sc.CopyTo(a, 0);
+			return a;
+		}
+
+		private string GetWord(string line, int cursor, out int start, out int length) 
+		{
+			start = cursor;
+			length = 0;
+			while (start >= 1 && !char.IsWhiteSpace(line[start - 1])) 
+			{
+				start--;
+			}
+			length = cursor - start;
+			while (length < (line.Length - start) && !char.IsWhiteSpace(line[start + length])) 
+			{
+				length++;
+			}
+			return line.Substring(start, length);
+		}
+
 		private void txtToSend_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
 		{
 			if ((int)e.KeyChar == 13)
@@ -376,6 +407,45 @@ namespace Obsidian
 				txtToSend.Text = null;
 				mcCommands.MainParser(this, mycmd);
 				return;
+			}
+			else if ((int)e.KeyChar == 9) 
+			{
+				// Tab was pressed. Try nickcompletion.
+				int start, len;
+				string word = GetWord(txtToSend.Text, txtToSend.SelectionStart, out start, out len);
+				string[] list = DoNickComplete(word);
+				string tmpstring = null;
+				if (list.Length == 1) 
+				{
+					txtToSend.SelectionStart = start;
+					txtToSend.SelectionLength = len;
+					txtToSend.SelectedText = list[0];
+				}
+				else if (list.Length > 1) 
+				{
+					for (int i = 0; i < list.Length; i++) 
+					{
+						if (tmpstring == null) 
+						{
+							tmpstring = list[i];
+						}
+						else 
+						{
+							while (!list[i].StartsWith(tmpstring)) 
+							{
+								tmpstring = tmpstring.Remove(tmpstring.Length - 1, 1);
+							}
+						}
+					}
+					if (tmpstring.Length > word.Length) 
+					{
+						txtToSend.SelectionStart = start;
+						txtToSend.SelectionLength = len;
+						txtToSend.SelectedText = tmpstring;
+					}
+					MessageInfo(String.Join(" ", list));
+				}
+				e.Handled = true;
 			}
 		}
 		private void txtTopic_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -795,5 +865,6 @@ namespace Obsidian
 				}
 			}
 		}
+
 	}
 }
