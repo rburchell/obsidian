@@ -451,11 +451,9 @@ namespace Obsidian
 							switch (modechar)
 							{
 								case '-':
-									page.MessageInfo("Adding");
 									adding = false;
 									break;
 								case '+':
-									page.MessageInfo("Removing");
 									adding = true;
 									break;
 								default:
@@ -466,7 +464,6 @@ namespace Obsidian
 										if (modechar == target.Server.ISupport.PREFIX_Modes[n])
 										{
 											/* We are dealing with a prefix. */
-											page.MessageInfo("prefixmode = true at " + n + " char is " + target.Server.ISupport.PREFIX_Modes[n]);
 											prefixmode = true;
 											break;											
 										}
@@ -476,13 +473,11 @@ namespace Obsidian
 									{
 										if (adding)
 										{
-											page.MessageInfo("Adding prefix " + target.Server.ISupport.PREFIX_Characters[n] + " to " + parameters[j]);
 											target.AddPrefix(parameters[j], target.Server.ISupport.PREFIX_Characters[n]);
 											j++;
 										}
 										else
 										{
-											page.MessageInfo("Removing prefix " + target.Server.ISupport.PREFIX_Characters[n] + " from " + parameters[j]);
 											target.RemovePrefix(parameters[j], target.Server.ISupport.PREFIX_Characters[n]);
 											j++;
 										}
@@ -491,12 +486,10 @@ namespace Obsidian
 									{
 										if (target.Server.ISupport.CHANMODES[0].IndexOf(modechar) >= 0 || target.Server.ISupport.CHANMODES[1].IndexOf(modechar) >= 0 || (target.Server.ISupport.CHANMODES[2].IndexOf(modechar) >= 0 && adding))
 										{
-											page.MessageInfo("Requiresparam");
 											requiresparam = true;
 										}
 										else
 										{
-											page.MessageInfo("Requiresparam = false");
 											requiresparam = false;
 										}
 										
@@ -504,13 +497,11 @@ namespace Obsidian
 										{
 											if (requiresparam)
 											{
-												page.MessageInfo("Adding mode " + modechar + " with param " + parameters[j]);
 												target.AddMode(modechar, parameters[j], requiresparam);
 												j++;
 											}
 											else
 											{
-												page.MessageInfo("Adding mode " + modechar + " with no param");
 												target.AddMode(modechar, null, requiresparam);
 											}								
 										}
@@ -518,13 +509,11 @@ namespace Obsidian
 										{
 											if (requiresparam)
 											{
-												page.MessageInfo("Removing mode " + modechar + " with param " + parameters[j]);
 												target.RemoveMode(modechar, parameters[j]);
 												j++;
 											}
 											else
 											{
-												page.MessageInfo("Removing mode " + modechar + " with no param");
 												target.RemoveMode(modechar, null);
 											}
 										}
