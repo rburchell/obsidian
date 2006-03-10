@@ -55,6 +55,7 @@ namespace Obsidian
 		private System.Windows.Forms.TextBox txtTopic;
 		private System.Windows.Forms.Panel panel2;
 		public System.Windows.Forms.ListBox lstUsers;
+		private ArrayList History = new ArrayList();
 		
 		/*
 		 * This is to hold any mode (beI on most IRCds) with a parameter - for example:
@@ -189,6 +190,7 @@ namespace Obsidian
 			this.txtToSend.Size = new System.Drawing.Size(512, 24);
 			this.txtToSend.TabIndex = 5;
 			this.txtToSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToSend_KeyPress);
+			this.txtToSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtToSend_KeyDown);
 			// 
 			// panel1
 			// 
@@ -237,7 +239,7 @@ namespace Obsidian
 			// ctmNicklist
 			// 
 			this.ctmNicklist.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnuNicklistWhois});
+									this.mnuNicklistWhois});
 			// 
 			// mnuNicklistWhois
 			// 
@@ -282,7 +284,6 @@ namespace Obsidian
 			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
-
 		}
 		#endregion
 
@@ -454,15 +455,21 @@ namespace Obsidian
 
 		private void txtToSend_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
 		{
-			if ((int)e.KeyChar == 13)
+			if (((int)e.KeyChar) == 13)
 			{
 				/* Enter was pressed-- send it! */
 				string mycmd = txtToSend.Text;
 				txtToSend.Text = null;
 				mcCommands.MainParser(this, mycmd);
+				
+				/* add to command history.. */
+				History.Add(mycmd);
+				if (History.Count > 50)
+					History.RemoveAt(0);
+
 				return;
 			}
-			else if ((int)e.KeyChar == 9) 
+			else if (((int)e.KeyChar) == 9) 
 			{
 				// Tab was pressed. Try nickcompletion.
 				int start, len;
@@ -500,8 +507,22 @@ namespace Obsidian
 					MessageInfo(String.Join(" ", list));
 				}
 				e.Handled = true;
-			}
+			}			
 		}
+		
+		private void txtToSend_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Up)
+			{
+
+			}
+			else if (e.KeyCode == Keys.Down)
+			{
+
+			}
+			
+		}
+
 		private void txtTopic_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
 		{
 			if ((int)e.KeyChar == 13)
