@@ -1,9 +1,3 @@
-/* TODO (some day in the far off future)
- *   IRCd protocol modules, IRCd detected through 005 numeric.
- *   This would allow for cool ircd-independant features like
- *   inspircd's +g channelmode, and others :)
- */
-
 using System;
 using System.Text;
 
@@ -431,6 +425,7 @@ namespace Obsidian
 					//:w00t!u@h MODE #test +oi Brik
 					//:w00t!u@h MODE w00t +h
 					target = page.Server.FindPage(parameters[2]);
+					userhost = prefix.Split('!');
 					if (target == null)
 					{
 						/* setting modes on us, handle later */	
@@ -445,6 +440,12 @@ namespace Obsidian
 						bool prefixmode = false;
 						int n = 0;
 						bool requiresparam;
+						string myparams = null;
+						
+						for (n = 3; n < parameters.Length; n++)
+							myparams = myparams + " " + parameters[n];
+						
+						target.MessageMode(userhost[0], userhost[1], myparams.Substring(1));
 						
 						foreach (char modechar in parameters[3])
 						{
@@ -459,6 +460,7 @@ namespace Obsidian
 								default:
 									page.MessageInfo("Looking at " + modechar);
 									/* first, determine if it's a prefix mode.. treat them differently. */
+									prefixmode = false;
 									for (n = 0; n < target.Server.ISupport.PREFIX_Modes.Length; n++)
 									{
 										if (modechar == target.Server.ISupport.PREFIX_Modes[n])

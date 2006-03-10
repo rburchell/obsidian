@@ -155,7 +155,6 @@ namespace Obsidian
 			this.cmdClosePage = new System.Windows.Forms.Button();
 			this.txtToSend = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.MySplitter = new System.Windows.Forms.Splitter();
 			this.txtData = new System.Windows.Forms.RichTextBox();
 			this.lstUsers = new System.Windows.Forms.ListBox();
 			this.ctmNicklist = new System.Windows.Forms.ContextMenu();
@@ -174,6 +173,7 @@ namespace Obsidian
 			this.cmdClosePage.Size = new System.Drawing.Size(48, 24);
 			this.cmdClosePage.TabIndex = 3;
 			this.cmdClosePage.Text = "X";
+			this.cmdClosePage.UseCompatibleTextRendering = true;
 			this.cmdClosePage.Click += new System.EventHandler(this.cmdClosePage_Click);
 			// 
 			// txtToSend
@@ -181,19 +181,17 @@ namespace Obsidian
 			this.txtToSend.AcceptsTab = true;
 			this.txtToSend.BackColor = System.Drawing.Color.Black;
 			this.txtToSend.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtToSend.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.txtToSend.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtToSend.ForeColor = System.Drawing.Color.White;
 			this.txtToSend.Location = new System.Drawing.Point(0, 0);
 			this.txtToSend.Multiline = true;
 			this.txtToSend.Name = "txtToSend";
 			this.txtToSend.Size = new System.Drawing.Size(560, 24);
 			this.txtToSend.TabIndex = 5;
-			this.txtToSend.Text = "";
 			this.txtToSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToSend_KeyPress);
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.MySplitter);
 			this.panel1.Controls.Add(this.txtData);
 			this.panel1.Controls.Add(this.lstUsers);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -202,32 +200,23 @@ namespace Obsidian
 			this.panel1.Size = new System.Drawing.Size(560, 243);
 			this.panel1.TabIndex = 9;
 			// 
-			// MySplitter
-			// 
-			this.MySplitter.Dock = System.Windows.Forms.DockStyle.Right;
-			this.MySplitter.Location = new System.Drawing.Point(424, 0);
-			this.MySplitter.Name = "MySplitter";
-			this.MySplitter.Size = new System.Drawing.Size(3, 243);
-			this.MySplitter.TabIndex = 101;
-			this.MySplitter.TabStop = false;
-			// 
 			// txtData
 			// 
 			this.txtData.AutoSize = true;
 			this.txtData.BackColor = System.Drawing.Color.Black;
 			this.txtData.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtData.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.txtData.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtData.ForeColor = System.Drawing.Color.White;
 			this.txtData.Location = new System.Drawing.Point(0, 0);
 			this.txtData.MaxLength = 2048;
 			this.txtData.Name = "txtData";
 			this.txtData.ReadOnly = true;
 			this.txtData.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-			this.txtData.Size = new System.Drawing.Size(427, 243);
+			this.txtData.Size = new System.Drawing.Size(440, 243);
 			this.txtData.TabIndex = 99;
 			this.txtData.Text = "";
-			this.txtData.TextChanged += new System.EventHandler(this.txtData_TextChanged);
 			this.txtData.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtData_MouseUp);
+			this.txtData.TextChanged += new System.EventHandler(this.txtData_TextChanged);
 			// 
 			// lstUsers
 			// 
@@ -235,20 +224,20 @@ namespace Obsidian
 			this.lstUsers.ContextMenu = this.ctmNicklist;
 			this.lstUsers.Dock = System.Windows.Forms.DockStyle.Right;
 			this.lstUsers.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.lstUsers.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.lstUsers.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstUsers.ForeColor = System.Drawing.Color.White;
 			this.lstUsers.IntegralHeight = false;
-			this.lstUsers.Location = new System.Drawing.Point(427, 0);
+			this.lstUsers.Location = new System.Drawing.Point(440, 0);
 			this.lstUsers.Name = "lstUsers";
-			this.lstUsers.Size = new System.Drawing.Size(133, 243);
+			this.lstUsers.Size = new System.Drawing.Size(120, 243);
 			this.lstUsers.TabIndex = 100;
-			this.lstUsers.DoubleClick += new System.EventHandler(this.lstUsers_DoubleClick);
 			this.lstUsers.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lstUsers_DrawItem);
+			this.lstUsers.DoubleClick += new System.EventHandler(this.lstUsers_DoubleClick);
 			// 
 			// ctmNicklist
 			// 
 			this.ctmNicklist.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						this.mnuNicklistWhois});
+									this.mnuNicklistWhois});
 			// 
 			// mnuNicklistWhois
 			// 
@@ -260,13 +249,12 @@ namespace Obsidian
 			// 
 			this.txtTopic.BackColor = System.Drawing.Color.Black;
 			this.txtTopic.Dock = System.Windows.Forms.DockStyle.Top;
-			this.txtTopic.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.txtTopic.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtTopic.ForeColor = System.Drawing.Color.White;
 			this.txtTopic.Location = new System.Drawing.Point(0, 0);
 			this.txtTopic.Name = "txtTopic";
 			this.txtTopic.Size = new System.Drawing.Size(560, 21);
 			this.txtTopic.TabIndex = 11;
-			this.txtTopic.Text = "";
 			this.txtTopic.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTopic_KeyPress);
 			// 
 			// panel2
@@ -289,11 +277,12 @@ namespace Obsidian
 			this.Tag = "";
 			this.TextChanged += new System.EventHandler(this.PageTextChanged);
 			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.panel2.ResumeLayout(false);
+			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
-
+			this.PerformLayout();
 		}
-		private System.Windows.Forms.Splitter MySplitter;
 		#endregion
 
 
@@ -564,10 +553,6 @@ namespace Obsidian
 
 		public bool MessageUser(string nick, string msg) 
 		{
-			if(nick.Length < 1 || msg == null || msg.Length < 1)
-				return false;
-
-
 			this.Append(TimeStamp());
 			this.SetColor(System.Drawing.Color.Blue);
 			this.Append("<"); 
@@ -584,9 +569,6 @@ namespace Obsidian
 
 		public bool MessagePrivate(string nick, string msg) 
 		{
-			if (nick.Length < 1 || msg == null || msg.Length < 1)
-				return false;
-			
 			this.Append(TimeStamp());
 			this.SetColor(System.Drawing.Color.Green);
 			this.Append(">"); 
@@ -603,8 +585,6 @@ namespace Obsidian
 		public bool MessageNotice(string nick, string msg) 
 		{
 			System.Drawing.Color pink = System.Drawing.Color.FromArgb(238, 34, 238);
-			if (nick.Length < 1 || msg == null || msg.Length < 1)
-				return false;
 
 			this.Append(TimeStamp()); 
 			this.SetColor(System.Drawing.Color.Blue);
@@ -621,9 +601,6 @@ namespace Obsidian
 
 		public bool MessageAction(string nick, string msg) 
 		{
-			if (nick.Length < 1 || msg == null || msg.Length < 1)
-				return false;
-
 			this.Append(TimeStamp());
 			this.SetColor(System.Drawing.Color.Cyan);
 			this.Append("*");
@@ -632,12 +609,20 @@ namespace Obsidian
 
 			return true;
 		}
+		
+		public bool MessageMode(string nick, string info, string modes)
+		{
+			this.Append(TimeStamp());
+			this.SetColor(System.Drawing.Color.Cyan);
+			this.Append("*");
+			this.ResetColor();
+			this.Append(" " + nick + " (" + info + ") sets mode " + modes + "\r\n");
+
+			return true;
+		}
 
 		public bool MessageInfo(string msg) 
 		{
-			if (msg == null || msg.Length < 1)
-				return false;
-
 			this.Append(TimeStamp());
 			this.Append("-");
 			this.SetColor(System.Drawing.Color.DarkCyan);
@@ -652,9 +637,6 @@ namespace Obsidian
 
 		public bool MessageJoin(string nick, string info) 
 		{
-			if (nick == null || info == null || nick.Length < 1 || info.Length < 1)
-				return false;
-
 			this.Append(TimeStamp());
 			this.Append("-");
 			this.SetColor(System.Drawing.Color.DarkCyan);
@@ -682,9 +664,6 @@ namespace Obsidian
 
 		public bool MessagePart(string nick, string info, string reason) 
 		{
-			if (nick == null || info == null || nick.Length < 1 || info.Length < 1)
-				return false;
-
 			this.Append(TimeStamp());
 			this.Append("<");
 			this.SetColor(System.Drawing.Color.DarkCyan);
@@ -723,9 +702,6 @@ namespace Obsidian
 
 		public bool MessageKick(string target, string opnick, string reason) 
 		{
-			if (target == null || opnick == null)
-				return false;
-
 			this.Append(TimeStamp());
 			this.Append("<");
 			this.SetColor(System.Drawing.Color.DarkCyan);
@@ -758,9 +734,6 @@ namespace Obsidian
 
 		public bool MessageQuit(string qnick, string reason) 
 		{
-			if( qnick == null || qnick.Length < 1)
-				return false;
-
 			this.Append(TimeStamp());
 			this.Append("<");
 			this.SetColor(Color.DarkCyan);
@@ -791,9 +764,6 @@ namespace Obsidian
 
 		public bool MessageTopic(string topic) 
 		{
-			if (topic == null)
-				return false;
-
 			this.txtTopic.Text = topic;
 			if(this.Equals(this.Server.CurrentPage))
 				this.Server.CurrentPage.txtTopic.Text = this.txtTopic.Text;
