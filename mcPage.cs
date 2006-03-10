@@ -882,9 +882,11 @@ namespace Obsidian
 		public void RemoveUserFromChannel(string nick)
 		{
 			ChanUser cu = GetUserOnChannelByNick(nick);
-			if (cu != null)
+			if (cu != null) 
+			{
 				this.lstUsers.Items.Remove(cu);
-			this.Refresh();
+				this.lstUsers.Refresh();
+			}
 		}
 
 		public ChanUser GetUserOnChannelByNick(string nick)
@@ -909,6 +911,7 @@ namespace Obsidian
 					stmp[i] = ' ';
 			}
 			cu.Prefixes = (new string(stmp)).Replace(" ", "");
+			this.lstUsers.Refresh();
 		}
 
 		public void RemovePrefix(string nick, char prefix)
@@ -916,6 +919,7 @@ namespace Obsidian
 			ChanUser cu = GetUserOnChannelByNick(nick);
 			if (cu == null) return;
 			cu.Prefixes = cu.Prefixes.Replace(prefix.ToString(), "");
+			this.lstUsers.Refresh();
 		}
 
 		private void lstUsers_DrawItem(object sender, DrawItemEventArgs e)
