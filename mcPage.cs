@@ -425,7 +425,7 @@ namespace Obsidian
 			System.Collections.Specialized.StringCollection sc = new System.Collections.Specialized.StringCollection();
 			foreach (ChanUser cu in lstUsers.Items) 
 			{
-				if (cu.Nick.ToLower().StartsWith(word)) 
+				if (cu.Nick.ToLower().StartsWith(word.ToLower())) 
 				{
 					sc.Add(cu.Nick);
 				}
@@ -484,7 +484,7 @@ namespace Obsidian
 						}
 						else 
 						{
-							while (!list[i].ToLower().StartsWith(tmpstring)) 
+							while (!list[i].ToLower().StartsWith(tmpstring.ToLower())) 
 							{
 								tmpstring = tmpstring.Remove(tmpstring.Length - 1, 1);
 							}
