@@ -63,8 +63,8 @@ namespace Obsidian
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(mcMainForm));
-			this.mainMenu1 = new System.Windows.Forms.MainMenu();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mcMainForm));
+			this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
 			this.menuItem1 = new System.Windows.Forms.MenuItem();
 			this.mnuCreateNewServer = new System.Windows.Forms.MenuItem();
 			this.mnuFileExit = new System.Windows.Forms.MenuItem();
@@ -85,16 +85,16 @@ namespace Obsidian
 			// mainMenu1
 			// 
 			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.menuItem1,
-																					  this.mnuView,
-																					  this.mnuHelp});
+									this.menuItem1,
+									this.mnuView,
+									this.mnuHelp});
 			// 
 			// menuItem1
 			// 
 			this.menuItem1.Index = 0;
 			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.mnuCreateNewServer,
-																					  this.mnuFileExit});
+									this.mnuCreateNewServer,
+									this.mnuFileExit});
 			this.menuItem1.Text = "&File";
 			// 
 			// mnuCreateNewServer
@@ -113,8 +113,8 @@ namespace Obsidian
 			// 
 			this.mnuView.Index = 1;
 			this.mnuView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					this.mnuNetworkEditor,
-																					this.mnuViewOptions});
+									this.mnuNetworkEditor,
+									this.mnuViewOptions});
 			this.mnuView.Text = "View";
 			// 
 			// mnuNetworkEditor
@@ -133,7 +133,7 @@ namespace Obsidian
 			// 
 			this.mnuHelp.Index = 2;
 			this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					this.mnuAbout});
+									this.mnuAbout});
 			this.mnuHelp.Text = "&Help";
 			// 
 			// mnuAbout
@@ -146,7 +146,7 @@ namespace Obsidian
 			// 
 			this.MySplitter.Location = new System.Drawing.Point(144, 0);
 			this.MySplitter.Name = "MySplitter";
-			this.MySplitter.Size = new System.Drawing.Size(3, 260);
+			this.MySplitter.Size = new System.Drawing.Size(3, 300);
 			this.MySplitter.TabIndex = 5;
 			this.MySplitter.TabStop = false;
 			// 
@@ -154,14 +154,12 @@ namespace Obsidian
 			// 
 			this.tvcWindows.BackColor = System.Drawing.Color.Black;
 			this.tvcWindows.Dock = System.Windows.Forms.DockStyle.Left;
-			this.tvcWindows.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.tvcWindows.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tvcWindows.ForeColor = System.Drawing.Color.White;
-			this.tvcWindows.ImageIndex = -1;
 			this.tvcWindows.ItemHeight = 16;
 			this.tvcWindows.Location = new System.Drawing.Point(0, 0);
 			this.tvcWindows.Name = "tvcWindows";
-			this.tvcWindows.SelectedImageIndex = -1;
-			this.tvcWindows.Size = new System.Drawing.Size(144, 260);
+			this.tvcWindows.Size = new System.Drawing.Size(144, 300);
 			this.tvcWindows.TabIndex = 4;
 			this.tvcWindows.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvcWindows_AfterSelect);
 			// 
@@ -174,8 +172,8 @@ namespace Obsidian
 			// 
 			this.tbLauncher.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
 			this.tbLauncher.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-																						  this.tbbtnNewServer,
-																						  this.tbbtnConnectDisconnect});
+									this.tbbtnNewServer,
+									this.tbbtnConnectDisconnect});
 			this.tbLauncher.DropDownArrows = true;
 			this.tbLauncher.ImageList = this.tbImages;
 			this.tbLauncher.Location = new System.Drawing.Point(147, 0);
@@ -189,26 +187,29 @@ namespace Obsidian
 			// tbbtnNewServer
 			// 
 			this.tbbtnNewServer.ImageIndex = 0;
+			this.tbbtnNewServer.Name = "tbbtnNewServer";
 			this.tbbtnNewServer.Tag = "NEW_SERVER";
 			this.tbbtnNewServer.ToolTipText = "Opens a new server window without disconnecting from the current one";
 			// 
 			// tbbtnConnectDisconnect
 			// 
 			this.tbbtnConnectDisconnect.ImageIndex = 1;
+			this.tbbtnConnectDisconnect.Name = "tbbtnConnectDisconnect";
 			this.tbbtnConnectDisconnect.Tag = "CONNECT_DISCONNECT";
 			this.tbbtnConnectDisconnect.ToolTipText = "Connects (or disconnects) the currently selected server instance";
 			// 
 			// tbImages
 			// 
-			this.tbImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth16Bit;
-			this.tbImages.ImageSize = new System.Drawing.Size(16, 16);
 			this.tbImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("tbImages.ImageStream")));
 			this.tbImages.TransparentColor = System.Drawing.Color.Transparent;
+			this.tbImages.Images.SetKeyName(0, "");
+			this.tbImages.Images.SetKeyName(1, "");
+			this.tbImages.Images.SetKeyName(2, "");
 			// 
 			// mcMainForm
 			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(648, 260);
+			this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
+			this.ClientSize = new System.Drawing.Size(648, 300);
 			this.Controls.Add(this.tbLauncher);
 			this.Controls.Add(this.MySplitter);
 			this.Controls.Add(this.tvcWindows);
@@ -217,7 +218,7 @@ namespace Obsidian
 			this.Text = "Obsidian";
 			this.Closed += new System.EventHandler(this.Exit);
 			this.ResumeLayout(false);
-
+			this.PerformLayout();
 		}
 		#endregion
 
