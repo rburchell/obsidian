@@ -186,7 +186,7 @@ namespace Obsidian
 			this.txtToSend.Location = new System.Drawing.Point(0, 0);
 			this.txtToSend.Multiline = true;
 			this.txtToSend.Name = "txtToSend";
-			this.txtToSend.Size = new System.Drawing.Size(560, 24);
+			this.txtToSend.Size = new System.Drawing.Size(512, 24);
 			this.txtToSend.TabIndex = 5;
 			this.txtToSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToSend_KeyPress);
 			// 
@@ -237,7 +237,7 @@ namespace Obsidian
 			// ctmNicklist
 			// 
 			this.ctmNicklist.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-									this.mnuNicklistWhois});
+            this.mnuNicklistWhois});
 			// 
 			// mnuNicklistWhois
 			// 
@@ -259,8 +259,8 @@ namespace Obsidian
 			// 
 			// panel2
 			// 
-			this.panel2.Controls.Add(this.cmdClosePage);
 			this.panel2.Controls.Add(this.txtToSend);
+			this.panel2.Controls.Add(this.cmdClosePage);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.panel2.Location = new System.Drawing.Point(0, 264);
 			this.panel2.Name = "panel2";
@@ -282,6 +282,7 @@ namespace Obsidian
 			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		#endregion
 

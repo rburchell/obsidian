@@ -21,7 +21,7 @@ namespace Obsidian
 
 		public static mcMainForm mainForm = new mcMainForm();
 
-		private static System.Collections.ArrayList mNetThreads = new System.Collections.ArrayList();
+		private static System.Collections.Generic.List<NetworkThread> mNetThreads = new System.Collections.Generic.List<NetworkThread>();
 
 		public static NetworkThread[] IOThreads 
 		{

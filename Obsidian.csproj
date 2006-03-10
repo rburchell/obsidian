@@ -42,33 +42,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="mcAbout.cs" />
+    <Compile Include="mcAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="mcAbout.resx">
       <DependentUpon>mcAbout.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="mcCommands.cs" />
     <Compile Include="mcInbound.cs" />
-    <Compile Include="mcMainForm.cs" />
+    <Compile Include="mcMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="mcMainForm.resx">
       <DependentUpon>mcMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="mcNetwork.cs" />
-    <Compile Include="mcNetworkEditor.cs" />
+    <Compile Include="mcNetworkEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="mcNetworkEditor.resx">
       <DependentUpon>mcNetworkEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="mcOptions.cs" />
+    <Compile Include="mcOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="mcOptions.resx">
       <DependentUpon>mcOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="mcPage.cs" />
+    <Compile Include="mcPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="mcPage.resx">
       <DependentUpon>mcPage.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="mcServer.cs" />
     <Compile Include="mcSocket.cs" />
     <Compile Include="Obsidian.cs" />
-    <Compile Include="mcModeList.cs" />
+    <Compile Include="mcModeList.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

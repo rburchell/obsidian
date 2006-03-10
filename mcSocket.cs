@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Obsidian
 {
@@ -293,8 +294,8 @@ namespace Obsidian
 			}
 		}
 		// sockets.Count + connectionqueue.Count MUST NOT exceed MAX_SOCKETS_PER_THREAD
-		private ArrayList sockets;
-		private Queue connectionqueue;
+		private List<BufferedSocket> sockets;
+		private Queue<ConnQueueItem> connectionqueue;
 		private Thread thread;
 		/// <summary>
 		/// Creates a new NetworkThread instance.
@@ -302,9 +303,9 @@ namespace Obsidian
 		public NetworkThread() 
 		{
 			// Set the ArrayList initial capacity to MAX_SOCKETS_PER_THREAD.
-			sockets = new ArrayList(MAX_SOCKETS_PER_THREAD);
+			sockets = new List<BufferedSocket>(MAX_SOCKETS_PER_THREAD);
 			// Same here.
-			connectionqueue = new Queue(MAX_SOCKETS_PER_THREAD);
+			connectionqueue = new Queue<ConnQueueItem>(MAX_SOCKETS_PER_THREAD);
 			// The thread is only active when we actually have a socket to monitor.
 		}
 		/// <summary>
@@ -324,11 +325,6 @@ namespace Obsidian
 			{
 				// Don't bother.
 				return;
-			}
-				// Otherwise, if the thread is sleeping, wake it up.
-			else if ((thread.ThreadState & ThreadState.Suspended) != 0)
-			{
-				thread.Resume();
 			}
 			else if ((thread.ThreadState & ThreadState.WaitSleepJoin) != 0) 
 			{
@@ -367,10 +363,6 @@ namespace Obsidian
 					thread.Start();
 				}
 					// Otherwise, if the thread is sleeping, wake it up.
-				else if ((thread.ThreadState & ThreadState.Suspended) != 0)
-				{
-					thread.Resume();
-				}
 				else if ((thread.ThreadState & ThreadState.WaitSleepJoin) != 0) 
 				{
 					thread.Interrupt();
@@ -407,7 +399,7 @@ namespace Obsidian
 			while (!ar.IsCompleted) ar.AsyncWaitHandle.WaitOne(10, false);
 			try 
 			{
-				hostent = Dns.EndGetHostByName(ar);
+				hostent = Dns.EndGetHostEntry(ar);
 			} 
 			catch (Exception e2) 
 			{
@@ -441,7 +433,7 @@ namespace Obsidian
 						// then do so and then put the attempt back on the end.
 						if (connectionqueue.Count > 0) 
 						{
-							ConnQueueItem nextconn = (ConnQueueItem)connectionqueue.Dequeue();
+							ConnQueueItem nextconn = connectionqueue.Dequeue();
 							IPAddress ip;
 							try 
 							{
@@ -468,7 +460,7 @@ namespace Obsidian
 								// We must DNS.
 								try 
 								{
-									Dns.BeginGetHostByName(nextconn.address, new AsyncCallback(Dns_Resolve), nextconn);
+									Dns.BeginGetHostEntry(nextconn.address, new AsyncCallback(Dns_Resolve), nextconn);
 								} 
 								catch (Exception e2) 
 								{
