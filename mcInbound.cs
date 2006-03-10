@@ -594,8 +594,11 @@ namespace Obsidian
 
 					target.MessagePart(userhost[0], userhost[1], parameters[3]);
 
-					if(userhost[0] == page.Server.MyNickname)
+					if (userhost[0] == page.Server.MyNickname)
+					{
 						page.Server.DeletePage(target);
+						Obsidian.mainForm.tvcWindows.Nodes.Remove(target.MyNode);
+					}
 					break;
 				case "PING":
 					//PING :something.goes.here
