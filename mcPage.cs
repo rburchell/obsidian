@@ -85,8 +85,9 @@ namespace Obsidian
 			
 			public bool MatchesMe(char mode, string value)
 			{
-				if (mode == this.mode && value == this.value)
-					return true;
+				if (mode == this.mode)
+					if (this.requires_param && value == this.value)
+						return true;
 				
 				return false;
 			}
