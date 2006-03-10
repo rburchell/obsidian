@@ -155,13 +155,13 @@ namespace Obsidian
 			this.cmdClosePage = new System.Windows.Forms.Button();
 			this.txtToSend = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.MySplitter = new System.Windows.Forms.Splitter();
 			this.txtData = new System.Windows.Forms.RichTextBox();
 			this.lstUsers = new System.Windows.Forms.ListBox();
 			this.ctmNicklist = new System.Windows.Forms.ContextMenu();
 			this.mnuNicklistWhois = new System.Windows.Forms.MenuItem();
 			this.txtTopic = new System.Windows.Forms.TextBox();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.MySplitter = new System.Windows.Forms.Splitter();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.SuspendLayout();
@@ -174,7 +174,6 @@ namespace Obsidian
 			this.cmdClosePage.Size = new System.Drawing.Size(48, 24);
 			this.cmdClosePage.TabIndex = 3;
 			this.cmdClosePage.Text = "X";
-			this.cmdClosePage.UseCompatibleTextRendering = true;
 			this.cmdClosePage.Click += new System.EventHandler(this.cmdClosePage_Click);
 			// 
 			// txtToSend
@@ -182,13 +181,14 @@ namespace Obsidian
 			this.txtToSend.AcceptsTab = true;
 			this.txtToSend.BackColor = System.Drawing.Color.Black;
 			this.txtToSend.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtToSend.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtToSend.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.txtToSend.ForeColor = System.Drawing.Color.White;
 			this.txtToSend.Location = new System.Drawing.Point(0, 0);
 			this.txtToSend.Multiline = true;
 			this.txtToSend.Name = "txtToSend";
 			this.txtToSend.Size = new System.Drawing.Size(560, 24);
 			this.txtToSend.TabIndex = 5;
+			this.txtToSend.Text = "";
 			this.txtToSend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToSend_KeyPress);
 			// 
 			// panel1
@@ -202,12 +202,21 @@ namespace Obsidian
 			this.panel1.Size = new System.Drawing.Size(560, 243);
 			this.panel1.TabIndex = 9;
 			// 
+			// MySplitter
+			// 
+			this.MySplitter.Dock = System.Windows.Forms.DockStyle.Right;
+			this.MySplitter.Location = new System.Drawing.Point(424, 0);
+			this.MySplitter.Name = "MySplitter";
+			this.MySplitter.Size = new System.Drawing.Size(3, 243);
+			this.MySplitter.TabIndex = 101;
+			this.MySplitter.TabStop = false;
+			// 
 			// txtData
 			// 
 			this.txtData.AutoSize = true;
 			this.txtData.BackColor = System.Drawing.Color.Black;
 			this.txtData.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtData.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtData.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.txtData.ForeColor = System.Drawing.Color.White;
 			this.txtData.Location = new System.Drawing.Point(0, 0);
 			this.txtData.MaxLength = 2048;
@@ -217,8 +226,8 @@ namespace Obsidian
 			this.txtData.Size = new System.Drawing.Size(427, 243);
 			this.txtData.TabIndex = 99;
 			this.txtData.Text = "";
-			this.txtData.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtData_MouseUp);
 			this.txtData.TextChanged += new System.EventHandler(this.txtData_TextChanged);
+			this.txtData.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtData_MouseUp);
 			// 
 			// lstUsers
 			// 
@@ -226,20 +235,20 @@ namespace Obsidian
 			this.lstUsers.ContextMenu = this.ctmNicklist;
 			this.lstUsers.Dock = System.Windows.Forms.DockStyle.Right;
 			this.lstUsers.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.lstUsers.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lstUsers.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.lstUsers.ForeColor = System.Drawing.Color.White;
 			this.lstUsers.IntegralHeight = false;
 			this.lstUsers.Location = new System.Drawing.Point(427, 0);
 			this.lstUsers.Name = "lstUsers";
 			this.lstUsers.Size = new System.Drawing.Size(133, 243);
 			this.lstUsers.TabIndex = 100;
-			this.lstUsers.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lstUsers_DrawItem);
 			this.lstUsers.DoubleClick += new System.EventHandler(this.lstUsers_DoubleClick);
+			this.lstUsers.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lstUsers_DrawItem);
 			// 
 			// ctmNicklist
 			// 
 			this.ctmNicklist.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-									this.mnuNicklistWhois});
+																						this.mnuNicklistWhois});
 			// 
 			// mnuNicklistWhois
 			// 
@@ -251,12 +260,13 @@ namespace Obsidian
 			// 
 			this.txtTopic.BackColor = System.Drawing.Color.Black;
 			this.txtTopic.Dock = System.Windows.Forms.DockStyle.Top;
-			this.txtTopic.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtTopic.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.txtTopic.ForeColor = System.Drawing.Color.White;
 			this.txtTopic.Location = new System.Drawing.Point(0, 0);
 			this.txtTopic.Name = "txtTopic";
 			this.txtTopic.Size = new System.Drawing.Size(560, 21);
 			this.txtTopic.TabIndex = 11;
+			this.txtTopic.Text = "";
 			this.txtTopic.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTopic_KeyPress);
 			// 
 			// panel2
@@ -269,15 +279,6 @@ namespace Obsidian
 			this.panel2.Size = new System.Drawing.Size(560, 24);
 			this.panel2.TabIndex = 12;
 			// 
-			// MySplitter
-			// 
-			this.MySplitter.Dock = System.Windows.Forms.DockStyle.Right;
-			this.MySplitter.Location = new System.Drawing.Point(424, 0);
-			this.MySplitter.Name = "MySplitter";
-			this.MySplitter.Size = new System.Drawing.Size(3, 243);
-			this.MySplitter.TabIndex = 101;
-			this.MySplitter.TabStop = false;
-			// 
 			// mcPage
 			// 
 			this.Controls.Add(this.panel1);
@@ -288,11 +289,9 @@ namespace Obsidian
 			this.Tag = "";
 			this.TextChanged += new System.EventHandler(this.PageTextChanged);
 			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
 			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
+
 		}
 		private System.Windows.Forms.Splitter MySplitter;
 		#endregion
@@ -869,16 +868,95 @@ namespace Obsidian
 			this.txtToSend.Focus();
 		}
 
-		public class ChanUser 
+		public class ChanUser : IComparable
 		{
 			public string Nick = "";
 			public string Info = "";
 			public string Prefixes = "";
 			public Color DispColor;
-			public ChanUser(string nick) 
+			public mcPage p;
+			public ChanUser(string nick, mcPage p) 
 			{
 				this.Nick = nick;
 				this.DispColor = Color.White;
+				this.p = p;
+			}
+			#region IComparable Members
+
+			public int CompareTo(object obj)
+			{
+				if (!(obj is ChanUser)) throw new ArgumentException("Can only compare with other ChanUser objects.", "obj");
+				ChanUser cu = ((ChanUser)(obj));
+				// Both have no prefixes. Do nick compare.
+				if (this.Prefixes.Length == 0 && cu.Prefixes.Length == 0) return Nick.CompareTo(cu.Nick);
+				// They have a prefix. We don't. Put us > them so that we come after in an ascending sort.
+				if (this.Prefixes.Length == 0 && cu.Prefixes.Length > 0) return 1;
+				// We have a prefix. They don't. Us < them so we come before in an ascending sort.
+				if (this.Prefixes.Length > 0 && cu.Prefixes.Length == 0) return -1;
+				// Both have a prefix so we must compare the "highest" (first) prefix.
+				char myhighprefix = Prefixes[0], hishighprefix = cu.Prefixes[0];
+				// Highest prefixes are equal - compare nicks.
+				if (myhighprefix == hishighprefix) 
+				{
+					return Nick.CompareTo(cu.Nick);
+				}
+				// If for some reason an invalid first prefix is involved, put the invalid prefixes after
+				// all valid prefixes.
+				// Here we're invalid, they aren't. We come after. We > them.
+				if (p.Server.ISupport.PREFIX_Characters.IndexOf(myhighprefix) < 0 && p.Server.ISupport.PREFIX_Characters.IndexOf(hishighprefix) >= 0) 
+				{
+					return 1;
+				}
+				// They're invalid, we aren't. We come before. We < them.
+				if (p.Server.ISupport.PREFIX_Characters.IndexOf(myhighprefix) >= 0 && p.Server.ISupport.PREFIX_Characters.IndexOf(hishighprefix) < 0) 
+				{
+					return -1;
+				}
+				// Both prefixes invalid, so do a flat ASCII compare.
+				if (p.Server.ISupport.PREFIX_Characters.IndexOf(myhighprefix) < 0 && p.Server.ISupport.PREFIX_Characters.IndexOf(hishighprefix) < 0) 
+				{
+					return myhighprefix.CompareTo(hishighprefix);
+				}
+				int compare;
+				// Compare the index of the prefixes within the prefix part of CHANMODES which will be
+				// ordered in "highest level" prefix to "lowest level" (eg owner/op first, voice last).
+				compare = p.Server.ISupport.PREFIX_Characters.IndexOf(myhighprefix).CompareTo(p.Server.ISupport.PREFIX_Characters.IndexOf(hishighprefix));
+				// If his index is higher, we actually have the higher prefix. (PREFIX= symbols are ordered
+				// high-to-low.) However, when we have the higher prefix, we come first, so we < them.
+				if (compare != 0) return compare * 1;
+					// Indexes are equal - shouldn't happen unless the prefixes themselves are equal and
+					// that's handled above. However, I'm paranoid, and therefore am leaving this here.
+				else return Nick.CompareTo(cu.Nick);
+			}
+
+			#endregion
+		}
+
+		public void AddUserToChannel(ChanUser cu) 
+		{
+			try 
+			{
+				for (int i = 0; i < this.lstUsers.Items.Count; i++) 
+				{
+					// For an ascending sort, we keep going until we find something we aren't >, 
+					// then insert ourselves there.
+					// We then just return. The finally block will trip to refresh the listbox before the
+					// return kicks us all the way out.
+					if (cu.CompareTo(lstUsers.Items[i]) < 1) 
+					{
+						// cu is less than or equal to lstUsers.Items[i]. That's where we insert.
+						lstUsers.Items.Insert(i, cu);
+						return; // Now get the heck out of this proc.
+					}
+				}
+				this.lstUsers.Items.Add(cu);
+			}
+				// A fun hack to get this Refresh to happen come hell or high water.
+				// Hint: finally blocks run when code leaves a try or catch block in ANY WAY OR FORM.
+				// Whether by hitting the }, throwing up, breaking, or even return.
+			finally 
+			{
+				this.lstUsers.Refresh();
 			}
 		}
 
@@ -887,20 +965,24 @@ namespace Obsidian
 			if (this.GetUserOnChannelByNick(nick) != null)
 				return;
 
-			ChanUser cu = new ChanUser(nick);
+			ChanUser cu = new ChanUser(nick, this);
 			cu.Info = info;
-			this.lstUsers.Items.Add(cu);
-			this.lstUsers.Refresh();
+			AddUserToChannel(cu);
 		}
 
-		public void RemoveUserFromChannel(string nick)
+		public void RemoveUserFromChannel(ChanUser cu) 
 		{
-			ChanUser cu = GetUserOnChannelByNick(nick);
 			if (cu != null) 
 			{
 				this.lstUsers.Items.Remove(cu);
 				this.lstUsers.Refresh();
 			}
+		}
+
+		public void RemoveUserFromChannel(string nick)
+		{
+			ChanUser cu = GetUserOnChannelByNick(nick);
+			RemoveUserFromChannel(cu);
 		}
 
 		public ChanUser GetUserOnChannelByNick(string nick)
@@ -918,22 +1000,39 @@ namespace Obsidian
 		{
 			ChanUser cu = GetUserOnChannelByNick(nick);
 			if (cu == null) return;
-			char[] stmp = Server.ISupport.PREFIX_Characters.ToCharArray();
-			for (int i = 0; i < stmp.Length; i++) 
+			RemoveUserFromChannel(cu);
+			try 
 			{
-				if (stmp[i] != prefix && cu.Prefixes.IndexOf(stmp[i]) < 0)
-					stmp[i] = ' ';
+				char[] stmp = Server.ISupport.PREFIX_Characters.ToCharArray();
+				for (int i = 0; i < stmp.Length; i++) 
+				{
+					if (stmp[i] != prefix && cu.Prefixes.IndexOf(stmp[i]) < 0)
+						stmp[i] = ' ';
+				}
+				cu.Prefixes = (new string(stmp)).Replace(" ", "");
 			}
-			cu.Prefixes = (new string(stmp)).Replace(" ", "");
-			this.lstUsers.Refresh();
+			finally 
+			{
+				// No matter what put cu back where it came from if possible.
+				AddUserToChannel(cu);
+				this.lstUsers.Refresh();
+			}
 		}
 
 		public void RemovePrefix(string nick, char prefix)
 		{
 			ChanUser cu = GetUserOnChannelByNick(nick);
 			if (cu == null) return;
-			cu.Prefixes = cu.Prefixes.Replace(prefix.ToString(), "");
-			this.lstUsers.Refresh();
+			RemoveUserFromChannel(cu);
+			try 
+			{
+				cu.Prefixes = cu.Prefixes.Replace(prefix.ToString(), "");
+			}
+			finally 
+			{
+				AddUserToChannel(cu);
+				this.lstUsers.Refresh();
+			}
 		}
 
 		private void lstUsers_DrawItem(object sender, DrawItemEventArgs e)
