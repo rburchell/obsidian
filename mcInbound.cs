@@ -175,7 +175,7 @@ namespace Obsidian
 					/* todo: do we need to support RPL_BOUNCE too? */
 					//<- :devel.rburchell.org 005 w00t SAFELIST HCN MAXCHANNELS=10 CHANLIMIT=#:10 MAXLIST=b:60,e:60,I:60 NICKLEN=30 CHANNELLEN=32 TOPICLEN=307 KICKLEN=307 AWAYLEN=307 MAXTARGETS=20 WALLCHOPS WATCH=128 :are supported by this Server
 					//<- :devel.rburchell.org 005 w00t SILENCE=15 MODES=12 CHANTYPES=# PREFIX=(qaohv)~&@%+ CHANMODES=beI,kfL,lj,psmntirRcOAQKVGCuzNSMTG NETWORK=Symmetic CASEMAPPING=ascii EXTBAN=~,cqnr ELIST=MNUCT STATUSMSG=~&@%+ EXCEPTS INVEX CMDS=KNOCK,MAP,DCCALLOW,USERIP :are supported by this Server
-					for (int i = 3; i < parameters.Length - 1; i++)
+					for (i = 3; i < parameters.Length - 1; i++)
 					{
 						string str = parameters[i];
 						//TODO: Finish RPL_ISUPPORT parsing.
@@ -221,7 +221,7 @@ namespace Obsidian
 								{
 									if (tokens.Length > 1) 
 									{
-										page.Server.ISupport.Other[tokens[0]) = tokens[1];
+										page.Server.ISupport.Other[tokens[0]] = tokens[1];
 									}
 								}
 								else 
@@ -427,6 +427,114 @@ namespace Obsidian
 				//case "INVITE":
 
 				//	break;
+				case "MODE":
+					//:w00t!u@h MODE #test +oi Brik
+					//:w00t!u@h MODE w00t +h
+					target = page.Server.FindPage(parameters[2]);
+					if (target == null)
+					{
+						/* setting modes on us, handle later */	
+						page.MessageInfo("UNHANDLED USERMODE SET: " + parameters[3]);
+						return;
+					}
+					
+					/* a block for the fun of it */
+					{
+						bool adding = true;
+						int j = 4;
+						bool prefixmode = false;
+						int n = 0;
+						bool requiresparam;
+						
+						foreach (char modechar in parameters[3])
+						{
+							switch (modechar)
+							{
+								case '-':
+									page.MessageInfo("Adding");
+									adding = false;
+									break;
+								case '+':
+									page.MessageInfo("Removing");
+									adding = true;
+									break;
+								default:
+									page.MessageInfo("Looking at " + modechar);
+									/* first, determine if it's a prefix mode.. treat them differently. */
+									for (n = 0; n < target.Server.ISupport.PREFIX_Modes.Length; n++)
+									{
+										if (modechar == target.Server.ISupport.PREFIX_Modes[n])
+										{
+											/* We are dealing with a prefix. */
+											page.MessageInfo("prefixmode = true at " + n + " char is " + target.Server.ISupport.PREFIX_Modes[n]);
+											prefixmode = true;
+											break;											
+										}
+									}
+									
+									if (prefixmode)
+									{
+										if (adding)
+										{
+											page.MessageInfo("Adding prefix " + target.Server.ISupport.PREFIX_Characters[n] + " to " + parameters[j]);
+											target.AddPrefix(parameters[j], target.Server.ISupport.PREFIX_Characters[n]);
+											j++;
+										}
+										else
+										{
+											page.MessageInfo("Removing prefix " + target.Server.ISupport.PREFIX_Characters[n] + " from " + parameters[j]);
+											target.RemovePrefix(parameters[j], target.Server.ISupport.PREFIX_Characters[n]);
+											j++;
+										}
+									}
+									else
+									{
+										if (target.Server.ISupport.CHANMODES[0].IndexOf(modechar) >= 0 || target.Server.ISupport.CHANMODES[1].IndexOf(modechar) >= 0 || (target.Server.ISupport.CHANMODES[2].IndexOf(modechar) >= 0 && adding))
+										{
+											page.MessageInfo("Requiresparam");
+											requiresparam = true;
+										}
+										else
+										{
+											page.MessageInfo("Requiresparam = false");
+											requiresparam = false;
+										}
+										
+										if (adding)
+										{
+											if (requiresparam)
+											{
+												page.MessageInfo("Adding mode " + modechar + " with param " + parameters[j]);
+												target.AddMode(modechar, parameters[j], requiresparam);
+												j++;
+											}
+											else
+											{
+												page.MessageInfo("Adding mode " + modechar + " with no param");
+												target.AddMode(modechar, null, requiresparam);
+											}								
+										}
+										else
+										{
+											if (requiresparam)
+											{
+												page.MessageInfo("Removing mode " + modechar + " with param " + parameters[j]);
+												target.RemoveMode(modechar, parameters[j]);
+												j++;
+											}
+											else
+											{
+												page.MessageInfo("Removing mode " + modechar + " with no param");
+												target.RemoveMode(modechar, null);
+											}
+										}
+									}
+									break;
+							}
+						}
+						
+					}
+					break;
 				case "JOIN":
 					//:w00t!u@h JOIN :#test
 					target = page.Server.FindPage(parameters[2]);

@@ -55,6 +55,48 @@ namespace Obsidian
 		private System.Windows.Forms.TextBox txtTopic;
 		private System.Windows.Forms.Panel panel2;
 		public System.Windows.Forms.ListBox lstUsers;
+		
+		/*
+		 * This is to hold any mode (beI on most IRCds) with a parameter - for example:
+		 *  b w00t!*@*
+		 *  e *!viroteck@*
+		 * ..etc.
+		 */
+		sealed private class ChannelMode
+		{
+			private char mode;
+			private string value;
+			private bool _requires_param;	/* does it require a param to unset? */
+			
+			public bool requires_param
+			{
+				get
+				{
+					return this._requires_param;
+				}
+			}
+			
+			public ChannelMode(char mode, string value, bool requires_param)
+			{
+				this.mode = mode;
+				this.value = value;
+				this._requires_param = requires_param;
+			}
+			
+			public bool MatchesMe(char mode, string value)
+			{
+				if (mode == this.mode && value == this.value)
+					return true;
+				
+				return false;
+			}
+		}
+		
+		/*
+		 * Holds type 'ChannelModes'
+		 */
+		ArrayList ExtModes = new ArrayList();
+
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -243,6 +285,42 @@ namespace Obsidian
 
 
 		/* Actual code below here */
+
+		/*
+		 * GetMode()
+		 *  Returns a channel mode with char `mode', and value `value', or null.
+		 */
+		private ChannelMode GetMode(char mode, string value)
+		{
+			foreach (ChannelMode moo in this.ExtModes)
+			{
+				if (moo.MatchesMe(mode, value))
+					return moo;
+			}
+			
+			return null;
+		}
+		
+		/*
+		 * RemoveMode()
+		 *  Frees memory taken by a ChannelMode, and removes it from the list
+		 *  Should only be called from the MODE parser.
+		 */
+		public void RemoveMode(char mode, string value)
+		{
+				this.ExtModes.Remove(this.GetMode(mode, value));
+		}
+		
+		/*
+		 * AddMode()
+		 *  Creates a new ChannelMode structure, and adds it to the list.
+		 *  Should only be called from the MODE parser.
+		 */
+		public void AddMode(char mode, string value, bool requires_param)
+		{
+			this.ExtModes.Add(new ChannelMode(mode, value, requires_param));
+		}
+		
 		/*
 		 *  avoid using .Append externally, I'm still
 		 *  considering making it private.
