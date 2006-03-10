@@ -27,7 +27,8 @@ namespace Obsidian
 		{
 			get 
 			{
-				return (NetworkThread[])(mNetThreads.ToArray(typeof(NetworkThread)));
+				return (NetworkThread[])(mNetThreads.ToArray());
+				//typeof(NetworkThread)
 			}
 		}
 
