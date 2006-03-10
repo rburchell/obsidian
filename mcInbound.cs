@@ -37,18 +37,21 @@ namespace Obsidian
 
 			/* If we have any tempBuffer from the last parse, and more than one element,
 			 * then we have the end of the incomplete buffer from the last parse. */
-			if (tempBuffer.Length > 0 && messages.Length > 1) {
+			if (tempBuffer.Length > 0 && messages.Length > 1)
+			{
 				messages[0] = tempBuffer + messages[0];
 				tempBuffer = "";
 			}
 
 			/* The last element should be empty. If it isn't we have an incomplete buffer. */
-			if (messages[messages.Length - 1] != "") {
+			if (messages[messages.Length - 1] != "")
+			{
 				tempBuffer = messages[messages.Length - 1];
 				messages[messages.Length - 1] = "";
 			}
 
-			foreach (string message in messages) {
+			foreach (string message in messages)
+			{
 				/* 
 				 * we might get CMD param\r\n which gets translated to
 				 * CMD param\n\n above, giving us empty entries.
@@ -70,13 +73,16 @@ namespace Obsidian
 					workstr = workstr.Replace("  ", " ");
 
 				// My parsing code :P !
-				if (workstr[0] == ':') {
+				if (workstr[0] == ':')
+				{
 					// First character is : - we have a prefix. The command comes second.
 					temp = message.Split(new char[] { ' ' }, 3);
 					prefix = temp[0].Substring(1);
 					command = temp[1];
 					workstr = temp[2];
-				} else {
+				}
+				else
+				{
 					// First character is not a : - there is no prefix (assume server is the sender). The command comes first.
 					temp = message.Split(new char[] { ' ' }, 2);
 					prefix = page.Server.ServerName;
@@ -85,21 +91,35 @@ namespace Obsidian
 				}
 
 				// Now the parameters. Check if we have a starting : ... AGAIN.
-				if (workstr[0] == ':') {
+				if (workstr[0] == ':')
+				{
 					// We do. It's the one and only param no matter how many spaces it has.
 					parts = new string[1] { workstr.Substring(1) };
-				} else if ((i = workstr.IndexOf(" :")) >= 0) {
+				}
+				else if ((i = workstr.IndexOf(" :")) >= 0)
+				{
 					// We don't, but we have a space-colon elsewhere.
 					// i is the space before the :
 					// Substring from 0 to i - we want the trailing space as that'll leave an empty spot at the end.
 					parts = workstr.Substring(0, i + 1).Split(' ');
 					parts[parts.Length - 1] = workstr.Substring(i + 2);
-				} else {
+				}
+				else
+				{
 					// No space-colon either.
 					parts = workstr.Split(' ');
 				}
 
-				ActualParse(prefix, command, parts, page);
+			
+				Type t = typeof(mcInbound);
+				MethodInfo m;
+				
+				/* now lookup and execute the given command */
+				m = t.GetMethod("Cmd" + command, BindingFlags.Static | BindingFlags.NonPublic, null, new Type[] { typeof(string), typeof(string), typeof(string[]), typeof(mcPage) }, null);
+				if (m == null)
+					DefaultCommand(prefix, command, parts, page);
+				else
+					m.Invoke(null, new object[] { prefix, command, parts, page });
 			}
 		}
 
@@ -703,17 +723,6 @@ namespace Obsidian
 				todisplay = todisplay + " " + str;
 			}
 			page.MessageInfo(todisplay);
-		}
-
-		private static void ActualParse(string prefix, string command, string[] parameters, mcPage page)
-		{
-			Type t = typeof(mcInbound);
-			MethodInfo m;
-			m = t.GetMethod("Cmd" + command, BindingFlags.Static | BindingFlags.NonPublic, null, new Type[] { typeof(string), typeof(string), typeof(string[]), typeof(mcPage) }, null);
-			if (m == null)
-				DefaultCommand(prefix, command, parameters, page);
-			else
-				m.Invoke(null, new object[] { prefix, command, parameters, page });
 		}
 
 		private static void CTCP(string prefix, string[] parameters, mcPage page)
