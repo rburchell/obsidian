@@ -458,7 +458,6 @@ namespace Obsidian
 									adding = true;
 									break;
 								default:
-									page.MessageInfo("Looking at " + modechar);
 									/* first, determine if it's a prefix mode.. treat them differently. */
 									prefixmode = false;
 									for (n = 0; n < target.Server.ISupport.PREFIX_Modes.Length; n++)
