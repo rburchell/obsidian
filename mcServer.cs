@@ -18,19 +18,6 @@ namespace Obsidian
 		}
 		sealed public class RPL_ISupport
 		{
-			//What features does my host Server support?
-			public bool SILENCE = false;
-			public bool SAFELIST = false;
-			public bool WATCH = false;
-
-			public int MAXCHANNELS = 10;
-			public int NICKLEN = 12;
-			public int CHANNELLEN = 32;
-			public int TOPICLEN = 307;
-			public int KICKLEN = 307;
-			public int AWAYLEN = 307;
-			public int MAXTARGETS = 20;
-
 			public string PREFIX_Modes = "ohv";
 			public string PREFIX_Characters = "@%+";
 

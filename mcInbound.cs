@@ -203,17 +203,7 @@ namespace Obsidian
 				
 				switch (tokens[0])
 				{
-					case "WATCH":
-						page.Server.ISupport.WATCH = true;
-						break;
-					case "SILENCE":
-						page.Server.ISupport.SILENCE = true;
-						break;
-					case "SAFELIST":
-						page.Server.ISupport.SAFELIST = true;
-						break;
 					case "CHANMODES":
-						/* CHANMODES=beI,kfL,lj,psmntirRcOAQKVGCuzNSMTG */
 						page.Server.ISupport.CHANMODES = tokens[1].Split(',');
 						break;
 					case "PREFIX":
