@@ -138,7 +138,8 @@ namespace Obsidian
 			//split param 3 to get network name..
 			userhost = parameters[1].Split(' ');
 
-			if (System.IO.File.Exists(".\\networks\\" + userhost[3] + "\\network.dat")) {
+			if (System.IO.File.Exists(".\\networks\\" + userhost[3] + "\\network.dat"))
+			{
 				page.MessageInfo("Network " + userhost[3] + " is a known network.");
 				/* We have a networks file. */
 				mcNetwork NewNetwork = mcNetwork.GetNetwork(userhost[3]);
@@ -146,14 +147,18 @@ namespace Obsidian
 				/* assume that user/real is already valid. */
 				//todo: add this to the list of servers?
 				//page.Server.ServerSocket.RemoteHost
-				foreach (string str in NewNetwork.Perform) {
-					if (str[0] != '#') {
+				foreach (string str in NewNetwork.Perform)
+				{
+					if (str[0] != '#')
+					{
 						/* the "P" is stripped automagically */
 						page.MessageInfo("Doing PERFORM " + str);
 						page.Server.IRCSend(str);
 					}
 				}
-			} else {
+			}
+			else
+			{
 				page.MessageInfo("Network " + userhost[3] + " is not a known network.");
 			}
 		}
@@ -179,58 +184,72 @@ namespace Obsidian
 		private static void Cmd005(string prefix, string command, string[] parameters, mcPage page)
 		{
 			int i = 0;
-			string todisplay = null; /* join parts of parameters together to display */
+			string todisplay = "Options: ";
+			
 			/* todo: do we need to support RPL_BOUNCE too? */
 			//<- :devel.rburchell.org 005 w00t SAFELIST HCN MAXCHANNELS=10 CHANLIMIT=#:10 MAXLIST=b:60,e:60,I:60 NICKLEN=30 CHANNELLEN=32 TOPICLEN=307 KICKLEN=307 AWAYLEN=307 MAXTARGETS=20 WALLCHOPS WATCH=128 :are supported by this Server
 			//<- :devel.rburchell.org 005 w00t SILENCE=15 MODES=12 CHANTYPES=# PREFIX=(qaohv)~&@%+ CHANMODES=beI,kfL,lj,psmntirRcOAQKVGCuzNSMTG NETWORK=Symmetic CASEMAPPING=ascii EXTBAN=~,cqnr ELIST=MNUCT STATUSMSG=~&@%+ EXCEPTS INVEX CMDS=KNOCK,MAP,DCCALLOW,USERIP :are supported by this Server
-			for (i = 1; i < parameters.Length - 1; i++) {
+			
+			for (i = 1; i < parameters.Length - 1; i++)
+			{
 				string str = parameters[i];
-				//TODO: Finish RPL_ISUPPORT parsing.
-				//str will be in form: TOK=VALUE
-				//or optionally, TOK.
+				string[] tokens;
+
 				if (str == null)
 					break;
-				string[] tokens = str.Split("=".ToCharArray());
-				switch (tokens[0]) {
-				case "WATCH":
-					page.Server.ISupport.WATCH = true;
-					break;
-				case "SILENCE":
-					page.Server.ISupport.SILENCE = true;
-					break;
-				case "SAFELIST":
-					page.Server.ISupport.SAFELIST = true;
-					break;
-				case "CHANMODES":
-					/* CHANMODES=beI,kfL,lj,psmntirRcOAQKVGCuzNSMTG */
-					page.Server.ISupport.CHANMODES = tokens[1].Split(',');
-					break;
-				case "PREFIX":
-					/* tokens[1] is something like (ohv)@%+ */
-					tokens[1] = tokens[1].Substring(1, tokens[1].Length - 1);
-					/* now ohv)@%+ - find the ) in the middle */
-					int a = tokens[1].IndexOf(")");
-					/* split string into prefixchars and equivilant modes */
-					string modechars = tokens[1].Substring(0, a);
-					string prefixchars = tokens[1].Substring(a + 1);
-					if (modechars.Length != prefixchars.Length) {
-						/* o_O I want to hear if this ever happens :P */
-						page.MessageInfo("Remote Server sent malformed 005 PREFIX token, ignoring. Please report this.");
-						continue;
-					}
-					page.Server.ISupport.PREFIX_Characters = prefixchars;
-					page.Server.ISupport.PREFIX_Modes = modechars;
-					break;
+				
+				todisplay = todisplay + " " + parameters[i];
+				tokens = str.Split("=".ToCharArray());
+				
+				switch (tokens[0])
+				{
+					case "WATCH":
+						page.Server.ISupport.WATCH = true;
+						break;
+					case "SILENCE":
+						page.Server.ISupport.SILENCE = true;
+						break;
+					case "SAFELIST":
+						page.Server.ISupport.SAFELIST = true;
+						break;
+					case "CHANMODES":
+						/* CHANMODES=beI,kfL,lj,psmntirRcOAQKVGCuzNSMTG */
+						page.Server.ISupport.CHANMODES = tokens[1].Split(',');
+						break;
+					case "PREFIX":
+						/* tokens[1] is something like (ohv)@%+ */
+						tokens[1] = tokens[1].Substring(1, tokens[1].Length - 1);
+						/* now ohv)@%+ - find the ) in the middle */
+						int a = tokens[1].IndexOf(")");
+						/* split string into prefixchars and equivilant modes */
+						string modechars = tokens[1].Substring(0, a);
+						string prefixchars = tokens[1].Substring(a + 1);
+						if (modechars.Length != prefixchars.Length)
+						{
+							/* o_O I want to hear if this ever happens :P */
+							page.MessageInfo("Remote Server sent malformed 005 PREFIX token, ignoring. Please report this.");
+							continue;
+						}
+						page.Server.ISupport.PREFIX_Characters = prefixchars;
+						page.Server.ISupport.PREFIX_Modes = modechars;
+						break;
 				default:
-					if (page.Server.ISupport.Other.ContainsKey(tokens[0])) {
-						if (tokens.Length > 1) {
+					if (page.Server.ISupport.Other.ContainsKey(tokens[0]))
+					{
+						if (tokens.Length > 1)
+						{
 							page.Server.ISupport.Other[tokens[0]] = tokens[1];
 						}
-					} else {
-						if (tokens.Length > 1) {
+					}
+					else
+					{
+						if (tokens.Length > 1)
+						{
 							// Has a value.
 							page.Server.ISupport.Other.Add(tokens[0], tokens[1]);
-						} else {
+						}
+						else
+						{
 							// No value.
 							page.Server.ISupport.Other.Add(tokens[0], null);
 						}
@@ -238,14 +257,7 @@ namespace Obsidian
 					break;
 				}
 			}
-
-			/* todo: this is inefficient given we loop over the array twice */
-			todisplay = "Options: ";
-			foreach (string tmp in parameters) {
-				if (i > 2)
-					todisplay = todisplay + " " + tmp;
-				i++;
-			}
+			todisplay = todisplay + " " + parameters[i++];
 			page.MessageInfo(todisplay);
 		}
 		#endregion
