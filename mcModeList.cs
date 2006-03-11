@@ -35,14 +35,214 @@ namespace Obsidian
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.tabPage5 = new System.Windows.Forms.TabPage();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.tabPage6 = new System.Windows.Forms.TabPage();
+			this.checkBox2 = new System.Windows.Forms.CheckBox();
+			this.checkBox3 = new System.Windows.Forms.CheckBox();
+			this.checkBox4 = new System.Windows.Forms.CheckBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.tabControl1.SuspendLayout();
+			this.tabPage1.SuspendLayout();
+			this.tabPage2.SuspendLayout();
+			this.tabPage6.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// tabControl1
+			// 
+			this.tabControl1.Controls.Add(this.tabPage1);
+			this.tabControl1.Controls.Add(this.tabPage6);
+			this.tabControl1.Controls.Add(this.tabPage2);
+			this.tabControl1.Controls.Add(this.tabPage3);
+			this.tabControl1.Controls.Add(this.tabPage4);
+			this.tabControl1.Controls.Add(this.tabPage5);
+			this.tabControl1.Location = new System.Drawing.Point(12, 12);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(564, 279);
+			this.tabControl1.TabIndex = 0;
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Controls.Add(this.checkBox4);
+			this.tabPage1.Controls.Add(this.checkBox3);
+			this.tabPage1.Controls.Add(this.checkBox2);
+			this.tabPage1.Controls.Add(this.checkBox1);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage1.Size = new System.Drawing.Size(556, 253);
+			this.tabPage1.TabIndex = 0;
+			this.tabPage1.Text = "Single Modes";
+			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// tabPage2
+			// 
+			this.tabPage2.Controls.Add(this.textBox2);
+			this.tabPage2.Controls.Add(this.button1);
+			this.tabPage2.Controls.Add(this.listBox1);
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(556, 253);
+			this.tabPage2.TabIndex = 1;
+			this.tabPage2.Text = "b";
+			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Size = new System.Drawing.Size(556, 253);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "e";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Size = new System.Drawing.Size(556, 253);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "I";
+			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// tabPage5
+			// 
+			this.tabPage5.Location = new System.Drawing.Point(4, 22);
+			this.tabPage5.Name = "tabPage5";
+			this.tabPage5.Size = new System.Drawing.Size(556, 253);
+			this.tabPage5.TabIndex = 4;
+			this.tabPage5.Text = "g";
+			this.tabPage5.UseVisualStyleBackColor = true;
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.Location = new System.Drawing.Point(6, 6);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(45, 18);
+			this.checkBox1.TabIndex = 0;
+			this.checkBox1.Text = "p";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			// 
+			// tabPage6
+			// 
+			this.tabPage6.Controls.Add(this.textBox1);
+			this.tabPage6.Controls.Add(this.label1);
+			this.tabPage6.Location = new System.Drawing.Point(4, 22);
+			this.tabPage6.Name = "tabPage6";
+			this.tabPage6.Size = new System.Drawing.Size(556, 253);
+			this.tabPage6.TabIndex = 5;
+			this.tabPage6.Text = "Parameter Modes";
+			this.tabPage6.UseVisualStyleBackColor = true;
+			// 
+			// checkBox2
+			// 
+			this.checkBox2.Location = new System.Drawing.Point(6, 30);
+			this.checkBox2.Name = "checkBox2";
+			this.checkBox2.Size = new System.Drawing.Size(45, 18);
+			this.checkBox2.TabIndex = 1;
+			this.checkBox2.Text = "m";
+			this.checkBox2.UseVisualStyleBackColor = true;
+			// 
+			// checkBox3
+			// 
+			this.checkBox3.Location = new System.Drawing.Point(6, 54);
+			this.checkBox3.Name = "checkBox3";
+			this.checkBox3.Size = new System.Drawing.Size(45, 18);
+			this.checkBox3.TabIndex = 2;
+			this.checkBox3.Text = "n";
+			this.checkBox3.UseVisualStyleBackColor = true;
+			// 
+			// checkBox4
+			// 
+			this.checkBox4.Location = new System.Drawing.Point(6, 78);
+			this.checkBox4.Name = "checkBox4";
+			this.checkBox4.Size = new System.Drawing.Size(45, 18);
+			this.checkBox4.TabIndex = 3;
+			this.checkBox4.Text = "t";
+			this.checkBox4.UseVisualStyleBackColor = true;
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(12, 9);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(25, 15);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "k";
+			// 
+			// textBox1
+			// 
+			this.textBox1.Location = new System.Drawing.Point(43, 6);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(114, 21);
+			this.textBox1.TabIndex = 1;
+			// 
+			// listBox1
+			// 
+			this.listBox1.FormattingEnabled = true;
+			this.listBox1.Location = new System.Drawing.Point(6, 6);
+			this.listBox1.Name = "listBox1";
+			this.listBox1.Size = new System.Drawing.Size(544, 212);
+			this.listBox1.TabIndex = 0;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(504, 222);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(46, 23);
+			this.button1.TabIndex = 1;
+			this.button1.Text = "Add";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// textBox2
+			// 
+			this.textBox2.Location = new System.Drawing.Point(6, 224);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(492, 21);
+			this.textBox2.TabIndex = 2;
 			// 
 			// mcModeList
 			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(292, 266);
-			this.Text = "mcModeList";
+			this.ClientSize = new System.Drawing.Size(598, 303);
+			this.Controls.Add(this.tabControl1);
 			this.Name = "mcModeList";
+			this.Text = "mcModeList";
+			this.tabControl1.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
+			this.tabPage2.ResumeLayout(false);
+			this.tabPage2.PerformLayout();
+			this.tabPage6.ResumeLayout(false);
+			this.tabPage6.PerformLayout();
+			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.TabPage tabPage5;
+		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.ListBox listBox1;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TabPage tabPage6;
+		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox checkBox2;
+		private System.Windows.Forms.CheckBox checkBox3;
+		private System.Windows.Forms.CheckBox checkBox4;
+		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.TabControl tabControl1;
 		#endregion
 	}
 }
