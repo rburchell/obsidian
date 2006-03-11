@@ -468,6 +468,7 @@ namespace Obsidian
 					History.RemoveAt(0);
 				
 				HistoryIndex = History.Count;
+				e.Handled = true;
 				return;
 			}
 			else if (((int)e.KeyChar) == 9) 
@@ -517,14 +518,34 @@ namespace Obsidian
 			
 			if (e.KeyCode == Keys.Up)
 			{
+				if (History <= 0)
+				{
+					System.Media.SystemSounds.Beep.Play()
+					e.Handled = true;
+					return;
+				}
 				HistoryIndex--;
 				txtToSend.Text = (string)History[HistoryIndex];
 			}
 			else if (e.KeyCode == Keys.Down)
 			{
+				if (HistoryIndex >= History.Length)
+				{
+					System.Media.SystemSounds.Beep.Play()
+					e.Handled = true;
+					return;
+				}
 				HistoryIndex++;
-				txtToSend.Text = (string)History[HistoryIndex];
+				if (HistoryIndex < History.Length)
+				{
+					txtToSend.Text = (string)History[HistoryIndex];
+				}
+				else
+				{
+					txtToSend.Text = "";
+				}
 			}
+			e.Handled = true;
 		}
 
 		private void txtTopic_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
