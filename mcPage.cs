@@ -514,8 +514,6 @@ namespace Obsidian
 		
 		private void txtToSend_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
-			string temp = null;
-			
 			if (e.KeyCode == Keys.Up)
 			{
 				if (HistoryIndex <= 0)
