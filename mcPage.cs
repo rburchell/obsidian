@@ -518,9 +518,9 @@ namespace Obsidian
 			
 			if (e.KeyCode == Keys.Up)
 			{
-				if (History <= 0)
+				if (HistoryIndex <= 0)
 				{
-					System.Media.SystemSounds.Beep.Play()
+					System.Media.SystemSounds.Beep.Play();
 					e.Handled = true;
 					return;
 				}
@@ -529,14 +529,14 @@ namespace Obsidian
 			}
 			else if (e.KeyCode == Keys.Down)
 			{
-				if (HistoryIndex >= History.Length)
+				if (HistoryIndex >= History.Count)
 				{
-					System.Media.SystemSounds.Beep.Play()
+					System.Media.SystemSounds.Beep.Play();
 					e.Handled = true;
 					return;
 				}
 				HistoryIndex++;
-				if (HistoryIndex < History.Length)
+				if (HistoryIndex < History.Count)
 				{
 					txtToSend.Text = (string)History[HistoryIndex];
 				}
