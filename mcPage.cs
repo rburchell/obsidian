@@ -56,6 +56,7 @@ namespace Obsidian
 		private System.Windows.Forms.Panel panel2;
 		public System.Windows.Forms.ListBox lstUsers;
 		private ArrayList History = new ArrayList();
+		private int HistoryIndex;
 		
 		/*
 		 * This is to hold any mode (beI on most IRCds) with a parameter - for example:
@@ -462,11 +463,11 @@ namespace Obsidian
 				txtToSend.Text = null;
 				mcCommands.MainParser(this, mycmd);
 				
-				/* add to command history.. */
 				History.Add(mycmd);
 				if (History.Count > 50)
 					History.RemoveAt(0);
-
+				
+				HistoryIndex = History.Count;
 				return;
 			}
 			else if (((int)e.KeyChar) == 9) 
@@ -512,15 +513,18 @@ namespace Obsidian
 		
 		private void txtToSend_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
+			string temp = null;
+			
 			if (e.KeyCode == Keys.Up)
 			{
-
+				HistoryIndex--;
+				txtToSend.Text = (string)History[HistoryIndex];
 			}
 			else if (e.KeyCode == Keys.Down)
 			{
-
+				HistoryIndex++;
+				txtToSend.Text = (string)History[HistoryIndex];
 			}
-			
 		}
 
 		private void txtTopic_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
