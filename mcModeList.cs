@@ -41,16 +41,13 @@ namespace Obsidian
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.tabPage6 = new System.Windows.Forms.TabPage();
-			this.checkBox2 = new System.Windows.Forms.CheckBox();
-			this.checkBox3 = new System.Windows.Forms.CheckBox();
-			this.checkBox4 = new System.Windows.Forms.CheckBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.chkSingleModes = new System.Windows.Forms.CheckedListBox();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
@@ -73,10 +70,7 @@ namespace Obsidian
 			// 
 			// tabPage1
 			// 
-			this.tabPage1.Controls.Add(this.checkBox4);
-			this.tabPage1.Controls.Add(this.checkBox3);
-			this.tabPage1.Controls.Add(this.checkBox2);
-			this.tabPage1.Controls.Add(this.checkBox1);
+			this.tabPage1.Controls.Add(this.chkSingleModes);
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -125,15 +119,6 @@ namespace Obsidian
 			this.tabPage5.Text = "g";
 			this.tabPage5.UseVisualStyleBackColor = true;
 			// 
-			// checkBox1
-			// 
-			this.checkBox1.Location = new System.Drawing.Point(6, 6);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(45, 18);
-			this.checkBox1.TabIndex = 0;
-			this.checkBox1.Text = "p";
-			this.checkBox1.UseVisualStyleBackColor = true;
-			// 
 			// tabPage6
 			// 
 			this.tabPage6.Controls.Add(this.textBox1);
@@ -144,33 +129,6 @@ namespace Obsidian
 			this.tabPage6.TabIndex = 5;
 			this.tabPage6.Text = "Parameter Modes";
 			this.tabPage6.UseVisualStyleBackColor = true;
-			// 
-			// checkBox2
-			// 
-			this.checkBox2.Location = new System.Drawing.Point(6, 30);
-			this.checkBox2.Name = "checkBox2";
-			this.checkBox2.Size = new System.Drawing.Size(45, 18);
-			this.checkBox2.TabIndex = 1;
-			this.checkBox2.Text = "m";
-			this.checkBox2.UseVisualStyleBackColor = true;
-			// 
-			// checkBox3
-			// 
-			this.checkBox3.Location = new System.Drawing.Point(6, 54);
-			this.checkBox3.Name = "checkBox3";
-			this.checkBox3.Size = new System.Drawing.Size(45, 18);
-			this.checkBox3.TabIndex = 2;
-			this.checkBox3.Text = "n";
-			this.checkBox3.UseVisualStyleBackColor = true;
-			// 
-			// checkBox4
-			// 
-			this.checkBox4.Location = new System.Drawing.Point(6, 78);
-			this.checkBox4.Name = "checkBox4";
-			this.checkBox4.Size = new System.Drawing.Size(45, 18);
-			this.checkBox4.TabIndex = 3;
-			this.checkBox4.Text = "t";
-			this.checkBox4.UseVisualStyleBackColor = true;
 			// 
 			// label1
 			// 
@@ -211,6 +169,14 @@ namespace Obsidian
 			this.textBox2.Size = new System.Drawing.Size(492, 21);
 			this.textBox2.TabIndex = 2;
 			// 
+			// chkSingleModes
+			// 
+			this.chkSingleModes.FormattingEnabled = true;
+			this.chkSingleModes.Location = new System.Drawing.Point(6, 6);
+			this.chkSingleModes.Name = "chkSingleModes";
+			this.chkSingleModes.Size = new System.Drawing.Size(544, 244);
+			this.chkSingleModes.TabIndex = 0;
+			// 
 			// mcModeList
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,6 +193,7 @@ namespace Obsidian
 			this.tabPage6.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckedListBox chkSingleModes;
 		private System.Windows.Forms.TabPage tabPage5;
 		private System.Windows.Forms.TabPage tabPage4;
 		private System.Windows.Forms.TabPage tabPage3;
@@ -237,10 +204,6 @@ namespace Obsidian
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.TabPage tabPage6;
-		private System.Windows.Forms.CheckBox checkBox1;
-		private System.Windows.Forms.CheckBox checkBox2;
-		private System.Windows.Forms.CheckBox checkBox3;
-		private System.Windows.Forms.CheckBox checkBox4;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabControl tabControl1;
 		#endregion
