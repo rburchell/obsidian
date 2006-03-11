@@ -405,18 +405,22 @@ namespace Obsidian
 			/* TODO: clear the list first? */
 			userlist = parameters[3].Split(' ');
 			target.lstUsers.BeginUpdate();
-			foreach (string name in userlist) {
+			foreach (string name in userlist)
+			{
 				StringBuilder thenick = new StringBuilder();
 				StringBuilder theprefix = new StringBuilder();
 
 				if (name.Length < 1)
 					continue;
 
-				foreach (char nickchar in name) {
+				foreach (char nickchar in name)
+				{
 					bool isprefix = false;
 
-					foreach (char prefixchar in target.Server.ISupport.PREFIX_Characters) {
-						if (prefixchar == nickchar) {
+					foreach (char prefixchar in target.Server.ISupport.PREFIX_Characters)
+					{
+						if (prefixchar == nickchar)
+						{
 							/* it's a prefix */
 							isprefix = true;
 							break;
@@ -500,30 +504,32 @@ namespace Obsidian
 			//:w00t!u@h MODE w00t +h
 			mcPage target;
 			string[] userhost;
+			
 			target = page.Server.FindPage(parameters[0]);
 			userhost = prefix.Split('!');
-			if (target == null) {
+			if (target == null)
+			{
 				/* setting modes on us, handle later */
 				page.MessageInfo("UNHANDLED USERMODE SET: " + parameters[1]);
 				return;
 			}
 
-			/* a block for the fun of it */
+			bool adding = true;
+			int j = 2;
+			bool prefixmode = false;
+			int n = 0;
+			bool requiresparam;
+			string myparams = null;
+
+			for (n = 1; n < parameters.Length; n++)
+				myparams = myparams + " " + parameters[n];
+
+			target.MessageMode(userhost[0], userhost[1], myparams.Substring(1));
+
+			foreach (char modechar in parameters[1])
 			{
-				bool adding = true;
-				int j = 2;
-				bool prefixmode = false;
-				int n = 0;
-				bool requiresparam;
-				string myparams = null;
-
-				for (n = 1; n < parameters.Length; n++)
-					myparams = myparams + " " + parameters[n];
-
-				target.MessageMode(userhost[0], userhost[1], myparams.Substring(1));
-
-				foreach (char modechar in parameters[1]) {
-					switch (modechar) {
+				switch (modechar)
+				{
 					case '-':
 						adding = false;
 						break;
@@ -533,47 +539,65 @@ namespace Obsidian
 					default:
 						/* first, determine if it's a prefix mode.. treat them differently. */
 						prefixmode = false;
-						for (n = 0; n < target.Server.ISupport.PREFIX_Modes.Length; n++) {
-							if (modechar == target.Server.ISupport.PREFIX_Modes[n]) {
+						for (n = 0; n < target.Server.ISupport.PREFIX_Modes.Length; n++)
+						{
+							if (modechar == target.Server.ISupport.PREFIX_Modes[n])
+							{
 								/* We are dealing with a prefix. */
 								prefixmode = true;
 								break;
 							}
 						}
 
-						if (prefixmode) {
-							if (adding) {
+						if (prefixmode)
+						{
+							if (adding)
+							{
 								target.AddPrefix(parameters[j], target.Server.ISupport.PREFIX_Characters[n]);
 								j++;
-							} else {
+							}
+							else
+							{
 								target.RemovePrefix(parameters[j], target.Server.ISupport.PREFIX_Characters[n]);
 								j++;
 							}
-						} else {
+						}
+						else
+						{
 							if (target.Server.ISupport.CHANMODES[0].IndexOf(modechar) >= 0 || target.Server.ISupport.CHANMODES[1].IndexOf(modechar) >= 0 || (target.Server.ISupport.CHANMODES[2].IndexOf(modechar) >= 0 && adding)) {
 								requiresparam = true;
-							} else {
+							}
+							else
+							{
 								requiresparam = false;
 							}
 
-							if (adding) {
-								if (requiresparam) {
+							if (adding)
+							{
+								if (requiresparam)
+								{
 									target.AddMode(modechar, parameters[j], requiresparam);
 									j++;
-								} else {
+								}
+								else
+								{
 									target.AddMode(modechar, null, requiresparam);
 								}
-							} else {
-								if (requiresparam) {
+							}
+							else
+							{
+								if (requiresparam)
+								{
 									target.RemoveMode(modechar, parameters[j]);
 									j++;
-								} else {
+								}
+								else
+								{
 									target.RemoveMode(modechar, null);
 								}
 							}
 						}
 						break;
-					}
 				}
 
 			}
@@ -589,13 +613,17 @@ namespace Obsidian
 			//:w00t!u@h JOIN :#test
 			mcPage target;
 			string[] userhost;
+			
 			target = page.Server.FindPage(parameters[0]);
 			userhost = prefix.Split('!');
-			if (target == null) {
+			
+			if (target == null)
+			{
 				/* Joining a new channel. */
 				target = page.Server.AddPage(parameters[0], mcServer.PageType.Channel);
 				target.IsChannel = true;
 			}
+			
 			target.MessageJoin(userhost[0], userhost[1]);
 		}
 
@@ -604,14 +632,15 @@ namespace Obsidian
 			/* :aggressor!u@h KICK #somechan target :reason */
 			string[] userhost;
 			mcPage target;
+			
 			userhost = prefix.Split('!');
 			target = page.Server.FindPage(parameters[0].ToLower());
+			
 			if (target == null)
 				return; /* probably server lag. */
 
 			target.MessageKick(parameters[1], userhost[0], parameters[1]);
-			//if(nick.Equals(page.Server.MyNickname))
-			//	page.Server.DeletePage(target);
+			/* TODO: Clear the nicklist? */
 		}
 
 		private static void CmdNICK(string prefix, string command, string[] parameters, mcPage page)
@@ -619,9 +648,12 @@ namespace Obsidian
 			// Command: NICK    Parameters: :<new>
 			string[] userhost;
 			userhost = prefix.Split('!');
-			if (userhost[0] == page.Server.MyNickname) {
+			
+			if (userhost[0] == page.Server.MyNickname)
+			{
 				page.Server.MyNickname = parameters[0];
 			}
+			
 			page.Server.ChangeNick(userhost[0], parameters[0]);
 		}
 
@@ -630,26 +662,25 @@ namespace Obsidian
 			// Command: NOTICE  Parameters: <msgtarget> :<text>
 			string source;
 			string[] userhost;
+			
 			mcPage target;
-			if (prefix != null) {
+			if (prefix != null)
+			{
 				userhost = prefix.Split('!');
 				source = userhost[0];
-			} else {
+			}
+			else
+			{
 				source = page.Server.ServerName;
 			}
-			//parts = parameters.Split(null);
-			//message = parameters.Substring(parts[0].Length + 
-			//	((parameters.Substring(parts[0].Length).StartsWith(" :"))?2:1));
+
 			target = page.Server.FindPage(parameters[0]);
+			
 			if (target != null)
 				target.MessageNotice(source, parameters[1]);
-			else {
-				/*
-				 * Dilemma, should we be sending to ACTIVE page,
-				 * or Server page. Reminder to self, add
-				 * CurrentPage to mcServer class.
-				 */
-				page.Server.ServerPage.MessageNotice(source, parameters[1]);
+			else
+			{
+				page.Server.CurrentPage.MessageNotice(source, parameters[1]);
 			}
 		}
 
@@ -658,14 +689,17 @@ namespace Obsidian
 			//:n!u@h PART #chan :message
 			string[] userhost;
 			mcPage target;
+			
 			userhost = prefix.Split('!');
 			target = page.Server.FindPage(parameters[0]);
+			
 			if (target == null)
 				return;
 
 			target.MessagePart(userhost[0], userhost[1], parameters[1]);
 
-			if (userhost[0] == page.Server.MyNickname) {
+			if (userhost[0] == page.Server.MyNickname)
+			{
 				page.Server.DeletePage(target);
 				Obsidian.mainForm.tvcWindows.Nodes.Remove(target.MyNode);
 			}
@@ -682,21 +716,32 @@ namespace Obsidian
 			//:n!u@h PRIVMSG target :message here!
 			string[] userhost;
 			mcPage target;
+			
 			userhost = prefix.Split('!');
-			if (parameters[1][0] == '\u0001') {
+			
+			if (parameters[1][0] == '\u0001')
+			{
 				//todo: redo CTCP support (:
 				CTCP(prefix, parameters, page);
 				return;
 			}
+			
 			target = page.Server.FindPage(parameters[0]);
-			if (target != null) {
+			
+			if (target != null)
+			{
 				target.MessageUser(userhost[0], parameters[1]);
-			} else {
+			}
+			else
+			{
 				target = page.Server.FindPage(userhost[0]);
-				if (target == null) {
+				
+				if (target == null)
+				{
 					page.Server.AddPage(userhost[0], mcServer.PageType.Message);
 					target = page.Server.FindPage(userhost[0]);
 				}
+				
 				target.MessageUser(userhost[0], parameters[1]);
 			}
 		}
@@ -705,6 +750,7 @@ namespace Obsidian
 		{
 			//:prefix!u@h QUIT :message :o
 			string[] userhost;
+			
 			userhost = prefix.Split('!');
 			page.Server.QuitNick(userhost[0], parameters[0]);
 		}
@@ -714,8 +760,10 @@ namespace Obsidian
 			//:n!u@h TOPIC #chan :newtopic zomg!
 			string[] userhost;
 			mcPage target;
+			
 			userhost = prefix.Split('!');
 			target = page.Server.FindPage(parameters[0]);
+			
 			if (target == null)
 				return;
 
@@ -730,10 +778,14 @@ namespace Obsidian
 		{
 			/* unknown numeric/command */
 			string todisplay;
+			
 			todisplay = "UNKNOWN: :" + prefix + " " + command + " ";
-			foreach (string str in parameters) {
+			
+			foreach (string str in parameters)
+			{
 				todisplay = todisplay + " " + str;
 			}
+			
 			page.MessageInfo(todisplay);
 		}
 
@@ -750,37 +802,46 @@ namespace Obsidian
 			ctcpparams = parameters[1].Split(' ');
 
 			target = page.Server.FindPage(parameters[0]);
-			if (target == null) {
+			if (target == null)
+			{
 				/* no channel page, try find a private one.. */
 				target = page.Server.FindPage(userhost[0]);
 			}
 
-			switch (ctcpparams[0]) {
-			case "ACTION":
-				/* if we didn't find a page previously, create one (presume private ;)) */
-				if (target == null) {
-					target = page.Server.AddPage(userhost[0], mcServer.PageType.Message);
-				}
-				int i = 0;
-				string action = null;
-				foreach (string str in ctcpparams) {
-					if (i == 0) /* ugly :p */ {
-						i++;
-						continue;
+			switch (ctcpparams[0])
+			{
+				case "ACTION":
+					/* if we didn't find a page previously, create one (presume private ;)) */
+					if (target == null)
+					{
+						target = page.Server.AddPage(userhost[0], mcServer.PageType.Message);
 					}
-					action = action + " " + str;
-				}
-				target.MessageAction(userhost[0], action);
-				break;
-			case "VERSION":
-				if (target == null) {
-					target = page.Server.ServerPage;
-				}
-				target.MessageInfo("[" + userhost[0] + " VERSION]");
-				page.Server.IRCSend("NOTICE " + userhost[0] + " :VERSION  " + Obsidian.APP_NAME + " " + Obsidian.APP_VER + " - Got it yet?\r\n");
-				break;
+					
+					int i = 0;
+					string action = null;
+					
+					foreach (string str in ctcpparams)
+					{
+						if (i == 0) /* ugly :p */
+						{
+							i++;
+							continue;
+						}
+						action = action + " " + str;
+					}
+					
+					target.MessageAction(userhost[0], action);
+					break;
+				case "VERSION":
+					if (target == null)
+					{
+						target = page.Server.ServerPage;
+					}
+					
+					target.MessageInfo("[" + userhost[0] + " VERSION]");
+					page.Server.IRCSend("NOTICE " + userhost[0] + " :VERSION  " + Obsidian.APP_NAME + " " + Obsidian.APP_VER + " - Got it yet?\r\n");
+					break;
 			}
-
 		}
 	}
 }
