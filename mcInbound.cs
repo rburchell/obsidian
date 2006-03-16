@@ -688,7 +688,7 @@ namespace Obsidian
 			if (target == null)
 				return;
 
-			target.MessagePart(userhost[0], userhost[1], parameters[1]);
+			target.MessagePart(userhost[0], userhost[1], (parameters.Length >= 2 ? parameters[1] : ""));
 
 			if (userhost[0] == page.Server.MyNickname)
 			{

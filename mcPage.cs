@@ -524,6 +524,7 @@ namespace Obsidian
 				}
 				HistoryIndex--;
 				txtToSend.Text = (string)History[HistoryIndex];
+				e.Handled = true;
 			}
 			else if (e.KeyCode == Keys.Down)
 			{
@@ -542,8 +543,8 @@ namespace Obsidian
 				{
 					txtToSend.Text = "";
 				}
+				e.Handled = true;
 			}
-			e.Handled = true;
 		}
 
 		private void txtTopic_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -835,9 +836,7 @@ namespace Obsidian
 
 		public bool MessageTopicTime(string user, string rawtime) 
 		{
-			//TODO: There is a known issue to do with this.
-			//Basically, the date doesn't work! :p
-			System.DateTime time = new System.DateTime(System.Int32.Parse(rawtime));
+			System.DateTime time = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(double.Parse(rawtime)).ToLocalTime();
 			this.Append(TimeStamp());
 			this.Append("-");
 			this.SetColor(System.Drawing.Color.DarkCyan);
@@ -855,11 +854,7 @@ namespace Obsidian
 			this.ResetColor();
 			this.Append(" at ");
 			this.SetColor(System.Drawing.Color.Cyan);
-			this.Append(time.ToString("ddd, MMM d HH:mm:ss"));
-			this.Append("DEBUG: " + time.ToString());
-			this.ResetColor();
-			this.Append("\r\n");
-
+			this.Append(time.ToString("ddd, MMM d, yyyy HH:mm:ss"));
 			return true;
 		}
 
