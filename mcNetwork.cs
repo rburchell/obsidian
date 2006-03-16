@@ -143,7 +143,7 @@ namespace Obsidian
 								System.Windows.Forms.MessageBox.Show("Malformed 'R' token in network file " + NetworkName + ", aborting read effort.", "Error!");
 								return null;
 							}
-							NewNetwork.Realname = String.Join(' ', parts, 1, parts.Length - 1);
+							NewNetwork.Realname = String.Join(" ", parts, 1, parts.Length - 1);
 							break;
 						case 's':
 							/* connect on startup */
@@ -160,7 +160,7 @@ namespace Obsidian
 							break;
 						case 'P':
 							/* perform line */
-							temp = String.Join(' ', parts, 1, parts.Length - 1);
+							temp = String.Join(" ", parts, 1, parts.Length - 1);
 							NewNetwork.Perform.Add(temp);
 							break;
 						case 'B':
