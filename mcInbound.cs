@@ -66,17 +66,13 @@ namespace Obsidian
 				string workstr = message;
 
 				// Scrub off leading spaces. Not really RFC valid but...
-				workstr = message.Trim(' ');
-
-				// Get rid of multispaces.
-				while (workstr.IndexOf("  ") >= 0)
-					workstr = workstr.Replace("  ", " ");
+				workstr = message.TrimStart(' ');
 
 				// My parsing code :P !
 				if (workstr[0] == ':')
 				{
 					// First character is : - we have a prefix. The command comes second.
-					temp = message.Split(new char[] { ' ' }, 3);
+					temp = message.Split(new char[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
 					prefix = temp[0].Substring(1);
 					command = temp[1];
 					workstr = temp[2];
@@ -84,12 +80,17 @@ namespace Obsidian
 				else
 				{
 					// First character is not a : - there is no prefix (assume server is the sender). The command comes first.
-					temp = message.Split(new char[] { ' ' }, 2);
+					temp = message.Split(new char[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
 					prefix = page.Server.ServerName;
 					command = temp[0];
 					workstr = temp[1];
 				}
 
+/*				// Get rid of multispaces.
+				while (workstr.IndexOf("  ") >= 0)
+					workstr = workstr.Replace("  ", " ");
+*/
+				
 				// Now the parameters. Check if we have a starting : ... AGAIN.
 				if (workstr[0] == ':')
 				{
@@ -100,14 +101,15 @@ namespace Obsidian
 				{
 					// We don't, but we have a space-colon elsewhere.
 					// i is the space before the :
-					// Substring from 0 to i - we want the trailing space as that'll leave an empty spot at the end.
-					parts = workstr.Substring(0, i + 1).Split(' ');
+					string[] tmp = workstr.Substring(0, i).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+					parts = new string[tmp.Length + 1];
+					tmp.CopyTo(parts, 0);
 					parts[parts.Length - 1] = workstr.Substring(i + 2);
 				}
 				else
 				{
 					// No space-colon either.
-					parts = workstr.Split(' ');
+					parts = workstr.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 				}
 
 			
