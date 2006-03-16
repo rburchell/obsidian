@@ -172,7 +172,7 @@ namespace Obsidian
 		public void Connect()
 		{
 			/* Try to connect (this is slow :/) */
-			//TODO: Asynchronous sockets.
+
 			this.ServerPage.MessageInfo("Attempting to connect to " + this.ServerName + " on " + this.ServerPort.ToString());
 #if NeverDefineThis
 			try

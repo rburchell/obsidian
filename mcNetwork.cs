@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Obsidian
 {
@@ -13,20 +15,17 @@ namespace Obsidian
 		public string Realname;
 
 		/* these all really need to be marked private. */
-		public System.Collections.ArrayList Buddies = new System.Collections.ArrayList();
-		public System.Collections.ArrayList Perform = new System.Collections.ArrayList();
+		public List<string> Buddies = new List<string>();
+		public List<string> Perform = new List<string>();
 
 		//these are stored like serverdns:port
-		public System.Collections.ArrayList Servers = new System.Collections.ArrayList();
+		public List<string> Servers = new List<string>();
 
 		public bool ConnectOnStartup = false;
 		
 
 		public mcNetwork()
 		{
-			//
-			// TODO: Add constructor logic here
-			//
 		}
 
 		/*
@@ -47,6 +46,39 @@ namespace Obsidian
 			{
 				System.Windows.Forms.MessageBox.Show("An exception occured while trying to write network file " + aNetwork.NetworkName + ": " + ex.ToString(), "Error!");
 				return 0;
+			}
+			
+			try
+			{
+				fd.WriteLine("N {0}", aNetwork.Nickname);
+				fd.WriteLine("U {0}", aNetwork.Username);
+				fd.WriteLine("R {0}", aNetwork.Realname);
+				if (aNetwork.ConnectOnStartup) fd.WriteLine("s");
+				foreach (string server in aNetwork.Servers)
+				{
+					fd.WriteLine("S {0}", server);
+				}
+				foreach (string line in aNetwork.Perform)
+				{
+					if (line[0] == '#')
+					{
+						// Just as C programmers never printf(string), we never
+						// write the string directly either.
+						fd.WriteLine("{0}", line);
+					}
+					else
+					{
+						fd.WriteLine("P {0}", line);
+					}
+				}
+				foreach (string buddy in aNetwork.Buddies)
+				{
+					fd.Write("B {0}", buddy);
+				}
+			}
+			finally
+			{
+				fd.Close();
 			}
 
 			return 0;
@@ -70,83 +102,84 @@ namespace Obsidian
 				System.Windows.Forms.MessageBox.Show("An exception occured while trying to read network " + NetworkName + ": " + ex.ToString(), "Error!");
 				return null;
 			}
-
-			while (true)
+			
+			NewNetwork.NetworkName = NetworkName;
+			
+			try
 			{
-				/* no, this does actually end ;) */
-				line = fd.ReadLine();
-				if (line == null)
-					break;
-
-				parts = line.Split(' ');
-
-				switch (line[0])
+				while (true)
 				{
-					case 'N':
-						/* nickname token */
-						if (parts.Length < 2)
-						{
-							System.Windows.Forms.MessageBox.Show("Malformed 'N' token in network file " + NetworkName + ", aborting read effort.", "Error!");
-							return null;
-						}
-						NewNetwork.Nickname = parts[1];
+					/* no, this does actually end ;) */
+					line = fd.ReadLine();
+					if (line == null)
 						break;
-					case 'U':
-						/* username token */
-						if (parts.Length < 2)
-						{
-							System.Windows.Forms.MessageBox.Show("Malformed 'U' token in network file " + NetworkName + ", aborting read effort.", "Error!");
-							return null;
-						}
-						NewNetwork.Username = parts[1];
-						break;
-					case 'R':
-						/* realname token */
-						if (parts.Length < 2)
-						{
-							System.Windows.Forms.MessageBox.Show("Malformed 'R' token in network file " + NetworkName + ", aborting read effort.", "Error!");
-							return null;
-						}
-						NewNetwork.Realname = parts[1];
-						for (int i = 0; i < parts.Length; i++)
-						{
-							if (i > 1)
-								NewNetwork.Realname = NewNetwork.Realname + " " + parts[i];
-						}
-						break;
-					case 's':
-						/* connect on startup */
-						/* optional token- if it's here, we're supposed to connect on startup. */
-						NewNetwork.ConnectOnStartup = true;
-						break;
-					case 'S':
-						/* a server/port combination */
-						NewNetwork.Servers.Add(parts[1]);
-						break;
-					case '#':
-						/* perform comment */
-						temp = parts[0];
-						for (int i = 1; i < parts.Length; i++)
-						{
-							temp = temp + " " + parts[i];
-						}
-						NewNetwork.Perform.Add(temp);
-						break;
-					case 'P':
-						/* perform line */
-						temp = parts[1];
-						for (int i = 0; i < parts.Length; i++)
-						{
-							if (i > 1)
-								temp = temp + " " + parts[i];
-						}
-						NewNetwork.Perform.Add(temp);
-						break;
+	
+					parts = line.Split(' ');
+	
+					switch (line[0])
+					{
+						case 'N':
+							/* nickname token */
+							if (parts.Length < 2)
+							{
+								System.Windows.Forms.MessageBox.Show("Malformed 'N' token in network file " + NetworkName + ", aborting read effort.", "Error!");
+								return null;
+							}
+							NewNetwork.Nickname = parts[1];
+							break;
+						case 'U':
+							/* username token */
+							if (parts.Length < 2)
+							{
+								System.Windows.Forms.MessageBox.Show("Malformed 'U' token in network file " + NetworkName + ", aborting read effort.", "Error!");
+								return null;
+							}
+							NewNetwork.Username = parts[1];
+							break;
+						case 'R':
+							/* realname token */
+							if (parts.Length < 2)
+							{
+								System.Windows.Forms.MessageBox.Show("Malformed 'R' token in network file " + NetworkName + ", aborting read effort.", "Error!");
+								return null;
+							}
+							NewNetwork.Realname = String.Join(' ', parts, 1, parts.Length - 1);
+							break;
+						case 's':
+							/* connect on startup */
+							/* optional token- if it's here, we're supposed to connect on startup. */
+							NewNetwork.ConnectOnStartup = true;
+							break;
+						case 'S':
+							/* a server/port combination */
+							NewNetwork.Servers.Add(parts[1]);
+							break;
+						case '#':
+							/* perform comment */
+							NewNetwork.Perform.Add(line);
+							break;
+						case 'P':
+							/* perform line */
+							temp = String.Join(' ', parts, 1, parts.Length - 1);
+							NewNetwork.Perform.Add(temp);
+							break;
+						case 'B':
+							/* buddy line */
+							if (parts.Length < 2)
+							{
+								System.Windows.Forms.MessageBox.Show("Malformed 'U' token in network file " + NetworkName + ", aborting read effort.", "Error!");
+								return null;
+							}
+							NewNetwork.Buddies.Add(parts[1]);
+							break;
+					}
 				}
+				return NewNetwork;
 			}
-
-			fd.Close();
-			return NewNetwork;
+			finally
+			{
+				fd.Close();
+			}
 		}
 	}
 }
