@@ -214,6 +214,17 @@ namespace Obsidian
 			aPage.Server.IRCSend("PRIVMSG " + aPage.Text + " :ACTION" + Parameters + "");
 			aPage.MessageAction(aPage.Server.MyNickname, Parameters);
 		}
+		
+		public static void cmdSay(mcPage aPage, string Parameters)
+		{
+			if (Parameters == null)
+			{
+				aPage.MessageInfo("Usage: /say <text>");
+				return;
+			}
+			aPage.Server.IRCSend("PRIVMSG " + aPage.Text + " :" + Parameters);
+			aPage.MessageUser(aPage.Server.MyNickname, Parameters);
+		}
 
 		public mcCommands()
 		{
@@ -279,9 +290,7 @@ namespace Obsidian
 				}
 				else
 				{
-					//TODO: Lookup cmdPrivmsg in future.
-					aPage.Server.IRCSend("PRIVMSG " + aPage.Text + " :" + CurrentLine);
-					aPage.MessageUser(aPage.Server.MyNickname, CurrentLine);
+					cmdSay(aPage, CurrentLine);
 				}
 			}
 		}
