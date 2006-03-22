@@ -12,20 +12,8 @@ namespace Obsidian
 	sealed public class mcMainForm	: System.Windows.Forms.Form
 	{
 		public mcPage CurrentPage;
-		public mcOptions OptionsForm = new mcOptions();
-		public mcNetworkEditor NetworkEditor;
-		public mcAbout AboutForm;
 
 		private System.Collections.SortedList Servers = new System.Collections.SortedList(5);
-		private System.Windows.Forms.MainMenu mainMenu1;
-		private System.Windows.Forms.MenuItem menuItem1;
-		private System.Windows.Forms.MenuItem mnuFileExit;
-		private System.Windows.Forms.MenuItem mnuCreateNewServer;
-		private System.Windows.Forms.MenuItem mnuHelp;
-		private System.Windows.Forms.MenuItem mnuAbout;
-		private System.Windows.Forms.MenuItem mnuView;
-		private System.Windows.Forms.MenuItem mnuNetworkEditor;
-		private System.Windows.Forms.MenuItem mnuViewOptions;
 		private System.Windows.Forms.Splitter MySplitter;
 		public System.Windows.Forms.TreeView tvcWindows;
 		private System.Windows.Forms.Timer tmrParseStuff;
@@ -64,15 +52,6 @@ namespace Obsidian
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mcMainForm));
-			this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
-			this.menuItem1 = new System.Windows.Forms.MenuItem();
-			this.mnuCreateNewServer = new System.Windows.Forms.MenuItem();
-			this.mnuFileExit = new System.Windows.Forms.MenuItem();
-			this.mnuView = new System.Windows.Forms.MenuItem();
-			this.mnuNetworkEditor = new System.Windows.Forms.MenuItem();
-			this.mnuViewOptions = new System.Windows.Forms.MenuItem();
-			this.mnuHelp = new System.Windows.Forms.MenuItem();
-			this.mnuAbout = new System.Windows.Forms.MenuItem();
 			this.MySplitter = new System.Windows.Forms.Splitter();
 			this.tvcWindows = new System.Windows.Forms.TreeView();
 			this.tmrParseStuff = new System.Windows.Forms.Timer(this.components);
@@ -80,73 +59,22 @@ namespace Obsidian
 			this.tbbtnNewServer = new System.Windows.Forms.ToolBarButton();
 			this.tbbtnConnectDisconnect = new System.Windows.Forms.ToolBarButton();
 			this.tbImages = new System.Windows.Forms.ImageList(this.components);
+			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.networkEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// mainMenu1
-			// 
-			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-									this.menuItem1,
-									this.mnuView,
-									this.mnuHelp});
-			// 
-			// menuItem1
-			// 
-			this.menuItem1.Index = 0;
-			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-									this.mnuCreateNewServer,
-									this.mnuFileExit});
-			this.menuItem1.Text = "&File";
-			// 
-			// mnuCreateNewServer
-			// 
-			this.mnuCreateNewServer.Index = 0;
-			this.mnuCreateNewServer.Text = "&New Server";
-			this.mnuCreateNewServer.Click += new System.EventHandler(this.mnuCreateNewServer_Click);
-			// 
-			// mnuFileExit
-			// 
-			this.mnuFileExit.Index = 1;
-			this.mnuFileExit.Text = "&Exit";
-			this.mnuFileExit.Click += new System.EventHandler(this.mnuFileExit_Click);
-			// 
-			// mnuView
-			// 
-			this.mnuView.Index = 1;
-			this.mnuView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-									this.mnuNetworkEditor,
-									this.mnuViewOptions});
-			this.mnuView.Text = "View";
-			// 
-			// mnuNetworkEditor
-			// 
-			this.mnuNetworkEditor.Index = 0;
-			this.mnuNetworkEditor.Text = "&Network Editor";
-			this.mnuNetworkEditor.Click += new System.EventHandler(this.mnuNetworkEditor_Click);
-			// 
-			// mnuViewOptions
-			// 
-			this.mnuViewOptions.Index = 1;
-			this.mnuViewOptions.Text = "&Options";
-			this.mnuViewOptions.Click += new System.EventHandler(this.mnuViewOptions_Click);
-			// 
-			// mnuHelp
-			// 
-			this.mnuHelp.Index = 2;
-			this.mnuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-									this.mnuAbout});
-			this.mnuHelp.Text = "&Help";
-			// 
-			// mnuAbout
-			// 
-			this.mnuAbout.Index = 0;
-			this.mnuAbout.Text = "&About";
-			this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
 			// 
 			// MySplitter
 			// 
-			this.MySplitter.Location = new System.Drawing.Point(144, 0);
+			this.MySplitter.Location = new System.Drawing.Point(144, 24);
 			this.MySplitter.Name = "MySplitter";
-			this.MySplitter.Size = new System.Drawing.Size(3, 300);
+			this.MySplitter.Size = new System.Drawing.Size(3, 314);
 			this.MySplitter.TabIndex = 5;
 			this.MySplitter.TabStop = false;
 			// 
@@ -157,9 +85,9 @@ namespace Obsidian
 			this.tvcWindows.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tvcWindows.ForeColor = System.Drawing.Color.White;
 			this.tvcWindows.ItemHeight = 16;
-			this.tvcWindows.Location = new System.Drawing.Point(0, 0);
+			this.tvcWindows.Location = new System.Drawing.Point(0, 24);
 			this.tvcWindows.Name = "tvcWindows";
-			this.tvcWindows.Size = new System.Drawing.Size(144, 300);
+			this.tvcWindows.Size = new System.Drawing.Size(144, 314);
 			this.tvcWindows.TabIndex = 4;
 			this.tvcWindows.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvcWindows_AfterSelect);
 			// 
@@ -176,7 +104,7 @@ namespace Obsidian
 									this.tbbtnConnectDisconnect});
 			this.tbLauncher.DropDownArrows = true;
 			this.tbLauncher.ImageList = this.tbImages;
-			this.tbLauncher.Location = new System.Drawing.Point(147, 0);
+			this.tbLauncher.Location = new System.Drawing.Point(147, 24);
 			this.tbLauncher.Name = "tbLauncher";
 			this.tbLauncher.ShowToolTips = true;
 			this.tbLauncher.Size = new System.Drawing.Size(501, 28);
@@ -206,26 +134,97 @@ namespace Obsidian
 			this.tbImages.Images.SetKeyName(1, "");
 			this.tbImages.Images.SetKeyName(2, "");
 			// 
+			// menuStrip1
+			// 
+			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.fileToolStripMenuItem,
+									this.viewToolStripMenuItem,
+									this.helpToolStripMenuItem});
+			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip1.Name = "menuStrip1";
+			this.menuStrip1.Size = new System.Drawing.Size(648, 24);
+			this.menuStrip1.TabIndex = 7;
+			this.menuStrip1.Text = "menuStrip1";
+			// 
+			// fileToolStripMenuItem
+			// 
+			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.exitToolStripMenuItem});
+			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+			this.fileToolStripMenuItem.Text = "&File";
+			// 
+			// exitToolStripMenuItem
+			// 
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.exitToolStripMenuItem.Text = "&Exit";
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
+			// 
+			// viewToolStripMenuItem
+			// 
+			this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.networkEditorToolStripMenuItem,
+									this.optionsToolStripMenuItem});
+			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+			this.viewToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+			this.viewToolStripMenuItem.Text = "&View";
+			// 
+			// networkEditorToolStripMenuItem
+			// 
+			this.networkEditorToolStripMenuItem.Name = "networkEditorToolStripMenuItem";
+			this.networkEditorToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+			this.networkEditorToolStripMenuItem.Text = "&Network Editor";
+			this.networkEditorToolStripMenuItem.Click += new System.EventHandler(this.NetworkEditorToolStripMenuItemClick);
+			// 
+			// optionsToolStripMenuItem
+			// 
+			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+			this.optionsToolStripMenuItem.Text = "&Options";
+			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.OptionsToolStripMenuItemClick);
+			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.aboutToolStripMenuItem});
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.helpToolStripMenuItem.Text = "&Help";
+			// 
+			// aboutToolStripMenuItem
+			// 
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+			this.aboutToolStripMenuItem.Text = "&About";
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
+			// 
 			// mcMainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-			this.ClientSize = new System.Drawing.Size(648, 300);
+			this.ClientSize = new System.Drawing.Size(648, 338);
 			this.Controls.Add(this.tbLauncher);
 			this.Controls.Add(this.MySplitter);
 			this.Controls.Add(this.tvcWindows);
-			this.Menu = this.mainMenu1;
+			this.Controls.Add(this.menuStrip1);
+			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "mcMainForm";
 			this.Text = "Obsidian";
 			this.Closed += new System.EventHandler(this.Exit);
+			this.menuStrip1.ResumeLayout(false);
+			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem networkEditorToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+		private System.Windows.Forms.MenuStrip menuStrip1;
 		#endregion
-
-		private void mnuFileExit_Click(object sender, System.EventArgs e)
-		{
-			this.Exit(null, null);
-		}
 
 		public mcServer AddServer()
 		{
@@ -320,29 +319,6 @@ namespace Obsidian
 			Application.Exit();
 		}
 
-		private void mnuCreateNewServer_Click(object sender, System.EventArgs e)
-		{
-			this.AddServer();
-		}
-
-		private void mnuAbout_Click(object sender, System.EventArgs e)
-		{
-			this.AboutForm = new mcAbout();
-			this.AboutForm.Show();
-		}
-
-		private void mnuNetworkEditor_Click(object sender, System.EventArgs e)
-		{
-			this.NetworkEditor = new mcNetworkEditor();
-			this.NetworkEditor.Show();
-		}
-
-		private void mnuViewOptions_Click(object sender, System.EventArgs e)
-		{
-			this.OptionsForm = new mcOptions();
-			this.OptionsForm.Show();
-		}
-
 		private void tmrParseStuff_Tick(object sender, System.EventArgs e)
 		{
 			/* bit of an ugly way to handle things, but it works ;) */
@@ -388,6 +364,29 @@ namespace Obsidian
 					}
 					break;
 			}
+		}
+		
+		void AboutToolStripMenuItemClick(object sender, System.EventArgs e)
+		{
+			mcAbout AboutForm = new mcAbout();
+			AboutForm.ShowDialog();
+		}
+		
+		void NetworkEditorToolStripMenuItemClick(object sender, System.EventArgs e)
+		{
+			mcNetworkEditor NetworkEditor = new mcNetworkEditor();
+			NetworkEditor.ShowDialog();
+		}
+		
+		void OptionsToolStripMenuItemClick(object sender, System.EventArgs e)
+		{
+			mcOptions OptionsDialog = new mcOptions();
+			OptionsDialog.ShowDialog();
+		}
+		
+		void ExitToolStripMenuItemClick(object sender, System.EventArgs e)
+		{
+			this.Exit(null, null);
 		}
 	}
 }
