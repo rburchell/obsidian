@@ -877,6 +877,15 @@ namespace Obsidian
 			Obsidian.mainForm.CurrentPage = this;
 			this.txtToSend.Focus();
 		}
+		
+		/*
+		 * Clear()
+		 *  Clears txtData (where stuff gets shown.)
+		 */
+		public void Clear()
+		{
+			this.txtData.Clear();
+		}
 
 		public class ChanUser : IComparable
 		{

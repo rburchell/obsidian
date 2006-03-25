@@ -225,6 +225,11 @@ namespace Obsidian
 			aPage.Server.IRCSend("PRIVMSG " + aPage.Text + " :" + Parameters);
 			aPage.MessageUser(aPage.Server.MyNickname, Parameters);
 		}
+		
+		public static void cmdClear(mcPage aPage, string Parameters)
+		{
+			aPage.Clear();
+		}
 
 		public mcCommands()
 		{
