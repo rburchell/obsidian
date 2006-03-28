@@ -11,7 +11,7 @@ namespace Obsidian
 	/// <summary>
 	/// Wraps the network I/O thread(s).
 	/// </summary>
-	public class NetworkThread 
+	public class NetworkThread : IDisposable
 	{
 		/// <summary>
 		/// The maximum number of sockets controlled by any one thread.
@@ -160,11 +160,17 @@ namespace Obsidian
 			AddSocket(address, port, cb);
 		}
 
-		~NetworkThread() 
+		public void Dispose()
 		{
+			// Dispose is supposed to never throw, so we have to decide what to do
+			// if they Dispose() while sockets are open. The sockets could still be usable
+			// so what we'll do is if they haven't got any references to the sockets,
+			// tough s*** :P .
 			if (thread == null || (thread.ThreadState & ThreadState.Unstarted) != 0 || (thread.ThreadState & ThreadState.Stopped) != 0) 
 			{
 				// Don't bother.
+				sockets = null;
+				connectionqueue = null;
 				return;
 			}
 			else if ((thread.ThreadState & ThreadState.WaitSleepJoin) != 0) 
@@ -172,15 +178,19 @@ namespace Obsidian
 				thread.Interrupt();
 			}
 			thread.Abort();
-			// It'll die eventually. We don't need to wait.
+			thread.Join();
+			sockets = null;
+			connectionqueue = null;
+			thread = null;
 		}
-
+		
 		/// <summary>
 		/// Reports the number of connection slots available in this thread.
 		/// </summary>
 		/// <returns>How many more sockets this thread can handle (effectively: MAX_SOCKETS_PER_THREAD - its current load).</returns>
 		public int AvailableSlot() 
 		{
+			if (sockets == null) throw new ObjectDisposedException("NetworkThread");
 			return MAX_SOCKETS_PER_THREAD - (sockets.Count + connectionqueue.Count);
 		}
 
@@ -192,6 +202,7 @@ namespace Obsidian
 		/// <param name="cb">A function to be called when the connection succeeds or fails.</param>
 		public void AddSocket(string address, int port, ConnectCallback cb) 
 		{
+			if (sockets == null) throw new ObjectDisposedException("NetworkThread");
 			lock(this) 
 			{
 				if (AvailableSlot() < 1) throw new Exception("Out of socket slots in this thread.");
@@ -218,6 +229,7 @@ namespace Obsidian
 		/// <param name="sck">The closed socket to be removed.</param>
 		public void RemoveSocket(BufferedSocket sck) 
 		{
+			if (sockets == null) throw new ObjectDisposedException("NetworkThread");
 			lock(this) 
 			{
 				if (sck == null) 

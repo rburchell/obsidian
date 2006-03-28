@@ -174,22 +174,6 @@ namespace Obsidian
 			/* Try to connect (this is slow :/) */
 
 			this.ServerPage.MessageInfo("Attempting to connect to " + this.ServerName + " on " + this.ServerPort.ToString());
-#if NeverDefineThis
-			try
-			{
-				ServerSocket.Connect(this.ServerName, this.ServerPort);
-			}
-			catch (Exception ex)
-			{
-				this.ServerPage.MessageInfo("Waah, couldn't connect: " + ex.ToString());
-				return;
-			}
-
-			/* we connected? register ourselves .. */
-			this._connected = true;
-			this.IRCSend("NICK " + this.MyNickname);
-			this.IRCSend("USER " + this.MyUsername + " * * :" + this.MyRealname);
-#endif
 			Obsidian.DoConnect(this.ServerName, this.ServerPort, new NetworkThread.ConnectCallback(this.ServerSocket_Connect));
 		}
 
