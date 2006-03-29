@@ -79,7 +79,7 @@ namespace Obsidian
 							mi = fieldtype.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public, System.Type.DefaultBinder, new Type[] { typeof(string) }, null);
 							try
 							{
-								fi.SetValue(mi.Invoke(null, new object[] { value }));
+								fi.SetValue(null, mi.Invoke(null, new object[] { value }));
 							}
 							catch (Exception e)
 							{
