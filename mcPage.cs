@@ -855,6 +855,8 @@ namespace Obsidian
 			this.Append(" at ");
 			this.SetColor(System.Drawing.Color.Cyan);
 			this.Append(time.ToString("ddd, MMM d, yyyy HH:mm:ss"));
+			this.Append("\r\n");
+			
 			return true;
 		}
 
