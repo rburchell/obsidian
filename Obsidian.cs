@@ -22,8 +22,10 @@ namespace Obsidian
 		public static string DefaultUsername = SystemInformation.UserName;
 		public static string DefaultRealname = SystemInformation.UserName;
 		internal static string DefaultQuitMsg = "";
-		public static string GetDefaultQuitMsg {
-			get {
+		public static string GetDefaultQuitMsg
+		{
+			get
+			{
 				return DefaultQuitMsg;
 			}
 		}
