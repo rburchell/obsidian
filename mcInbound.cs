@@ -302,7 +302,6 @@ namespace Obsidian
 		#region "WHOIS NUMERICS"
 		/*
 		 * TODO: A few more to be implemnted when I get time:
-		 * [16:38:25] --- UNKNOWN:  :irc.viroteck.net 310 Rob w00t is available for help.
 		 * [16:40:10] --- UNKNOWN:  :irc.viroteck.net 671 Rob Stskeeps is using a Secure Connection
 		 */
 		private static void Cmd301(string prefix, string command, string[] parameters, mcPage page)
@@ -317,6 +316,15 @@ namespace Obsidian
 		private static void Cmd307(string prefix, string command, string[] parameters, mcPage page)
 		{
 			page.Server.CurrentPage.MessageInfo("Status: " + parameters[1] + " is a Registered Nickname");
+		}
+		
+		private static void Cmd310(string prefix, string command, string[] parameters, mcPage page)
+		{
+			string todisplay = null; /* join parts of parameters together to display */
+			for (int i = 2; i < parameters.Length; i++)
+				todisplay = todisplay + " " + parameters[i];
+
+			page.Server.CurrentPage.MessageInfo("Status:" + todisplay);
 		}
 		
 		private static void Cmd311(string prefix, string command, string[] parameters, mcPage page)
