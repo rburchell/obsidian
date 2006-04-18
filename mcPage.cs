@@ -441,6 +441,18 @@ namespace Obsidian
 				{
 					sc.Add(tn.Text);
 				}
+				
+				/* fix: go through channel window nodes, query nodes, etc. */
+				foreach (TreeNode tn2 in tn.Nodes)
+				{
+					foreach (TreeNode tn3 in tn2.Nodes)
+					{
+						if (tn3.Text.ToLower().StartsWith(word.ToLower()))
+						{
+							sc.Add(tn3.Text);
+						}
+					}
+				}
 			}
 			
 			string[] a = new string[sc.Count];
