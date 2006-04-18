@@ -31,7 +31,6 @@ namespace Obsidian
 			string[] messages;
 
 			/* make \r into \n and split into commands */
-			/* TODO: buffering. */
 			data = data.Replace('\r', '\n');
 			messages = data.Split('\n');
 
