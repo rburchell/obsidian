@@ -739,7 +739,7 @@ namespace Obsidian
 				target.MessageNotice(source, parameters[1]);
 			else
 			{
-				if (source.IndexOf('.') == 0)
+				if (source.IndexOf('.') == -1)
 					page.Server.CurrentPage.MessageNotice(source, parameters[1]);
 				else
 					page.Server.ServerPage.MessageNotice(source, parameters[1]);
