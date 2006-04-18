@@ -426,6 +426,7 @@ namespace Obsidian
 		private string[] DoNickComplete(string word) 
 		{
 			System.Collections.Specialized.StringCollection sc = new System.Collections.Specialized.StringCollection();
+			
 			foreach (ChanUser cu in lstUsers.Items) 
 			{
 				if (cu.Nick.ToLower().StartsWith(word.ToLower())) 
@@ -433,6 +434,15 @@ namespace Obsidian
 					sc.Add(cu.Nick);
 				}
 			}
+			
+			foreach (TreeNode tn in Obsidian.mainForm.tvcWindows.Nodes)
+			{
+				if (tn.Text.ToLower().StartsWith(word.ToLower()))
+				{
+					sc.Add(tn.Text);
+				}
+			}
+			
 			string[] a = new string[sc.Count];
 			sc.CopyTo(a, 0);
 			return a;

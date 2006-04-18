@@ -11,10 +11,11 @@ namespace Obsidian
 	/// </summary>
 	sealed public class mcMainForm	: System.Windows.Forms.Form
 	{
+		/* XXX - should probably be private. or something. */
 		public mcPage CurrentPage;
-
-		private System.Collections.SortedList Servers = new System.Collections.SortedList(5);
+		public System.Collections.SortedList Servers = new System.Collections.SortedList(5);
 		private System.Windows.Forms.Splitter MySplitter;
+		/* XXX - should probably be private. used for nickcomplete, etc. */
 		public System.Windows.Forms.TreeView tvcWindows;
 		private System.Windows.Forms.Timer tmrParseStuff;
 		private System.Windows.Forms.ToolBar tbLauncher;
