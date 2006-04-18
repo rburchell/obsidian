@@ -332,6 +332,42 @@ namespace Obsidian
 
 			page.Server.CurrentPage.MessageInfo("Server:" + todisplay);
 		}
+		
+		//:stitch.chatspike.net 317  w00t Brik 2496 1145297959 seconds idle, signon time
+		private static void Cmd318(string prefix, string command, string[] parameters, mcPage page)
+		{
+			int idle = Int32.Parse(parameters[2]);
+			string idleprefix = "second(s)";
+			System.DateTime time = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(double.Parse(parameters[3])).ToLocalTime();
+			
+			/*
+			 * XXX - this could be improved on by using 'x hours, y mins' or something.
+			 * I'm unsure exactly how this would be done, I assume by using the modulus
+			 * or something. aquanight? --w00t
+			 */
+			if (idle > 60)
+			{
+				/* get minutes */
+				idle = idle / 60;
+				idleprefix = "minute(s)";
+				
+				if (idle > 60)
+				{
+					/* get hours */
+					idle = idle / 60;
+					idleprefix = "hours(s)";
+					
+					if (idle > 24)
+					{
+						/* days */
+						idle = idle / 24;
+						idleprefix = "day(s)";
+					}
+				}
+			}
+			
+			page.Server.CurrentPage.MessageInfo("Idle: " + idle.ToString() + " " + idleprefix + " signon: " + time.ToString("ddd, MMM d, yyyy HH:mm:ss"));
+		}
 
 		private static void Cmd318(string prefix, string command, string[] parameters, mcPage page)
 		{
