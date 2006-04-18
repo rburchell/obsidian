@@ -150,6 +150,49 @@ namespace Obsidian
 			}
 			mNetThreads.Add(new NetworkThread(address, port, cb));
 		}
+		
+		public static string FormatTime(TimeSpan ts)
+		{
+			string txt = "";
+			if (ts.Equals(TimeSpan.Zero))
+			{
+				return "0 seconds";
+			}
+			if (ts.Days > 0)
+			{
+				txt += ts.Days.ToString() + " day" + (ts.Days == 1 ? "" : "s");
+			}
+			if (ts.Hours > 0)
+			{
+				if (txt.Length > 0)
+				{
+					txt += " ";
+				}
+				txt += ts.Hours.ToString() + " hour" + (ts.Hours == 1 ? "" : "s");
+			}
+			if (ts.Minutes > 0)
+			{
+				if (txt.Length > 0)
+				{
+					txt += " ";
+				}
+				txt += ts.Minutes.ToString() + " minute" + (ts.Minutes == 1 ? "" : "s");
+			}
+			if (ts.Seconds > 0)
+			{
+				if (txt.Length > 0)
+				{
+					txt += " ";
+				}
+				txt += ts.Seconds.ToString() + " second" + (ts.Seconds == 1 ? "" : "s");
+			}
+			return txt;
+		}
+		
+		public static string FormatTime(int ts)
+		{
+			return FormatTime(new TimeSpan(0, 0, ts));
+		}
 
 		[STAThread]
 		public static void Main()

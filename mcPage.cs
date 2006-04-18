@@ -330,12 +330,21 @@ namespace Obsidian
 		 *  avoid using .Append externally, I'm still
 		 *  considering making it private.
 		 */
+		private delegate void delegateAppendText(string text);
 		public bool Append(string data) 
 		{
 			if(txtData == null)
 				return false;
 
-			txtData.AppendText(data);
+			delegateAppendText d = txtData.AppendText;
+			if (txtData.InvokeRequired)
+			{
+				txtData.Invoke(d, data);
+			}
+			else
+			{
+				txtData.AppendText(data);
+			}
 
 			if(!Server.CurrentPage.Equals(this))
 				this.ColourNode(Color.Red);
@@ -351,15 +360,39 @@ namespace Obsidian
 			return true;
 		}
 
+		private delegate void setSelColor(System.Drawing.Color color);
 		private bool SetColor(System.Drawing.Color color) 
 		{
-			txtData.SelectionColor = color;
+			if (txtData.InvokeRequired)
+			{
+				setSelColor d = delegate(System.Drawing.Color clr)
+				{
+					txtData.SelectionColor = clr;
+				};
+				txtData.Invoke(d, color);
+			}
+			else
+			{
+				txtData.SelectionColor = color;
+			}
 			return true;
 		}
 
+		private delegate void resetSelColor();
 		private bool ResetColor() 
 		{
-			txtData.SelectionColor = System.Drawing.Color.White;
+			if (txtData.InvokeRequired)
+			{
+				resetSelColor d = delegate()
+				{
+					txtData.SelectionColor = System.Drawing.Color.White;
+				};
+				txtData.Invoke(d, new object[0] { });
+			}
+			else
+			{
+				txtData.SelectionColor = System.Drawing.Color.White;
+			}
 			return true;
 		}
 

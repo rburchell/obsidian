@@ -85,10 +85,10 @@ namespace Obsidian
 					workstr = temp[1];
 				}
 
-/*				// Get rid of multispaces.
+				/*				// Get rid of multispaces.
 				while (workstr.IndexOf("  ") >= 0)
 					workstr = workstr.Replace("  ", " ");
-*/
+				 */
 				
 				// Now the parameters. Check if we have a starting : ... AGAIN.
 				if (workstr[0] == ':')
@@ -111,7 +111,7 @@ namespace Obsidian
 					parts = workstr.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 				}
 
-			
+				
 				Type t = typeof(mcInbound);
 				MethodInfo m;
 				
@@ -224,28 +224,28 @@ namespace Obsidian
 						page.Server.ISupport.PREFIX_Characters = prefixchars;
 						page.Server.ISupport.PREFIX_Modes = modechars;
 						break;
-				default:
-					if (page.Server.ISupport.Other.ContainsKey(tokens[0]))
-					{
-						if (tokens.Length > 1)
+					default:
+						if (page.Server.ISupport.Other.ContainsKey(tokens[0]))
 						{
-							page.Server.ISupport.Other[tokens[0]] = tokens[1];
-						}
-					}
-					else
-					{
-						if (tokens.Length > 1)
-						{
-							// Has a value.
-							page.Server.ISupport.Other.Add(tokens[0], tokens[1]);
+							if (tokens.Length > 1)
+							{
+								page.Server.ISupport.Other[tokens[0]] = tokens[1];
+							}
 						}
 						else
 						{
-							// No value.
-							page.Server.ISupport.Other.Add(tokens[0], null);
+							if (tokens.Length > 1)
+							{
+								// Has a value.
+								page.Server.ISupport.Other.Add(tokens[0], tokens[1]);
+							}
+							else
+							{
+								// No value.
+								page.Server.ISupport.Other.Add(tokens[0], null);
+							}
 						}
-					}
-					break;
+						break;
 				}
 			}
 			todisplay = todisplay + " " + parameters[i++];
@@ -253,23 +253,23 @@ namespace Obsidian
 		}
 		#endregion
 		#region "200 Series"
-		// RPL_LUSERCLIENT 
+		// RPL_LUSERCLIENT
 		private static void Cmd251(string sender, string command, string[] parameters, mcPage page)
 		{
-			// ":There are <integer> users and <integer> services on <integer> servers" 
+			// ":There are <integer> users and <integer> services on <integer> servers"
 			page.MessageInfo(parameters[1]);
 		}
 
-		// RPL_LUSEROP 
+		// RPL_LUSEROP
 		private static void Cmd252(string sender, string command, string[] parameters, mcPage page)
 		{
-			// "<integer> :operator(s) online" 
+			// "<integer> :operator(s) online"
 			page.MessageInfo(parameters[1] + " IRC operator(s) online");
 		}
 
 		private static void Cmd253(string sender, string command, string[] parameters, mcPage page)
 		{
-			// "<integer> :unknown connection(s)" 
+			// "<integer> :unknown connection(s)"
 			page.MessageInfo(parameters[1] + " unknown connection(s)");
 		}
 
@@ -356,25 +356,26 @@ namespace Obsidian
 		private static void Cmd317(string prefix, string command, string[] parameters, mcPage page)
 		{
 			int idle = Int32.Parse(parameters[2]);
-			string idleprefix = "second(s)";
-			System.DateTime time = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(double.Parse(parameters[3])).ToLocalTime();
+			//string idleprefix = "second(s)";
+			System.DateTime time = new DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(double.Parse(parameters[3])).ToLocalTime();
 			
 			TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1));
 			int timeonline  = (int)t.TotalSeconds - int.Parse(parameters[3]);
-			string timeonlineprefix = "second(s)";
+			//string timeonlineprefix = "second(s)";
 			
 			/*
 			 * avoid negative online time if their local clock isn't quite right --
 			 * minor cosmetic detail, but I think it looks good. --w00t
 			 */
-			 if (idle > timeonline)
-			 	timeonline = idle;
+			if (idle > timeonline)
+				timeonline = idle;
 			
 			/*
 			 * XXX - this could be improved on by using 'x hours, y mins' or something.
 			 * I'm unsure exactly how this would be done, I assume by using the modulus
 			 * or something. aquanight? --w00t
 			 */
+			#if DeadCode
 			if (idle > 60)
 			{
 				/* get minutes */
@@ -395,13 +396,13 @@ namespace Obsidian
 					}
 				}
 			}
+
 			
 			if (timeonline > 60)
 			{
 				/* get minutes */
 				timeonline = timeonline / 60;
 				timeonlineprefix = "minute(s)";
-				
 				if (timeonline > 60)
 				{
 					/* get hours */
@@ -416,8 +417,9 @@ namespace Obsidian
 					}
 				}
 			}
-			
 			page.Server.CurrentPage.MessageInfo("Idle: " + idle.ToString() + " " + idleprefix + " online for " + timeonline.ToString() + " " + timeonlineprefix + ", signon: " + time.ToString("ddd, MMM d, yyyy HH:mm:ss"));
+			#endif
+			page.Server.CurrentPage.MessageInfo("Idle: " + Obsidian.FormatTime(idle) + " online for " + Obsidian.FormatTime(timeonline) + ", signon: " + time.ToString("ddd, MMM d, yyyy HH:mm:ss"));
 		}
 
 		private static void Cmd318(string prefix, string command, string[] parameters, mcPage page)
@@ -467,8 +469,8 @@ namespace Obsidian
 		private static void Cmd353(string prefix, string command, string[] parameters, mcPage page)
 		{
 			/*
-			 *  RPL_NAMREPLY 
-			 * <- :devel.rburchell.org 353 w-mirc = #test :@w-mirc 
+			 *  RPL_NAMREPLY
+			 * <- :devel.rburchell.org 353 w-mirc = #test :@w-mirc
 			 * <- :devel.rburchell.org 366 w-mirc #test :End of /NAMES list.
 			 */
 			string[] userlist;
@@ -521,7 +523,7 @@ namespace Obsidian
 
 		private static void Cmd366(string prefix, string command, string[] parameters, mcPage page)
 		{
-			// RPL_ENDOFNAMES 
+			// RPL_ENDOFNAMES
 			// do nothing.
 		}
 
@@ -535,13 +537,13 @@ namespace Obsidian
 		// RPL_MOTDSTART
 		private static void Cmd375(string prefix, string command, string[] parameters, mcPage page)
 		{
-			// ":- <Server> Message of the day - " 					
+			// ":- <Server> Message of the day - "
 			page.MessageInfo(parameters[1]);
 		}
 
 		private static void Cmd376(string prefix, string command, string[] parameters, mcPage page)
 		{
-			// RPL_ENDOFMOTD 
+			// RPL_ENDOFMOTD
 			page.MessageInfo(parameters[1]);
 		}
 		#endregion
