@@ -334,7 +334,7 @@ namespace Obsidian
 		}
 		
 		//:stitch.chatspike.net 317  w00t Brik 2496 1145297959 seconds idle, signon time
-		private static void Cmd318(string prefix, string command, string[] parameters, mcPage page)
+		private static void Cmd317(string prefix, string command, string[] parameters, mcPage page)
 		{
 			int idle = Int32.Parse(parameters[2]);
 			string idleprefix = "second(s)";
