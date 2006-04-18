@@ -568,7 +568,8 @@ namespace Obsidian
 			if (target == null)
 			{
 				/* setting modes on us, handle later */
-				page.MessageInfo("UNHANDLED USERMODE SET: " + parameters[1]);
+				page.MessageInfo(userhost[0] + " sets mode " + parameters[1] + " on you");
+				page.Server.ParseModes(parameters[1]);
 				return;
 			}
 

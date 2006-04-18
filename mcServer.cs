@@ -62,6 +62,50 @@ namespace Obsidian
 				return this._connected;
 			}
 		}
+		
+		/* wastes a little memory, a lot easier to work with ;p */
+		private int[] _usermodes = new int[255];
+		public bool HasModes(string Modes)
+		{
+			int i = 0;
+			
+			while (i < Modes.Length)
+			{
+				if (this._usermodes[(int)Modes[i]] != 1)
+					return false;
+				
+				i++;
+			}
+			
+			return true;
+		}
+		
+		public void ParseModes(string Modes)
+		{
+			bool adding = true;
+			int i = 0;
+			
+			while (i < Modes.Length)
+			{
+				switch (Modes[i])
+				{
+					case '+':
+						adding = true;
+						break;
+					case '-':
+						adding = false;
+						break;
+					default:
+						if (adding)
+							this._usermodes[(int)Modes[i]] = 1;
+						else
+							this._usermodes[(int)Modes[i]] = 0;
+						break;
+				}
+				
+				i++;
+			}
+		}
 
 		/* The "status window," if you want to call it that. (is never null) */
 		public mcPage ServerPage;
