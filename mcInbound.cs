@@ -303,8 +303,6 @@ namespace Obsidian
 		/*
 		 * TODO: A few more to be implemnted when I get time:
 		 * [16:38:25] --- UNKNOWN:  :irc.viroteck.net 310 Rob w00t is available for help.
-		 * [16:40:10] --- UNKNOWN:  :irc.viroteck.net 301 Rob Stskeeps CeBIT
-		 * [16:40:10] --- UNKNOWN:  :irc.viroteck.net 313 Rob Stskeeps is a Network Administrator
 		 * [16:40:10] --- UNKNOWN:  :irc.viroteck.net 671 Rob Stskeeps is using a Secure Connection
 		 */
 		private static void Cmd301(string prefix, string command, string[] parameters, mcPage page)
@@ -331,6 +329,15 @@ namespace Obsidian
 				todisplay = todisplay + " " + parameters[i];
 
 			page.Server.CurrentPage.MessageInfo("Real Name:" + todisplay);
+		}
+		
+		private static void Cmd313(string prefix, string command, string[] parameters, mcPage page)
+		{
+			string todisplay = null; /* join parts of parameters together to display */
+			for (int i = 2; i < parameters.Length; i++)
+				todisplay = todisplay + " " + parameters[i];
+
+			page.Server.CurrentPage.MessageInfo("Status:" + todisplay);
 		}
 
 		private static void Cmd312(string prefix, string command, string[] parameters, mcPage page)
