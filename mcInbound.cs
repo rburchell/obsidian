@@ -359,6 +359,17 @@ namespace Obsidian
 			string idleprefix = "second(s)";
 			System.DateTime time = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(double.Parse(parameters[3])).ToLocalTime();
 			
+			TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+			int timeonline  = (int)t.TotalSeconds - int.Parse(parameters[3]);
+			string timeonlineprefix = "second(s)";
+			
+			/*
+			 * avoid negative online time if their local clock isn't quite right --
+			 * minor cosmetic detail, but I think it looks good. --w00t
+			 */
+			 if (idle > timeonline)
+			 	timeonline = idle;
+			
 			/*
 			 * XXX - this could be improved on by using 'x hours, y mins' or something.
 			 * I'm unsure exactly how this would be done, I assume by using the modulus
@@ -385,7 +396,28 @@ namespace Obsidian
 				}
 			}
 			
-			page.Server.CurrentPage.MessageInfo("Idle: " + idle.ToString() + " " + idleprefix + " signon: " + time.ToString("ddd, MMM d, yyyy HH:mm:ss"));
+			if (timeonline > 60)
+			{
+				/* get minutes */
+				timeonline = timeonline / 60;
+				timeonlineprefix = "minute(s)";
+				
+				if (timeonline > 60)
+				{
+					/* get hours */
+					timeonline = timeonline / 60;
+					timeonlineprefix = "hours(s)";
+					
+					if (timeonline > 24)
+					{
+						/* days */
+						timeonline = timeonline / 24;
+						timeonlineprefix = "day(s)";
+					}
+				}
+			}
+			
+			page.Server.CurrentPage.MessageInfo("Idle: " + idle.ToString() + " " + idleprefix + " online for " + timeonline.ToString() + " " + timeonlineprefix + ", signon: " + time.ToString("ddd, MMM d, yyyy HH:mm:ss"));
 		}
 
 		private static void Cmd318(string prefix, string command, string[] parameters, mcPage page)
