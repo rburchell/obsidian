@@ -112,10 +112,12 @@ namespace Obsidian
 		
 		public static bool SaveConfig()
 		{
-			Type gc = typeof(GlobalConfig);
-			FieldInfo fi;
-			MethodInfo mi;
-			BindingFlags bf = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+			/*
+			 * Type gc = typeof(GlobalConfig);
+			 * FieldInfo fi;
+			 * MethodInfo mi;
+			 * BindingFlags bf = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+			 */
 			return false;
 		}
 	}
