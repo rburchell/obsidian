@@ -307,11 +307,20 @@ namespace Obsidian
 		 * [16:40:10] --- UNKNOWN:  :irc.viroteck.net 313 Rob Stskeeps is a Network Administrator
 		 * [16:40:10] --- UNKNOWN:  :irc.viroteck.net 671 Rob Stskeeps is using a Secure Connection
 		 */
+		private static void Cmd301(string prefix, string command, string[] parameters, mcPage page)
+		{
+			string todisplay = null; /* join parts of parameters together to display */
+			for (int i = 2; i < parameters.Length; i++)
+				todisplay = todisplay + " " + parameters[i];
+
+			page.Server.CurrentPage.MessageInfo("Away:" + todisplay);
+		}
+		
 		private static void Cmd307(string prefix, string command, string[] parameters, mcPage page)
 		{
 			page.Server.CurrentPage.MessageInfo("Status: " + parameters[1] + " is a Registered Nickname");
 		}
-
+		
 		private static void Cmd311(string prefix, string command, string[] parameters, mcPage page)
 		{
 			string todisplay = null; /* join parts of parameters together to display */
