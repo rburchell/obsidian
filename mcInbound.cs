@@ -2,6 +2,12 @@ using System;
 using System.Text;
 using System.Reflection;
 
+/*
+ * XXX - Numerics to Add (when w00t gets time. :P):
+ *  :stitch.chatspike.net 378  w00t w00t is connecting from *@CPE-61-9-200-140.nsw.bigpond.net.au 61.9.200.140
+ *  :stitch.chatspike.net 482  Guest465136598 #chatspike You must be at least a half-operator to change modes on this channel
+ *  :stitch.chatspike.net 401  Guest465136598 moo No such nick/channel
+ */
 namespace Obsidian
 {
 	/// <summary>
