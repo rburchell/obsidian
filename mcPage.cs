@@ -709,7 +709,7 @@ namespace Obsidian
 			this.SetColor(System.Drawing.Color.Cyan);
 			this.Append("*");
 			this.ResetColor();
-			this.Append(" "+nick+" "+msg+"\r\n");
+			this.Append(" "+nick+msg+"\r\n");
 
 			return true;
 		}
