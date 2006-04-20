@@ -412,6 +412,9 @@ namespace Obsidian
 		//public so windowlist can reset us.
 		private void ScrollDown()
 		{
+			if (this != Obsidian.mainForm.CurrentPage)
+				return;
+			
 			if (txtData != null && txtData.Text.Length > 0) 
 			{
 				txtData.SelectionStart = txtData.Text.Length - 1;
