@@ -5,8 +5,11 @@ using System.Reflection;
 /*
  * XXX - Numerics to Add (when w00t gets time. :P):
  *  :stitch.chatspike.net 378  w00t w00t is connecting from *@CPE-61-9-200-140.nsw.bigpond.net.au 61.9.200.140
+ *  :crew.irc.barafranca.com 338  Calis l33t`out Midnight@irc.barafranca.com 67.19.22.226 Actual user@host, Actual IP
  *  :stitch.chatspike.net 482  Guest465136598 #chatspike You must be at least a half-operator to change modes on this channel
  *  :stitch.chatspike.net 401  Guest465136598 moo No such nick/channel
+ *  :irc.barafranca.com 381  Calis You are now an IRC Operator
+ *  :irc.barafranca.com 330  Calis Kithy_Febril kythana is authed as
  */
 namespace Obsidian
 {
