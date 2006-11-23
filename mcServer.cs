@@ -230,6 +230,7 @@ namespace Obsidian
 				this._connected = true;
 				this.IRCSend("NICK " + this.MyNickname);
 				this.IRCSend("USER " + this.MyUsername + " * * :" + this.MyRealname);
+				this.IRCSend("PROTOCTL NAMESX");
 			}
 			else 
 			{
