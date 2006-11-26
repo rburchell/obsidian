@@ -48,6 +48,17 @@ namespace Obsidian
 				aPage.Server.Disconnect(Parameters);
 			} 
 		}
+		
+		public static void cmdNames(mcPage aPage, string Parameters)
+		{
+			if (Parameters == null)
+				return;
+			
+			mcPage target = aPage.Server.FindPage(Parameters);
+			
+			if (target != null)
+				target.RemoveAllUsersFromChannel();
+		}
 
 		public static void cmdNick(mcPage aPage, string Parameters)
 		{

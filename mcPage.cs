@@ -1064,6 +1064,12 @@ namespace Obsidian
 			RemoveUserFromChannel(cu);
 		}
 
+		public void RemoveAllUsersFromChannel()
+		{
+			this.lstUsers.Items.Clear();
+			this.lstUsers.Refresh();
+		}
+		
 		public ChanUser GetUserOnChannelByNick(string nick)
 		{
 			foreach (ChanUser cu in this.lstUsers.Items)

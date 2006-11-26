@@ -129,7 +129,17 @@ namespace Obsidian
 				if (m == null)
 					DefaultCommand(prefix, command, parts, page);
 				else
-					m.Invoke(null, new object[] { prefix, command, parts, page });
+				{
+					try
+					{
+						m.Invoke(null, new object[] { prefix, command, parts, page });
+					}
+					catch (Exception ex)
+					{
+						//System.Diagnostics.
+						System.Windows.Forms.MessageBox.Show("Method Cmd" + command + " threw an exception while being invoked: " + ex.ToString() + " - stack trace is: \n\n" + ex.StackTrace);
+					}
+				}
 			}
 		}
 
