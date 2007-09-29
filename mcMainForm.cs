@@ -116,14 +116,14 @@ namespace Obsidian
 			// tbbtnNewServer
 			// 
 			this.tbbtnNewServer.ImageIndex = 0;
-			this.tbbtnNewServer.Name = "tbbtnNewServer";
+			//this.tbbtnNewServer.Name = "tbbtnNewServer";
 			this.tbbtnNewServer.Tag = "NEW_SERVER";
 			this.tbbtnNewServer.ToolTipText = "Opens a new server window without disconnecting from the current one";
 			// 
 			// tbbtnConnectDisconnect
 			// 
 			this.tbbtnConnectDisconnect.ImageIndex = 1;
-			this.tbbtnConnectDisconnect.Name = "tbbtnConnectDisconnect";
+			//this.tbbtnConnectDisconnect.Name = "tbbtnConnectDisconnect";
 			this.tbbtnConnectDisconnect.Tag = "CONNECT_DISCONNECT";
 			this.tbbtnConnectDisconnect.ToolTipText = "Connects (or disconnects) the currently selected server instance";
 			// 
